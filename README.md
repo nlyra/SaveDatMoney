@@ -6,6 +6,7 @@ Clone repo via https by using the following link:
 
 To get the expo client installed on your machine, run:
 `npm install -g expo-cli`
+You might have to add keyword `sudo` before the previous command if permissions access is denied.
 
 If you'd like to see official documentation for setting up the environment instead, please click here: https://reactnative.dev/docs/environment-setup
 
