@@ -12,6 +12,8 @@ const PORT = process.env.PORT || 8080;
 const username = 'arjun-pherwani', password = 'nLZpC5fi5Oglpl5H';
 const MONGODB_URI = 'mongodb+srv://'+username+':'+password+'@cluster0.mcinj.mongodb.net/save-dat-money-db?retryWrites=true&w=majority';
 
+app.set('port', (process.env.PORT || 8080));
+
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
