@@ -34,7 +34,9 @@ Once you have successfully installed and logged into firebase, you can deploy th
 - `npm run deploy-hosting`
 
 If you are still having issues or would like to look at official docs, see here:
+
 Expo docs on deploying to firebase:
 - https://docs.expo.io/distribution/publishing-websites/#firebase-hosting 
+
 Firebase docs for installing and running:
 - https://firebase.google.com/docs/cli#install-cli-windows
