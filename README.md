@@ -22,3 +22,19 @@ To run your project, navigate to the directory and run one of the following npm 
 If you'd like to run your project directly on your physical device (iOS or Android), please go to either Google Play store or App Store and download "Expo Client" app (it's got a white and black picture with their logo on it), and follow the onscreen instructions to run it. 
 For connection selection choose "Tunnel" instead of "LAN" or "Local" and use your phone's camera to scan the QR code.
 
+
+Deployment (Firebase):
+
+If this is your first time, you need to install Firebase CLI first to have access to the command line commands.
+Accept the project invite to Firebase (need a gmail account).
+- `npm install -g firebase-tools` # This will install the CLI on your machine.
+- `firebase login` # Log in to your firebase account from the command line.
+- `firebase projects:list` # This will display the projects you have access to on your firebase (just to double check).
+Once you have successfully installed and logged into firebase, you can deploy the app by using:
+- `npm run deploy-hosting`
+
+If you are still having issues or would like to look at official docs, see here:
+Expo docs on deploying to firebase:
+- https://docs.expo.io/distribution/publishing-websites/#firebase-hosting 
+Firebase docs for installing and running:
+- https://firebase.google.com/docs/cli#install-cli-windows
