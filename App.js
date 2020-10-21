@@ -7,18 +7,18 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 export default function App() {
   return (
     //<LoginPage />
-    // <BrowserRouter >      
-    //   <Switch>        
-    //     <Route path="/" exact>          
-    //     <LoginPage />        
-    //     </Route>            
-    //     <Redirect to="/" />      
-    //   </Switch>      
-    // </BrowserRouter>
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app! Nate and fede wuz here</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Router >
+      <Switch>
+        <Route path="/" exact>
+          <LoginPage />
+        </Route>
+        <Redirect to="/" />
+      </Switch>  
+    </Router>
+    // <View style={styles.container}>
+    //   <Text>Open up App.js to start working on your app! Nate and fede wuz here</Text>
+    //   <StatusBar style="auto" />
+    // </View>
   );
 }
 
