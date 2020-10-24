@@ -38,8 +38,6 @@ app.use(morgan('tiny'));
 app.use('/api', routes);
 
 app.listen(PORT, console.log(`Server is starting at ${PORT}`));
-<<<<<<< HEAD
-=======
 
 app.post('/api/login', async (req, res, next) => 
 {
@@ -68,4 +66,3 @@ app.post('/api/login', async (req, res, next) =>
   var ret = { id:id, firstName:fn, lastName:ln, error:''};
   res.status(200).json(ret);
 });
->>>>>>> firebase
