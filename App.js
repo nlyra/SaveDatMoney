@@ -1,32 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import LoginPage from './src/pages/LoginPage';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import './src/firebase/config'
+import 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import RegistrationPage from './src/pages/RegistrationPage/RegistrationPage'
+import LoginPage from './src/pages/LoginPage/LoginPage'
+import DashboardPage from './src/pages/DashboardPage/DashboardPage'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+//import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+
+const Stack = createStackNavigator();
 
 export default function App() {
+
+    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null)
+
   return (
-    //<LoginPage />
-    <Router >
-      <Switch>
-        <Route path="/" exact>
-          <LoginPage />
-        </Route>
-        <Redirect to="/" />
-      </Switch>  
-    </Router>
-    // <View style={styles.container}>
-    //   <Text>Open up App.js to start working on your app! Nate and fede wuz here</Text>
-    //   <StatusBar style="auto" />
-    // </View>
+    <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="Registration" component={RegistrationPage} />
+            <Stack.Screen name="Dashboard" component={DashboardPage} />
+        </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
