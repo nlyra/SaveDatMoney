@@ -20,7 +20,7 @@ export default function DashboardPage({navigation})
     return (
       <NavigationContainer independent={true}>
         <Tab.Navigator
-          initialRouteName="Budget"
+          initialRouteName="Budget" barStyle={{ backgroundColor: '#2ea44f' }}
         >
           <Tab.Screen
             name="Budget"

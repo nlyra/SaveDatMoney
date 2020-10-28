@@ -7,5 +7,9 @@ export default StyleSheet.create({
     },
     title: {
         alignItems: 'center'
+    },
+    bottomNav: {
+        backgroundColor: '#2ea44f'
     }
+
 })
