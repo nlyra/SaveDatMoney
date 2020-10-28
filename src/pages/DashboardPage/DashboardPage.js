@@ -20,7 +20,10 @@ export default function DashboardPage({navigation})
     return (
       <NavigationContainer independent={true}>
         <Tab.Navigator
-          initialRouteName="Budget" barStyle={{ backgroundColor: '#2ea44f' }}
+          initialRouteName="Budget"
+          labeled='false'
+          barStyle={{ backgroundColor: '#2ea44f' }}
+          backBehavior='history'
         >
           <Tab.Screen
             name="Budget"
@@ -30,6 +33,11 @@ export default function DashboardPage({navigation})
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="currency-usd" color={color} size={26} />
               ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Budget' })
+              },
             }}
           />
           <Tab.Screen
@@ -41,6 +49,11 @@ export default function DashboardPage({navigation})
                 <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26} />
               ),
             }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Transactions' })
+              },
+            }}
           />
           <Tab.Screen
             name="Insights"
@@ -51,6 +64,11 @@ export default function DashboardPage({navigation})
                 <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
               ),
             }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Insights' })
+              },
+            }}
           />
           <Tab.Screen
             name="Settings"
@@ -60,6 +78,11 @@ export default function DashboardPage({navigation})
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="video-input-svideo" color={color} size={26} />
               ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Settings' })
+              },
             }}
           />
         </Tab.Navigator>
