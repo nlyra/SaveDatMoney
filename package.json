@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "predeploy": "expo build:web",
-    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
+    "build": "npm run predeploy && firebase deploy --only hosting"
   },
   "dependencies": {
     "@mdi/font": "^5.8.55",
