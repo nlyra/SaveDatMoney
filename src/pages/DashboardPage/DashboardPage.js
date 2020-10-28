@@ -21,15 +21,15 @@ export default function DashboardPage({navigation})
       <NavigationContainer independent={true}>
         <Tab.Navigator
           initialRouteName="Budget"
-          labeled='false'
           barStyle={{ backgroundColor: '#2ea44f' }}
           backBehavior='history'
+          shifting={false}
+          labeled={false}
         >
           <Tab.Screen
             name="Budget"
             component={BudgetPage}
             options={{
-              tabBarLabel: 'Budget',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="currency-usd" color={color} size={26} />
               ),
@@ -44,7 +44,6 @@ export default function DashboardPage({navigation})
             name="Transactions"
             component={TransactionsPage}
             options={{
-              tabBarLabel: 'Transactions',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26} />
               ),
@@ -59,7 +58,6 @@ export default function DashboardPage({navigation})
             name="Insights"
             component={InsightsPage}
             options={{
-              tabBarLabel: 'Insights',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
               ),
@@ -74,7 +72,6 @@ export default function DashboardPage({navigation})
             name="Settings"
             component={SettingsPage}
             options={{
-              tabBarLabel: 'Settings',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="video-input-svideo" color={color} size={26} />
               ),
