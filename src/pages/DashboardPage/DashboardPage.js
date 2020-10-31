@@ -20,46 +20,66 @@ export default function DashboardPage({navigation})
     return (
       <NavigationContainer independent={true}>
         <Tab.Navigator
-          initialRouteName="Budget" barStyle={{ backgroundColor: '#2ea44f' }}
+          initialRouteName="Budget"
+          barStyle={{ backgroundColor: '#2ea44f' }}
+          backBehavior='history'
+          shifting={false}
+          labeled={false}
         >
           <Tab.Screen
             name="Budget"
             component={BudgetPage}
             options={{
-              tabBarLabel: 'Budget',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="currency-usd" color={color} size={26} />
               ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Budget' })
+              },
             }}
           />
           <Tab.Screen
             name="Transactions"
             component={TransactionsPage}
             options={{
-              tabBarLabel: 'Transactions',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26} />
               ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Transactions' })
+              },
             }}
           />
           <Tab.Screen
             name="Insights"
             component={InsightsPage}
             options={{
-              tabBarLabel: 'Insights',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
               ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Insights' })
+              },
             }}
           />
           <Tab.Screen
             name="Settings"
             component={SettingsPage}
             options={{
-              tabBarLabel: 'Settings',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="video-input-svideo" color={color} size={26} />
               ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Settings' })
+              },
             }}
           />
         </Tab.Navigator>

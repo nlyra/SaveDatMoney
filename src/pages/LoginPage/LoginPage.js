@@ -16,8 +16,8 @@ export default function LoginPage({navigation})
     }
 
     /**
-     * 
-     * @param {React.FormEvent<HTMLFormElement>} e 
+     *
+     * @param {React.FormEvent<HTMLFormElement>} e
      */
     const doLogin = (e) => {
 
@@ -29,7 +29,11 @@ export default function LoginPage({navigation})
             const usersRef = firebase.database().ref('users/' + uid);
 
             usersRef.once('value').then(function(snapshot) {
-                navigation.navigate('Dashboard', snapshot.val());
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Budget' }],
+                });
+                //navigation.navigate('Dashboard', snapshot.val());
             }).catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
