@@ -16,7 +16,6 @@ type MonthPickerProps = {
 
 const MonthPicker: React.FC<MonthPickerProps> = ({date, onChange}) => {
 
-    
 }
 
 
