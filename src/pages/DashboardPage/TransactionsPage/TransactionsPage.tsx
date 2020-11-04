@@ -7,15 +7,23 @@ import { colors, padding, fonts, buttons } from '../../stdStyles';
 import {format, subMonths, addMonths} from 'date-fns'; 
 import {IconButton} from 'react-native-paper';
 
-var currentDate = ""
-
 type MonthPickerProps = {
-    date: Date;
-    onChange: (newDate: Date) => void;
+    date: Date
+    onChange: (newDate: Date) => void
 };
 
 const MonthPicker: React.FC<MonthPickerProps> = ({date, onChange}) => {
 
+    const handlePrev = () => {
+        const newDate = subMonths(date, 1);
+        onChange(newDate);
+    };
+
+    const handleNext = () => {
+        const newDate = addMonths(date, 1);
+        onChange(newDate);
+    };
+    
 }
 
 
