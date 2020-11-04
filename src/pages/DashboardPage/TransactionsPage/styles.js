@@ -2,8 +2,26 @@ import { Platform, StyleSheet } from 'react-native';
 import { colors, padding, fonts, styles } from '../../stdStyles';
 
 export default StyleSheet.create({
-    bottomContainer: {
+    mainContainer: {
         flex: 1,
+        alignItems: 'center'
+    },
+    topContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: "flex-start"
+    },
+    bodyContainer: {
+        flex: 2,
+        width: '100%',
+        alignItems: "flex-start",
+        justifyContent: "space-evenly",
+        flexDirection: 'row',
+        marginLeft: '2%',
+        marginBottom: '2%'
+    },
+    bottomContainer: {
+        flex: 3,
         width: '100%',
         alignItems: 'flex-end',
         flexDirection: 'row',
@@ -11,6 +29,11 @@ export default StyleSheet.create({
         marginLeft: '2%',
         marginBottom: '2%'
     },
+    separator: {
+        marginVertical: 8,
+        borderBottomColor: '#737373',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
     title: {
         alignItems: 'center'
     },
@@ -20,6 +43,29 @@ export default StyleSheet.create({
         width: 140,
         alignSelf: "center",
         margin: 30
+    },
+    transactions: {
+        textAlign: "center",
+        marginRight: '30%',
+        flexDirection: 'row',
+        justifyContent: "space-evenly",
+    },
+    transactionText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginRight: '2%'
+    },
+    transactionButton: {
+        color: 'white',
+        fontSize: 10,
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    date:{
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginTop: 10
     },
     input: {
         height: 48,
