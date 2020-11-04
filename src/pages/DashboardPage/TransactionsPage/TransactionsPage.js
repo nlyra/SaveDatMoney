@@ -4,20 +4,33 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { colors, padding, fonts, buttons } from '../../stdStyles';
-import moment from 'moment'; 
+import {format, subMonths, addMonths} from 'date-fns'; 
+import {iconButton} from 'react-native-paper';
 
+var currentDate = moment().format("MMMM YYYY");
+
+Type MonthPickerProps = {
+    date: Date;
+    onChange: (newDate: Date) => void;
+};
+
+const MonthPicker: React.FC<MonthPickerProps> - ({date, onChange}) => {
+
+    
+}
 
 
 export default function TransactionsPage({navigation})
 {
-    var now = moment().format();
-    var currentDate = moment().format("DD/MM/YYYY");
+
+
 
     return (
         
         <View style={styles.mainContainer} >
 
             <View style={styles.topContainer}>
+                <IconButton icon = "arrow-left" onPress = {handlePrev}/>
                 <Text style={styles.date}>{currentDate}</Text>
             </View>
 
