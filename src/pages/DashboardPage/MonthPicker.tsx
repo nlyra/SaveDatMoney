@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View, Button, Alert } from 'react-native';
 import styles from './TransactionsPage/styles';
 import {IconButton} from 'react-native-paper';

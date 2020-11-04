@@ -10,11 +10,16 @@ import MonthPicker from '../MonthPicker';
 
 export default function TransactionsPage({navigation})
 {
+    const [date, setDate] = useState(new Date());
+
     return (
         
         <View style={styles.mainContainer} >
 
-            <FlatList ListHeaderComponent={<MonthPicker/>}/>
+            <FlatList ListHeaderComponent={
+                <MonthPicker date={date} onChange={(newDate) => setDate(newDate)} />
+            }
+            />
 
             <View style={styles.bodyContainer}>
 
