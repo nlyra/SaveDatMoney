@@ -5,17 +5,24 @@ import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { colors, padding, fonts, buttons } from '../../stdStyles';
 import {format, subMonths, addMonths} from 'date-fns'; 
-import {iconButton} from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 
-var currentDate = moment().format("MMMM YYYY");
-
-Type MonthPickerProps = {
-    date: Date;
-    onChange: (newDate: Date) => void;
+type MonthPickerProps = {
+    date: Date
+    onChange: (newDate: Date) => void
 };
 
-const MonthPicker: React.FC<MonthPickerProps> - ({date, onChange}) => {
+const MonthPicker: React.FC<MonthPickerProps> = ({date, onChange}) => {
 
+    const handlePrev = () => {
+        const newDate = subMonths(date, 1);
+        onChange(newDate);
+    };
+
+    const handleNext = () => {
+        const newDate = addMonths(date, 1);
+        onChange(newDate);
+    };
     
 }
 
