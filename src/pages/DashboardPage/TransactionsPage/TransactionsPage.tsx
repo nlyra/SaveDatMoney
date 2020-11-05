@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View, Button, Alert, FlatList } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Image, Text, TextInput, TouchableOpacity, View, Button, Alert, FlatList, Modal } from 'react-native';
+import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { colors, padding, fonts, buttons } from '../../stdStyles';
@@ -17,16 +17,15 @@ export default function TransactionsPage({navigation})
     const [cost, setCost] = useState('');
     const [category, setCategory] = useState('');
     const [transaction, setTransaction] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
-    
 
     var user = firebase.auth().currentUser;
     var uid;
-
     const data = {
-        date : 'November 2020',
-        cost : 30,
-        category : 'food'
+        date : date,
+        cost : cost,
+        category : category
     };
 
     if (user != null) {
@@ -35,48 +34,24 @@ export default function TransactionsPage({navigation})
                     // you have one. Use User.getToken() instead.
     }
 
-    console.log(uid);
-
-    firebase.database().ref('transaction/' + uid).set(data).then(() => {
-        
-    }).catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        setMessage(errorMessage);
-    });
-
-    /*
-
-    var ref = firebase.database().ref("dinosaurs");
-    ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
-    console.log(snapshot.key);
-    });
-    const addTransaction = (e) => {
+ 
+    const addTransaction = (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
 
-        firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
-
-        const uid = response.user.uid
-            const data = {
-                id: uid,
-                cost,
-                category,
-                transaction
-            };
-
-            firebase.database().ref('users/' + uid).set(data).then(() => {
-                navigation.navigate('Login', data)
-            }).catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                setMessage(errorMessage);
-            });
-
+        if (user != null) {
+        uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                        // this value to authenticate with your backend server, if
+                        // you have one. Use User.getToken() instead.
+        }
+        firebase.database().ref('transaction/' + uid).set(data).then(() => {
+            
+        }).catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            setMessage(errorMessage);
         });
     }
-    */
-
     
     return (
         
@@ -87,17 +62,55 @@ export default function TransactionsPage({navigation})
             }
             />
             */}
-            
 
             <View style={styles.bodyContainer}>
 
                 <View style={styles.transactions}>
                     <Text style={styles.transactionText}>Transactions</Text>
-                    <Button title="+" color= "black" onPress={() => Alert.alert('Add')}/>
+                    <Button title="+" color= "black" onPress = {() => setModalVisible(true)}/>
                 </View>
 
                 <Text style={[{marginRight: '5%'}]} >Category</Text>
                 <Text style={[{marginRight: '5%'}]} >Cost</Text>
+
+                {/* Modal */}
+                <View style={styles.centeredView}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                        Alert.alert("Modal has been closed.");
+                        }}
+                    >
+                        <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Hello World!</Text>
+
+                            <TouchableHighlight
+                            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                            onPress={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                            >
+                            <Text style={styles.textStyle}>Hide Modal</Text>
+                            </TouchableHighlight>
+                        </View>
+                        </View>
+                    </Modal>
+
+                    <TouchableHighlight
+                        style={styles.openButton}
+                        onPress={() => {
+                        setModalVisible(true);
+                        }}
+                    >
+                        <Text style={styles.textStyle}>Show Modal</Text>
+                    </TouchableHighlight>
+                    </View>
+
+                {/* End Modal */}
+
             </View>
 
         <View style={styles.bottomContainer}>
