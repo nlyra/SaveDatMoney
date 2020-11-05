@@ -8,7 +8,6 @@ import {format, subMonths, addMonths} from 'date-fns';
 import {IconButton} from 'react-native-paper';
 import MonthPicker from '../MonthPicker';
 
-
 export default function TransactionsPage({navigation})
 {
 
@@ -16,52 +15,41 @@ export default function TransactionsPage({navigation})
     const [message, setMessage] = useState('');
     const [cost, setCost] = useState('');
     const [category, setCategory] = useState('');
-    const [transaction, setTransaction] = useState('');
+    const [description, setdescrition] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
 
 
     var user = firebase.auth().currentUser;
     var uid;
-    const data = {
-        date : date,
-        cost : cost,
-        category : category
-    };
 
     if (user != null) {
-    uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-                    // this value to authenticate with your backend server, if
-                    // you have one. Use User.getToken() instead.
+    uid = user.uid;  
     }
 
- 
+    //var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: date}
+    var transaction1 = { category: "Food", cost: 278, description: "McDonalds", userId: uid, date: "October 2020"}
+
+    var ref = firebase.database().ref("transaction");
+    ref.orderByChild("date").equalTo("October 2020").on("child_added", function(snapshot) {
+        console.log("this is it: " + snapshot.key)
+        console.log('This is the cost:' + snapshot.val().cost)
+    });
+
     const addTransaction = (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
-
-        if (user != null) {
-        uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-                        // this value to authenticate with your backend server, if
-                        // you have one. Use User.getToken() instead.
-        }
-        firebase.database().ref('transaction/' + uid).set(data).then(() => {
-            
-        }).catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            setMessage(errorMessage);
-        });
+        
+        firebase.database().ref('/transaction').push(transaction1)
     }
     
     return (
         
         <View style={styles.mainContainer} >
-            {/*  
+            
             <FlatList ListHeaderComponent={
                 <MonthPicker date={date} onChange={(newDate) => setDate(newDate)} />
             }
             />
-            */}
 
             <View style={styles.bodyContainer}>
 
