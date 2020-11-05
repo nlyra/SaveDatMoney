@@ -37,6 +37,21 @@ export default function TransactionsPage({navigation})
 
     console.log(uid);
 
+    
+    var transaction1 = { category: "Food", cost: 278, description: "McDonalds", userId: uid, date: "October 2020"}
+    
+    firebase.database().ref('/transaction').push(transaction1)
+
+    // Find all dinosaurs whose height is exactly 25 meters.
+    var ref = firebase.database().ref("transaction");
+    ref.orderByChild("date").equalTo("October 2020").on("child_added", function(snapshot) {
+        console.log(snapshot.key);
+        console.log("this is it: " + snapshot.key)
+        snapshot.val().cost;
+    }); 
+
+
+    console.log("pushed")
     firebase.database().ref('transaction/' + uid).set(data).then(() => {
         
     }).catch((error) => {
