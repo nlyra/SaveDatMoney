@@ -19,7 +19,7 @@ export default function TransactionsPage({navigation})
     const [transaction, setTransaction] = useState('');
 
     const addTransaction = (e) => {
-
+        
         e.preventDefault();
 
         firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
