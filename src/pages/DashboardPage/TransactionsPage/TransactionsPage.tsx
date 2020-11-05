@@ -18,6 +18,39 @@ export default function TransactionsPage({navigation})
     const [category, setCategory] = useState('');
     const [transaction, setTransaction] = useState('');
 
+    
+
+    var user = firebase.auth().currentUser;
+    var uid;
+
+    const data = {
+        date : 'November 2020',
+        cost : 30,
+        category : 'food'
+    };
+
+    if (user != null) {
+    uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                    // this value to authenticate with your backend server, if
+                    // you have one. Use User.getToken() instead.
+    }
+
+    console.log(uid);
+
+    firebase.database().ref('transaction/' + uid).set(data).then(() => {
+        
+    }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        setMessage(errorMessage);
+    });
+
+    /*
+
+    var ref = firebase.database().ref("dinosaurs");
+    ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
+    console.log(snapshot.key);
+    });
     const addTransaction = (e) => {
         
         e.preventDefault();
@@ -40,14 +73,21 @@ export default function TransactionsPage({navigation})
                 setMessage(errorMessage);
             });
 
+        });
+    }
+    */
+
+    
     return (
         
         <View style={styles.mainContainer} >
-
+            {/*  
             <FlatList ListHeaderComponent={
                 <MonthPicker date={date} onChange={(newDate) => setDate(newDate)} />
             }
             />
+            */}
+            
 
             <View style={styles.bodyContainer}>
 
@@ -61,10 +101,10 @@ export default function TransactionsPage({navigation})
             </View>
 
         <View style={styles.bottomContainer}>
-                <TouchableOpacity style={[{marginRight: '5%'}, buttons.long]} onPress={console.log("hi there")}>
+                <TouchableOpacity style={[{marginRight: '5%'}, buttons.long]} onPress={() => console.log("hi there")}>
                     <Text style={styles.buttonTitle}>Expenses</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={buttons.long} onPress={addTransaction}>
+                <TouchableOpacity style={buttons.long} onPress={() => console.log("hi there")}>
                     <Text style={styles.buttonTitle}>Income</Text>
                 </TouchableOpacity>
             </View>
