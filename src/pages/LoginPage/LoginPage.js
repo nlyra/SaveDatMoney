@@ -14,6 +14,9 @@ export default function LoginPage({navigation})
     const onFooterLinkPress = () => {
         navigation.navigate('Registration')
     }
+    const onFooterLinkPress2 = () => {
+        navigation.navigate('Forgot Password')
+    }
 
     /**
      *
@@ -78,6 +81,9 @@ export default function LoginPage({navigation})
                 </TouchableOpacity>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+                </View>
+                <View style={styles.footerView}>
+                    <Text onPress={onFooterLinkPress2} style={styles.footerLink}>Forgot Password?</Text>
                 </View>
             </ScrollView>
         </View>

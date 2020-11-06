@@ -16,7 +16,7 @@
     "@react-navigation/native": "^5.8.0",
     "@react-navigation/stack": "^5.10.0",
     "dotenv": "^8.2.0",
-    "expo": "^39.0.3",
+    "expo": "^39.0.4",
     "expo-status-bar": "~1.0.2",
     "firebase": "^7.24.0",
     "react": "16.13.1",
