@@ -7,7 +7,7 @@ import { colors, padding, fonts, buttons } from '../../stdStyles';
 import {format, subMonths, addMonths} from 'date-fns'; 
 import MonthPicker from '../MonthPicker'
 import Modal from 'modal-enhanced-react-native-web';
-import { List, Divider, DataTable } from 'react-native-paper';
+import { List, Divider, DataTable, Provider as PaperProvider} from 'react-native-paper';
 import { render } from 'react-native-web';
 
 export default function TransactionsPage({navigation})
@@ -33,7 +33,7 @@ export default function TransactionsPage({navigation})
      */
 
     const addTransaction = (e) => {
-        var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: format(date, 'MMMM, yyyy')};
+        var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
         firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");
 
@@ -41,10 +41,14 @@ export default function TransactionsPage({navigation})
     }
 
     var ref = firebase.database().ref("transaction");
-    ref.orderByChild("date").equalTo(format(date, 'MMMM, yyyy')).on("child_added", function(snapshot) {
+    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
         userData.push(snapshot.val());
         console.log(userData);
     });
+    // ref.orderByChild("date").equalTo(format(date, 'MMMM, yyyy')).on("child_added", function(snapshot) {
+    //     userData.push(snapshot.val());
+    //     console.log(userData);
+    // });
 
 
     return ( 

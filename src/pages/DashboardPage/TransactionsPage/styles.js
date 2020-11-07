@@ -15,7 +15,7 @@ export default StyleSheet.create({
     calendar: {
         flex: 1,
         alignItems: 'center',  
-        justifyContent: '',
+        justifyContent: 'center',
         flexDirection: 'row',  
         marginTop: 18 
     },
