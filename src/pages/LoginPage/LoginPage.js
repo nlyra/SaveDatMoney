@@ -15,7 +15,7 @@ export default function LoginPage({navigation})
         navigation.navigate('Registration')
     }
     const onFooterLinkPress2 = () => {
-        navigation.navigate('Forgot Password')
+        navigation.navigate('ForgotPassword')
     }
 
     /**

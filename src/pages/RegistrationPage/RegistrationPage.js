@@ -15,6 +15,7 @@ export default function RegistrationPage({navigation})
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
+
     /**
      * @param {React.FormEvent<HTMLFormElement>} e
      */
@@ -103,8 +104,8 @@ export default function RegistrationPage({navigation})
                 <TouchableOpacity style={styles.button} onPress={doRegister}>
                     <Text style={styles.buttonTitle}>Create account</Text>
                 </TouchableOpacity>
-                <View styles={styles.footerView}>
-                    <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
+                <View style={styles.footerView}>
+                    <Text style={styles.footerText}>Already have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
                 </View>
             </ScrollView>
         </View>
