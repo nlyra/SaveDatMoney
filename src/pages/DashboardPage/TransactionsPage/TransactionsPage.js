@@ -102,9 +102,10 @@ export default function TransactionsPage({navigation})
             <DataTable>
                 <DataTable.Header>
                 <DataTable.Title >Transactions</DataTable.Title>
+                <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
                 <DataTable.Title numeric>Description</DataTable.Title>
                 <DataTable.Title numeric>Cost</DataTable.Title>
-                <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
+                
                 </DataTable.Header>
                     <FlatList 
                         data={userData}
