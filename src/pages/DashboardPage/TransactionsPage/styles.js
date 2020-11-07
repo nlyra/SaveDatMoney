@@ -4,7 +4,7 @@ import { colors, padding, fonts, styles } from '../../stdStyles';
 export default StyleSheet.create({
     mainContainer: {
         flex: 1,
-        alignItems: 'center'
+
     },
     topContainer: {
         flex: 1,
@@ -12,14 +12,21 @@ export default StyleSheet.create({
         justifyContent: 'center',  
         marginTop: 18 
     },
-    bodyContainer: {
+    calendar: {
+        flex: 1,
+        alignItems: 'center',  
+        justifyContent: '',
+        flexDirection: 'row',  
+        marginTop: 18 
+    },
+    list: {
         flex: 2,
-        width: '100%',
-        alignItems: "flex-start",
-        justifyContent: "space-evenly",
-        flexDirection: 'row',
-        marginLeft: '2%',
-        marginBottom: '2%'
+        flexDirection: 'row', 
+    },
+    bodyContainer: {
+        flex: 1,
+        //width: '100%',
+        alignItems: 'stretch',
     },
     bottomContainer: {
         flex: 3,
@@ -136,6 +143,20 @@ export default StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 15,
         textAlign: "center"
-      },
+    },
+    tableContainer: { 
+        flex: 1, 
+        padding: 16, 
+        paddingTop: 30, 
+        backgroundColor: '#fff' 
+    },
+    head: 
+    { 
+        height: 40, 
+        backgroundColor: '#f1f8ff' 
+    },
+    text: { 
+        margin: 6 
+    }
 });
 

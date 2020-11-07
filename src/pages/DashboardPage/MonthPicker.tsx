@@ -25,9 +25,9 @@ const MonthPicker: React.FC<MonthPickerProps> = ({date, onChange}) => {
     };
 
     return (
-        <View style={styles.topContainer}>
+        <View style={styles.calendar}>
                 <IconButton icon = "arrow-left" onPress = {handlePrev}/>
-                <Text style={styles.date}>{currentDate}</Text>
+                <Text>{format(date, 'MMMM, yyyy')}</Text>
                 <IconButton icon = "arrow-right" onPress = {handleNext}/>
         </View>
     )

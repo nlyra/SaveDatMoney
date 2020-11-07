@@ -7,6 +7,8 @@ import { colors, padding, fonts, buttons } from '../../stdStyles';
 import {format, subMonths, addMonths} from 'date-fns'; 
 import MonthPicker from '../MonthPicker'
 import Modal from 'modal-enhanced-react-native-web';
+import { List, Divider, DataTable } from 'react-native-paper';
+import { render } from 'react-native-web';
 
 export default function TransactionsPage({navigation})
 {
@@ -19,18 +21,11 @@ export default function TransactionsPage({navigation})
 
     var user = firebase.auth().currentUser;
     var uid;
+    var userData = [];
 
     if (user != null) {
     uid = user.uid;  
-    }
-
-    // Find all dinosaurs whose height is exactly 25 meters.
-    var ref = firebase.database().ref("transaction");
-    ref.orderByChild("date").equalTo("October 2020").on("child_added", function(snapshot) {
-        console.log(snapshot.key);
-        console.log("this is it: " + snapshot.key)
-        snapshot.val().cost;
-    }); 
+    } 
 
     /**
      *
@@ -38,25 +33,28 @@ export default function TransactionsPage({navigation})
      */
 
     const addTransaction = (e) => {
-        var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: "October 2020"};
+        var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: format(date, 'MMMM, yyyy')};
         firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");
 
         setModalVisible(!modalVisible);
     }
 
+    var ref = firebase.database().ref("transaction");
+    ref.orderByChild("date").equalTo(format(date, 'MMMM, yyyy')).on("child_added", function(snapshot) {
+        userData.push(snapshot.val());
+        console.log(userData);
+    });
+
+
     return ( 
 
-        <View style={styles.mainContainer} >
-            {/*  
-            <FlatList ListHeaderComponent={
-                <MonthPicker date={date} onChange={(newDate) => setDate(newDate)} />
-            }
-            />
-            */}
+        <View style={styles.mainContainer}> 
 
-        {/* Modal */}
         <View style={styles.topContainer}>
+        <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> 
+
+            {/* Modal */}
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
             Alert.alert("Modal has been closed.");}}>
                 <View style={styles.centeredView}>
@@ -101,13 +99,38 @@ export default function TransactionsPage({navigation})
   
         <View style={styles.bodyContainer}>
 
-            <View style={styles.transactions}>
-                <Text style={styles.transactionText}>Transactions</Text>
+            <DataTable>
+                <DataTable.Header>
+                <DataTable.Title >Transactions</DataTable.Title>
                 <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-            </View>
+                <DataTable.Title numeric>Description</DataTable.Title>
+                <DataTable.Title numeric>Cost</DataTable.Title>
+                </DataTable.Header>
 
-            <Text style={[{marginRight: '5%'}]} >Category</Text>
-            <Text style={[{marginRight: '5%'}]} >Cost</Text>
+                <DataTable.Row>
+                    <DataTable.Cell>
+                        <FlatList 
+                            data={userData}
+                            keyExtractor = {(col) => col.id}
+                            renderItem={({item})=> (
+                                <React.Fragment> 
+                                    <List.Item
+                                        title = {item.category} 
+                                        right = {() => (
+                                            <View>
+                                                <Text>{item.description}</Text>
+                                                <Text>{item.cost}</Text>
+                                            </View>
+                                        )}
+                                    />
+                                <Divider />
+                                </React.Fragment>
+                            )}
+                        />
+                    </DataTable.Cell>
+                </DataTable.Row>
+            </DataTable>
+
         </View>
 
         <View style={styles.bottomContainer}>
