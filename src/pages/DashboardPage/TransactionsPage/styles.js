@@ -8,8 +8,9 @@ export default StyleSheet.create({
     },
     topContainer: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: "flex-start"
+        alignItems: 'center',  
+        justifyContent: 'center',  
+        marginTop: 18 
     },
     bodyContainer: {
         flex: 2,
@@ -33,7 +34,7 @@ export default StyleSheet.create({
         marginVertical: 8,
         borderBottomColor: '#737373',
         borderBottomWidth: StyleSheet.hairlineWidth,
-      },
+    },
     title: {
         alignItems: 'center'
     },
@@ -71,7 +72,7 @@ export default StyleSheet.create({
         height: 48,
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: '#f2f2f2',
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 30,
@@ -97,19 +98,18 @@ export default StyleSheet.create({
         color: "#2ea44f",
         fontWeight: "bold",
         fontSize: 16
-    },
-    centeredView: {
+    },  container: {
+        padding: 25,
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
+        alignItems: 'center',
+        justifyContent: 'center',
       },
       modalView: {
-        margin: 20,
+        margin: 30,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
-        alignItems: "center",
+        alignItems: 'stretch',
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -121,17 +121,21 @@ export default StyleSheet.create({
       },
       openButton: {
         backgroundColor: "#F194FF",
-        borderRadius: 20,
+        borderRadius: 25,
         padding: 10,
         elevation: 2
       },
       textStyle: {
         color: "white",
+        fontSize: 16,
         fontWeight: "bold",
         textAlign: "center"
       },
       modalText: {
+        fontSize: 16,
+        fontWeight: "bold",
         marginBottom: 15,
         textAlign: "center"
-      }
-})
+      },
+});
+

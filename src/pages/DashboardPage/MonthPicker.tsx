@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View, Button, Alert } from 'react-native';
+import { Image, Text, TouchableOpacity, View, Button, Alert } from 'react-native';
 import styles from './TransactionsPage/styles';
 import {IconButton} from 'react-native-paper';
 import {format, subMonths, addMonths} from 'date-fns'; 
