@@ -102,35 +102,23 @@ export default function TransactionsPage({navigation})
             <DataTable>
                 <DataTable.Header>
                 <DataTable.Title >Transactions</DataTable.Title>
-                <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
                 <DataTable.Title numeric>Description</DataTable.Title>
                 <DataTable.Title numeric>Cost</DataTable.Title>
+                <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
                 </DataTable.Header>
-
-                <DataTable.Row>
-                    <DataTable.Cell>
-                        <FlatList 
-                            data={userData}
-                            keyExtractor = {(col) => col.id}
-                            renderItem={({item})=> (
-                                <React.Fragment> 
-                                    <List.Item
-                                        title = {item.category} 
-                                        right = {() => (
-                                            <View>
-                                                <Text>{item.description}</Text>
-                                                <Text>{item.cost}</Text>
-                                            </View>
-                                        )}
-                                    />
+                    <FlatList 
+                        data={userData}
+                        keyExtractor = {(col) => col.id}
+                        renderItem={({item})=> (
+                            <DataTable.Row>
+                                <DataTable.Cell>{item.category}</DataTable.Cell>
+                                <DataTable.Cell>{item.description}</DataTable.Cell>
+                                <DataTable.Cell>{item.cost}</DataTable.Cell>
                                 <Divider />
-                                </React.Fragment>
-                            )}
-                        />
-                    </DataTable.Cell>
-                </DataTable.Row>
+                            </DataTable.Row>
+                        )}
+                    />
             </DataTable>
-
         </View>
 
         <View style={styles.bottomContainer}>
