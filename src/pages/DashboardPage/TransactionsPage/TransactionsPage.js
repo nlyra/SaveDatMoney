@@ -101,10 +101,10 @@ export default function TransactionsPage({navigation})
 
             <DataTable>
                 <DataTable.Header>
-                <DataTable.Title >Transactions</DataTable.Title>
                 <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-                <DataTable.Title numeric>Description</DataTable.Title>
-                <DataTable.Title numeric>Cost</DataTable.Title>
+                <DataTable.Title transaction>Transactions</DataTable.Title>
+                <DataTable.Title description>Description</DataTable.Title>
+                <DataTable.Title cost>Cost</DataTable.Title>
                 
                 </DataTable.Header>
                     <FlatList 
@@ -112,9 +112,9 @@ export default function TransactionsPage({navigation})
                         keyExtractor = {(col) => col.id}
                         renderItem={({item})=> (
                             <DataTable.Row>
-                                <DataTable.Cell>{item.category}</DataTable.Cell>
-                                <DataTable.Cell>{item.description}</DataTable.Cell>
-                                <DataTable.Cell>{item.cost}</DataTable.Cell>
+                                <DataTable.Cell transaction>{item.category}</DataTable.Cell>
+                                <DataTable.Cell description >{item.description}</DataTable.Cell>
+                                <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
                                 <Divider />
                             </DataTable.Row>
                         )}

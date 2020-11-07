@@ -26,7 +26,7 @@ export default StyleSheet.create({
     bodyContainer: {
         flex: 1,
         //width: '100%',
-        alignItems: 'stretch',
+        alignItems: 'center'
     },
     bottomContainer: {
         flex: 3,
