@@ -105,13 +105,14 @@ export default StyleSheet.create({
         color: "#2ea44f",
         fontWeight: "bold",
         fontSize: 16
-    },  container: {
+    },
+    container: {
         padding: 25,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      modalView: {
+    },
+    modalView: {
         margin: 30,
         backgroundColor: "white",
         borderRadius: 20,
@@ -126,24 +127,33 @@ export default StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5
-      },
-      openButton: {
+    },
+    openButton: {
         backgroundColor: "#F194FF",
         borderRadius: 25,
         padding: 10,
         elevation: 2
-      },
-      textStyle: {
+    },
+    textStyle: {
         color: "white",
         fontSize: 16,
         fontWeight: "bold",
         textAlign: "center"
-      },
-      modalText: {
+    },
+    modalText: {
         fontSize: 16,
         fontWeight: "bold",
         marginBottom: 15,
         textAlign: "center"
+    },
+    modalButtons: {
+        width: '100%',
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginLeft: '10%',
+        marginBottom: '2%',
+        marginTop: '5%',
     },
     tableContainer: { 
         flex: 1, 
