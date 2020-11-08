@@ -39,6 +39,10 @@ export default function TransactionsPage({navigation})
         setModalVisible(!modalVisible);
     }
 
+    const closeModal = (e) => {
+        setModalVisible(!modalVisible);
+    }
+
     var ref = firebase.database().ref("transaction");
     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
         userData.push(snapshot.val());
@@ -93,6 +97,9 @@ export default function TransactionsPage({navigation})
                         <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
                             <Text style={styles.buttonTitle}>Save</Text>
                         </TouchableHighlight>
+                        <TouchableHighlight style={buttons.standard}>
+                            <Text style={styles.buttonTitle} onPress={closeModal}>Cancel</Text>
+                        </TouchableHighlight>
                     </View>
                 </View>
             </Modal>
@@ -131,6 +138,9 @@ export default function TransactionsPage({navigation})
                             />
                             <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
                                 <Text style={styles.buttonTitle}>Save</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight style={buttons.standard}>
+                                <Text style={styles.buttonTitle} onPress={closeModal}>Cancel</Text>
                             </TouchableHighlight>
                         </View>
                     </View>

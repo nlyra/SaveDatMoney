@@ -117,6 +117,7 @@ export default StyleSheet.create({
         borderRadius: 20,
         padding: 35,
         alignItems: 'stretch',
+        justifyContent: 'center',
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
