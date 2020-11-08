@@ -1,0 +1,49 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "predeploy": "expo build:web",
+    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
+  },
+  "dependencies": {
+    "@mdi/font": "^5.8.55",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/material-bottom-tabs": "^5.3.0",
+    "@react-navigation/native": "^5.8.0",
+    "@react-navigation/stack": "^5.10.0",
+    "@types/react-router": "^5.1.8",
+    "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "expo": "^39.0.4",
+    "expo-status-bar": "~1.0.2",
+    "firebase": "^7.24.0",
+    "modal-enhanced-react-native-web": "^0.2.0",
+    "moment": "^2.29.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
+    "react-native-gesture-handler": "~1.7.0",
+    "react-native-modal": "^11.5.6",
+    "react-native-month-year-picker": "^1.5.0",
+    "react-native-navbar": "^2.1.0",
+    "react-native-paper": "^4.3.1",
+    "react-native-reanimated": "~1.13.0",
+    "react-native-safe-area-context": "3.1.4",
+    "react-native-screens": "~2.10.1",
+    "react-native-table-component": "^1.2.1",
+    "react-native-vector-icons": "^7.1.0",
+    "react-native-web": "^0.13.18",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.0",
+    "@types/react": "^16.9.55",
+    "@types/react-native": "^0.63.32"
+  },
+  "private": true,
+  "name": "SaveDatMoney"
+}
