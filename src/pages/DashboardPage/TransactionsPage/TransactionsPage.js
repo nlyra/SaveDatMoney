@@ -18,6 +18,7 @@ export default function TransactionsPage({navigation})
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [modal2Visible, setModal2Visible] = useState(false);
 
     var user = firebase.auth().currentUser;
     var uid;
@@ -46,12 +47,18 @@ export default function TransactionsPage({navigation})
     }
 
     const editTransaction = key => {
+        setModal2Visible(!modal2Visible);
         console.log("this is the key " + key)
     }
 
-    const closeModal = (e) => {
+    const closeModal = () => {
         setModalVisible(!modalVisible);
     }
+
+    const closeModal2 = () => {
+        setModal2Visible(!modal2Visible);
+    }
+
 
     /* Get data from the database */
     var ref = firebase.database().ref("transaction");
@@ -71,9 +78,53 @@ export default function TransactionsPage({navigation})
             <View style={styles.topContainer}>
             <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> 
 
-                {/* If user  */}
-                {Platform.OS === 'ios' ?
-                <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
+            {/* If user  */}
+            {Platform.OS === 'ios' ?
+            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
+            Alert.alert("Modal has been closed.");}}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Add</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Category'
+                            placeholderTextColor="black"
+                            onChangeText={(text) => setCategory(text)}
+                            value={category}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor="black"
+                            placeholder='Description'
+                            onChangeText={(text) => setDescription(text)}
+                            value={description}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor="black"
+                            placeholder='Cost'
+                            onChangeText={(text) => setCost(text)}
+                            value={cost}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                        <View style={styles.modalButtons}>
+                            <TouchableHighlight style={buttons.standard} onPress={closeModal}>
+                                <Text style={styles.buttonTitle}>Cancel</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                <Text style={styles.buttonTitle}>Save</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            :
+            <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                 Alert.alert("Modal has been closed.");}}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
@@ -115,53 +166,101 @@ export default function TransactionsPage({navigation})
                             </View>
                         </View>
                     </View>
-                </Modal>
-                :
-                <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");}}>
-                        <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Expense</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder='Category'
-                                    placeholderTextColor="black"
-                                    onChangeText={(text) => setCategory(text)}
-                                    value={category}
-                                    underlineColorAndroid="transparent"
-                                    autoCapitalize="none"
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
-                                    placeholder='Description'
-                                    onChangeText={(text) => setDescription(text)}
-                                    value={description}
-                                    underlineColorAndroid="transparent"
-                                    autoCapitalize="none"
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
-                                    placeholder='Cost'
-                                    onChangeText={(text) => setCost(text)}
-                                    value={cost}
-                                    underlineColorAndroid="transparent"
-                                    autoCapitalize="none"
-                                />
-                                <View style={styles.modalButtons}>
-                                    <TouchableHighlight style={buttons.standard} onPress={closeModal}>
-                                        <Text style={styles.buttonTitle}>Cancel</Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
-                                        <Text style={styles.buttonTitle}>Save</Text>
-                                    </TouchableHighlight>
-                                </View>
+                </WebModal>
+
+            }
+
+            {/* If user  */}
+            {Platform.OS === 'ios' ?
+            <Modal animationType="slide" transparent={true} visible={modal2Visible} onRequestClose={() => {
+            Alert.alert("Modal has been closed.");}}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Edit</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Category'
+                            placeholderTextColor="black"
+                            onChangeText={(text) => setCategory(text)}
+                            value={category}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor="black"
+                            placeholder='Description'
+                            onChangeText={(text) => setDescription(text)}
+                            value={description}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor="black"
+                            placeholder='Cost'
+                            onChangeText={(text) => setCost(text)}
+                            value={cost}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                        <View style={styles.modalButtons}>
+                            <TouchableHighlight style={buttons.standard} onPress={closeModal2}>
+                                <Text style={styles.buttonTitle}>Cancel</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                <Text style={styles.buttonTitle}>Save</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            :
+            <WebModal animationType="slide" transparent={true} visible={modal2Visible} onRequestClose={() => {
+                Alert.alert("Modal has been closed.");}}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Edit</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Category'
+                                placeholderTextColor="black"
+                                onChangeText={(text) => setCategory(text)}
+                                value={category}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholderTextColor="black"
+                                placeholder='Description'
+                                onChangeText={(text) => setDescription(text)}
+                                value={description}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholderTextColor="black"
+                                placeholder='Cost'
+                                onChangeText={(text) => setCost(text)}
+                                value={cost}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <View style={styles.modalButtons}>
+                                <TouchableHighlight style={buttons.standard} onPress={closeModal2}>
+                                    <Text style={styles.buttonTitle}>Cancel</Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                    <Text style={styles.buttonTitle}>Save</Text>
+                                </TouchableHighlight>
                             </View>
                         </View>
-                    </WebModal>
-                }
-    
+                    </View>
+                </WebModal>
+
+            }
             </View>
   
             <View style={styles.bodyContainer}>
@@ -173,7 +272,7 @@ export default function TransactionsPage({navigation})
                     <DataTable.Title description>Description</DataTable.Title>
                     <DataTable.Title cost>Cost</DataTable.Title>
                     <DataTable.Title delete>Delete</DataTable.Title>
-                    <DataTable.Title delete>Edit</DataTable.Title>
+                    <DataTable.Title edit>Edit</DataTable.Title>
 
                     </DataTable.Header>
                         <FlatList 
@@ -187,7 +286,7 @@ export default function TransactionsPage({navigation})
                                     <DataTable.Cell delete>
                                         <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
                                     </DataTable.Cell>
-                                    <DataTable.Cell delete>
+                                    <DataTable.Cell edit>
                                         <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editTransaction(item.key)}/>
                                     </DataTable.Cell>
                                     <Divider />
