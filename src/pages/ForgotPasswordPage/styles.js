@@ -3,7 +3,20 @@ import { Platform, StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        alignSelf: "center",
+        width: '100%',
+        ...Platform.select({
+            ios: {
+                width: '100%'
+            },
+            android: {
+                width: '100%'
+            },
+            default: {
+              // other platforms, web for example
+              width: '25%'
+            }
+          }),
     },
     title: {
         alignItems: 'center'
@@ -54,5 +67,6 @@ export default StyleSheet.create({
         color: "#2ea44f",
         fontWeight: "bold",
         fontSize: 16
-    }
+    },
+
 })
