@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
+import { colors, padding, fonts, buttons } from '../stdStyles';
 
 import { firebase } from '../../firebase/config'
 
