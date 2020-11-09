@@ -183,7 +183,7 @@ export default function BudgetPage({navigation})
                             keyExtractor = {(col) => col.id}
                             renderItem={({item})=> (
                                 <DataTable.Row>
-                                    <DataTable.Cell category>{item.name}</DataTable.Cell>
+                                    <DataTable.Cell category>{item.category}</DataTable.Cell>
                                     <DataTable.Cell description >{item.description}</DataTable.Cell>
                                     <DataTable.Cell budget >{'$' + item.budget}</DataTable.Cell>
                                     <DataTable.Cell delete>
