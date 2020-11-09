@@ -13,6 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
+
 const Tab = createMaterialBottomTabNavigator();
 
 export default function DashboardPage({navigation})
@@ -50,7 +51,8 @@ export default function DashboardPage({navigation})
             }}
             listeners={{
               tabPress: e => {
-                navigation.setOptions({ title: 'Transactions' })
+                navigation.setOptions({ title: 'Transactions' } )
+
               },
             }}
           />
