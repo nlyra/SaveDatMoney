@@ -2,6 +2,8 @@ import { Platform, StyleSheet, Dimensions } from 'react-native';
 
 export const colors = {
     primary: '#2ea44f',
+    danger: '#F85757',
+    warning: '#ffe700'
 }
 
 export const fonts = {

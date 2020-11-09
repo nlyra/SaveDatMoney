@@ -3,11 +3,12 @@ import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlig
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
-import { buttons } from '../../stdStyles';
+import { buttons, colors } from '../../stdStyles';
 import {format} from 'date-fns'; 
 import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
 import { Divider, DataTable} from 'react-native-paper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function TransactionsPage({navigation})
 {
@@ -39,6 +40,15 @@ export default function TransactionsPage({navigation})
         setModalVisible(!modalVisible);
     }
 
+    const deleteTransaction = key => {
+        console.log("this is the key " + key)
+        firebase.database().ref("/transaction/"+key).remove();
+    }
+
+    const editTransaction = key => {
+        console.log("this is the key " + key)
+    }
+
     const closeModal = (e) => {
         setModalVisible(!modalVisible);
     }
@@ -46,7 +56,12 @@ export default function TransactionsPage({navigation})
     /* Get data from the database */
     var ref = firebase.database().ref("transaction");
     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-        userData.push(snapshot.val());
+        userData.push({
+            ...snapshot.val(),
+            key: snapshot.key,
+          });
+        console.log("here is the key" + userData[0].key);
+        console.log(userData);
     });
 
     return ( 
@@ -91,11 +106,11 @@ export default function TransactionsPage({navigation})
                                 autoCapitalize="none"
                             />
                             <View style={styles.modalButtons}>
-                                <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
-                                    <Text style={styles.buttonTitle}>Save</Text>
-                                </TouchableHighlight>
                                 <TouchableHighlight style={buttons.standard} onPress={closeModal}>
                                     <Text style={styles.buttonTitle}>Cancel</Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                    <Text style={styles.buttonTitle}>Save</Text>
                                 </TouchableHighlight>
                             </View>
                         </View>
@@ -135,11 +150,11 @@ export default function TransactionsPage({navigation})
                                     autoCapitalize="none"
                                 />
                                 <View style={styles.modalButtons}>
-                                    <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
-                                        <Text style={styles.buttonTitle}>Save</Text>
-                                    </TouchableHighlight>
                                     <TouchableHighlight style={buttons.standard} onPress={closeModal}>
                                         <Text style={styles.buttonTitle}>Cancel</Text>
+                                    </TouchableHighlight>
+                                    <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                        <Text style={styles.buttonTitle}>Save</Text>
                                     </TouchableHighlight>
                                 </View>
                             </View>
@@ -157,7 +172,9 @@ export default function TransactionsPage({navigation})
                     <DataTable.Title transaction>Transactions</DataTable.Title>
                     <DataTable.Title description>Description</DataTable.Title>
                     <DataTable.Title cost>Cost</DataTable.Title>
-                    
+                    <DataTable.Title delete>Delete</DataTable.Title>
+                    <DataTable.Title delete>Edit</DataTable.Title>
+
                     </DataTable.Header>
                         <FlatList 
                             data={userData}
@@ -167,6 +184,12 @@ export default function TransactionsPage({navigation})
                                     <DataTable.Cell transaction>{item.category}</DataTable.Cell>
                                     <DataTable.Cell description >{item.description}</DataTable.Cell>
                                     <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
+                                    <DataTable.Cell delete>
+                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                    </DataTable.Cell>
+                                    <DataTable.Cell delete>
+                                        <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editTransaction(item.key)}/>
+                                    </DataTable.Cell>
                                     <Divider />
                                 </DataTable.Row>
                             )}
