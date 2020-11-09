@@ -187,10 +187,10 @@ export default function BudgetPage({navigation})
                                     <DataTable.Cell description >{item.description}</DataTable.Cell>
                                     <DataTable.Cell budget >{'$' + item.budget}</DataTable.Cell>
                                     <DataTable.Cell delete>
-                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteCategory(item.key)}/>
                                     </DataTable.Cell>
                                     <DataTable.Cell delete>
-                                        <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editTransaction(item.key)}/>
+                                        <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editCategory(item.key)}/>
                                     </DataTable.Cell>
                                     <Divider />
                                 </DataTable.Row>
