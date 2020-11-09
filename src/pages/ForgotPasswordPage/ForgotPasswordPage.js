@@ -6,15 +6,7 @@ import styles from './styles';
 
 export default function RegistrationPage({navigation})
 {   
-    const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [message, setMessage] = useState('');
-
-    const onFooterLinkPress = () => {
-        navigation.navigate('Login')
-    }
 
     /**
      * @param {React.FormEvent<HTMLFormElement>} e
@@ -23,12 +15,11 @@ export default function RegistrationPage({navigation})
     {
         e.preventDefault(); // to prevent webpage from realoading on submit each time login is pressed.
 
- 
     }
 
     return(
         <View style={styles.container}>
-            <ScrollView style={{flex: 1, width: '100%'}} keyboardShouldPersistTaps="always">
+            <ScrollView style={{flex: 1, width: '50%'}} keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
                     source={require('../../../assets/savedatmoneylogo.png')}
@@ -42,7 +33,6 @@ export default function RegistrationPage({navigation})
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                {message ? <Text style={{ color: 'red' }}>{message}</Text> : null}
                 <TouchableOpacity style={styles.button} onPress={doForgotPassword}>
                     <Text style={styles.buttonTitle}>Send Email</Text>
                 </TouchableOpacity>
