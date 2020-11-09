@@ -19,7 +19,7 @@ export default function RegistrationPage({navigation})
 
     return(
         <View style={styles.container}>
-            <ScrollView style={{flex: 1, width: '100%'}} keyboardShouldPersistTaps="always">
+            <ScrollView style={{flex: 1, width: '100%' }} keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
                     source={require('../../../assets/savedatmoneylogo.png')}
