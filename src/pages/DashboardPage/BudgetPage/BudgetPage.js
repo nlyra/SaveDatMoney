@@ -5,6 +5,7 @@ import { firebase } from '../../../firebase/config';
 import styles from '../styles';
 
 
+
 export default function BudgetPage({navigation})
 {
     return (
