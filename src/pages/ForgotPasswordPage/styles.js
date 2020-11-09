@@ -68,4 +68,5 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16
     },
+
 })
