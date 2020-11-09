@@ -1,14 +1,13 @@
 import React, { useState, Component } from 'react';
-import { Image, Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput} from 'react-native';
+import { Image, Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { colors, padding, fonts, buttons } from '../../stdStyles';
 import {format, subMonths, addMonths} from 'date-fns'; 
 import MonthPicker from '../MonthPicker'
-import Modal from 'modal-enhanced-react-native-web';
-import { List, Divider, DataTable } from 'react-native-paper';
-import { render } from 'react-native-web';
+import WebModal from 'modal-enhanced-react-native-web';
+import { List, Divider, DataTable, Provider as PaperProvider} from 'react-native-paper';
 
 export default function TransactionsPage({navigation})
 {
@@ -33,7 +32,7 @@ export default function TransactionsPage({navigation})
      */
 
     const addTransaction = (e) => {
-        var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: format(date, 'MMMM, yyyy')};
+        var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
         firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");
 
@@ -41,10 +40,14 @@ export default function TransactionsPage({navigation})
     }
 
     var ref = firebase.database().ref("transaction");
-    ref.orderByChild("date").equalTo(format(date, 'MMMM, yyyy')).on("child_added", function(snapshot) {
+    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
         userData.push(snapshot.val());
         console.log(userData);
     });
+    // ref.orderByChild("date").equalTo(format(date, 'MMMM, yyyy')).on("child_added", function(snapshot) {
+    //     userData.push(snapshot.val());
+    //     console.log(userData);
+    // });
 
 
     return ( 
@@ -54,7 +57,7 @@ export default function TransactionsPage({navigation})
         <View style={styles.topContainer}>
         <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> 
 
-            {/* Modal */}
+            {Platform.OS === 'ios' ?
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
             Alert.alert("Modal has been closed.");}}>
                 <View style={styles.centeredView}>
@@ -93,8 +96,47 @@ export default function TransactionsPage({navigation})
                     </View>
                 </View>
             </Modal>
-            {/* Modal End */}
-
+            :
+            <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
+                Alert.alert("Modal has been closed.");}}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Expense</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Category'
+                                placeholderTextColor="black"
+                                onChangeText={(text) => setCategory(text)}
+                                value={category}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholderTextColor="black"
+                                placeholder='Description'
+                                onChangeText={(text) => setDescription(text)}
+                                value={description}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholderTextColor="black"
+                                placeholder='Cost'
+                                onChangeText={(text) => setCost(text)}
+                                value={cost}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                <Text style={styles.buttonTitle}>Save</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </WebModal>
+            }
+  
         </View>
   
         <View style={styles.bodyContainer}>
