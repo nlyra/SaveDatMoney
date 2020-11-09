@@ -5,6 +5,7 @@ import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
 import {format} from 'date-fns'; 
+import {format} from 'date-fns';
 import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
 import { Divider, DataTable} from 'react-native-paper';
@@ -28,6 +29,8 @@ export default function BudgetPage({navigation})
     if (user != null) {
     uid = user.uid;  
     } 
+    uid = user.uid;
+    }
 
     /**
      *
@@ -69,9 +72,13 @@ export default function BudgetPage({navigation})
     return ( 
         
         <View style={styles.mainContainer}> 
+    return (
+
+        <View style={styles.mainContainer}>
 
             <View style={styles.topContainer}>
             <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> 
+            <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
 
                 {/* If user  */}
                 {Platform.OS === 'ios' ?
@@ -164,8 +171,10 @@ export default function BudgetPage({navigation})
                     </WebModal>
                 }
     
+
             </View>
   
+
             <View style={styles.bodyContainer}>
 
                 <DataTable>
@@ -179,11 +188,13 @@ export default function BudgetPage({navigation})
 
                     </DataTable.Header>
                         <FlatList 
+                        <FlatList
                             data={userData}
                             keyExtractor = {(col) => col.id}
                             renderItem={({item})=> (
                                 <DataTable.Row>
                                     <DataTable.Cell category>{item.name}</DataTable.Cell>
+                                    <DataTable.Cell category>{item.category}</DataTable.Cell>
                                     <DataTable.Cell description >{item.description}</DataTable.Cell>
                                     <DataTable.Cell budget >{'$' + item.budget}</DataTable.Cell>
                                     <DataTable.Cell delete>
