@@ -11,8 +11,13 @@ const firebaseConfig = {
     storageBucket: "savedatmoney-6020a.appspot.com",
     messagingSenderId: "708570009116",
     appId: "1:708570009116:web:db8b4f0adb8a88095fd9d9",
-    measurementId: "G-E03V4J17J6"
+    measurementId: "G-E03V4J17J6",
+
   };
+  passwordReset: email => {
+    return firebase.auth().sendPasswordResetEmail(email)
+  },
+
 
   firebase.initializeApp(firebaseConfig);
 

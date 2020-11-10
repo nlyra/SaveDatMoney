@@ -3,6 +3,9 @@
 __generated__
 web-build
 
+# Debug log
+debug.log
+
 # macOS
 .DS_Store
 
