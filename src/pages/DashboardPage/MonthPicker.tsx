@@ -4,6 +4,7 @@ import styles from './TransactionsPage/styles';
 import {IconButton} from 'react-native-paper';
 import {format, subMonths, addMonths} from 'date-fns'; 
 
+
 type MonthPickerProps = {
     date: Date
     onChange: (newDate: Date) => void
