@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
+import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
@@ -9,6 +9,7 @@ import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
 import { Divider, DataTable} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Swipeable from 'react-native-gesture-handler/Swipeable'
 
 export default function TransactionsPage({navigation})
 {
@@ -23,6 +24,7 @@ export default function TransactionsPage({navigation})
     var user = firebase.auth().currentUser;
     var uid;
     var userData = [];
+    var itemKey;
 
     if (user != null) {
     uid = user.uid;  
@@ -70,6 +72,40 @@ export default function TransactionsPage({navigation})
         console.log("here is the key" + userData[0].key);
         console.log(userData);
     });
+
+    const RightActions = (progress,dragX) => {
+        const scale = dragX.interpolate({
+            inputRange: [-100, 0],
+            outputRange: [0.7,0]
+        })
+        return (
+            <>
+            <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
+            <Animated.Text
+                style={{
+                color: 'white',
+                paddingHorizontal: 10,
+                fontWeight: '600',
+                transform: [{ scale }]
+                }}onPress={() => deleteTransaction(itemKey.key)}>
+                Delete
+            </Animated.Text>
+            </View>
+            <View style={{ backgroundColor: 'green', justifyContent: 'center' }}>
+            <Animated.Text
+                style={{
+                color: 'white',
+                paddingHorizontal: 10,
+                fontWeight: '600',
+                transform: [{ scale }]
+                }} onPress={() => editTransaction(itemKey.key)}>
+                Edit
+            </Animated.Text>
+            </View>
+        </>
+          
+        )
+       }
 
     return ( 
         
@@ -275,6 +311,8 @@ export default function TransactionsPage({navigation})
                     <DataTable.Title edit>Edit</DataTable.Title>
 
                     </DataTable.Header>
+                        {Platform.OS === 'web' ?
+                        /* Web Version */
                         <FlatList 
                             data={userData}
                             keyExtractor = {(col) => col.id}
@@ -283,16 +321,36 @@ export default function TransactionsPage({navigation})
                                     <DataTable.Cell transaction>{item.category}</DataTable.Cell>
                                     <DataTable.Cell description >{item.description}</DataTable.Cell>
                                     <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
-                                    <DataTable.Cell delete>
-                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
-                                    </DataTable.Cell>
-                                    <DataTable.Cell edit>
-                                        <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editTransaction(item.key)}/>
-                                    </DataTable.Cell>
+                                        <DataTable.Cell delete>
+                                            <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                        </DataTable.Cell>
+                                        <DataTable.Cell edit>
+                                            <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editTransaction(item.key)}/>
+                                        </DataTable.Cell>
                                     <Divider />
                                 </DataTable.Row>
                             )}
                         />
+                        :
+                        /* Mobile Version */
+                        <FlatList 
+                            data={userData}
+                            keyExtractor = {(col) => col.id}
+                            renderItem={({item})=> (
+                                    itemKey = {item},
+                                    <Swipeable  renderRightActions={RightActions}>
+                                    <View style={{ paddingVertical: 1 }}>
+                                        <DataTable.Row>
+                                            <DataTable.Cell transaction>{item.category}</DataTable.Cell>
+                                            <DataTable.Cell description >{item.description}</DataTable.Cell>
+                                            <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
+                                            <Divider />
+                                        </DataTable.Row>
+                                    </View>
+                                </Swipeable>   
+                            )}
+                        />
+                        }
                 </DataTable>
             </View>
 
