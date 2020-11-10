@@ -36,7 +36,6 @@
     "react-native-screens": "~2.10.1",
     "react-native-table-component": "^1.2.1",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-settings-screen": "^2.2.1",
     "react-native-web": "~0.13.12",
     "react-router-dom": "^5.2.0",
     "yup": "^0.29.3"
