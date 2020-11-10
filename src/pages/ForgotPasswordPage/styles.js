@@ -68,5 +68,38 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16
     },
-
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+      },
+    modalButtons: {
+    display: 'flex',
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2AC062',
+    shadowColor: '#2AC062',
+    shadowOpacity: 0.5,
+    shadowOffset: { 
+      height: 10, 
+      width: 0 
+    },
+    shadowRadius: 25,
+  },
+  modalButtonTitle: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: "bold"
+}
 })
