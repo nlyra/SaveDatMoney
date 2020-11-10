@@ -208,7 +208,7 @@ export default function TransactionsPage({navigation})
                             <TouchableHighlight style={buttons.standard} onPress={closeModal2}>
                                 <Text style={styles.buttonTitle}>Cancel</Text>
                             </TouchableHighlight>
-                            <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                            <TouchableHighlight style={buttons.standard} onPress={editTransaction}>
                                 <Text style={styles.buttonTitle}>Save</Text>
                             </TouchableHighlight>
                         </View>
@@ -252,7 +252,7 @@ export default function TransactionsPage({navigation})
                                 <TouchableHighlight style={buttons.standard} onPress={closeModal2}>
                                     <Text style={styles.buttonTitle}>Cancel</Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                <TouchableHighlight style={buttons.standard} onPress={editTransaction}>
                                     <Text style={styles.buttonTitle}>Save</Text>
                                 </TouchableHighlight>
                             </View>
