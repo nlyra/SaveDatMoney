@@ -73,11 +73,13 @@ export default function TransactionsPage({navigation})
         console.log(userData);
     });
 
-    const RightActions = (progress,dragX) => {
+    const RightActions = (progress, dragX, item) => {
+
         const scale = dragX.interpolate({
             inputRange: [-100, 0],
             outputRange: [0.7,0]
         })
+
         return (
             <>
             <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
@@ -87,7 +89,7 @@ export default function TransactionsPage({navigation})
                 paddingHorizontal: 10,
                 fontWeight: '600',
                 transform: [{ scale }]
-                }}onPress={() => deleteTransaction(itemKey.key)}>
+                }}onPress={() => deleteTransaction(item.key)}>
                 Delete
             </Animated.Text>
             </View>
@@ -98,14 +100,14 @@ export default function TransactionsPage({navigation})
                 paddingHorizontal: 10,
                 fontWeight: '600',
                 transform: [{ scale }]
-                }} onPress={() => editTransaction(itemKey.key)}>
+                }} onPress={() => editTransaction(item.key)}>
                 Edit
             </Animated.Text>
             </View>
         </>
           
         )
-       }
+    }
 
     return ( 
         
@@ -337,8 +339,7 @@ export default function TransactionsPage({navigation})
                             data={userData}
                             keyExtractor = {(col) => col.id}
                             renderItem={({item})=> (
-                                    itemKey = {item},
-                                    <Swipeable  renderRightActions={RightActions}>
+                                    <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
                                     <View style={{ paddingVertical: 1 }}>
                                         <DataTable.Row>
                                             <DataTable.Cell transaction>{item.category}</DataTable.Cell>
