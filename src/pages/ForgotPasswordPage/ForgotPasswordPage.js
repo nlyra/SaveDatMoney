@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal, Button } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../firebase/config'
 import WebModal from 'modal-enhanced-react-native-web';
 import styles from './styles';
 import { Alert } from 'react-native-web';
-import { buttons, colors } from '../stdStyles';
 
 export default function RegistrationPage({navigation})
 {   
