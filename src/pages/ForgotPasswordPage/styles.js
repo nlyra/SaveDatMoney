@@ -44,6 +44,8 @@ export default StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
         height: 48,
         borderRadius: 5,
         alignItems: "center",
@@ -69,6 +71,7 @@ export default StyleSheet.create({
         fontSize: 16
     },
     modalView: {
+        alignSelf: "center",
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -81,25 +84,28 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 9,
+        ...Platform.select({
+            ios: {
+                width: '100%'
+            },
+            android: {
+                width: '100%'
+            },
+            default: {
+              // other platforms, web for example
+              width: '25%'
+            }
+          })
       },
-    modalButtons: {
-    display: 'flex',
-    borderRadius: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2AC062',
-    shadowColor: '#2AC062',
-    shadowOpacity: 0.5,
-    shadowOffset: { 
-      height: 10, 
-      width: 0 
-    },
-    shadowRadius: 25,
-  },
-  modalButtonTitle: {
+    modalButtonTitle: {
     color: 'white',
     fontSize: 16,
     fontWeight: "bold"
-}
+    },
+    messageText: {
+    fontSize: 16,
+    color: "black",
+    paddingLeft: 20
+    }
 })

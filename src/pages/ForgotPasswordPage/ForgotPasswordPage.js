@@ -57,6 +57,7 @@ export default function RegistrationPage({navigation})
                 <TouchableOpacity style={styles.button} onPress={doForgotPassword}>
                     <Text style={styles.buttonTitle}>Send Email</Text>
                 </TouchableOpacity>
+
                 {message ? <Text style={{ color: 'red' }}>{message}</Text> : null}
 
                 {Platform.IOS === 'ios' ?
@@ -64,7 +65,7 @@ export default function RegistrationPage({navigation})
                     Alert.alert("Modal has been closed.");
                 }}>
                     <View style={styles.modalView}>
-                        <Text>Password recovery link successfully sent to email.</Text>
+                        <Text style={styles.messageText}>Password recovery link successfully sent to email.</Text>
                         <TouchableHighlight style={styles.button} onPress={closeModal}>
                             <Text style={styles.modalButtonTitle}>Ok</Text>
                         </TouchableHighlight>
@@ -75,7 +76,7 @@ export default function RegistrationPage({navigation})
                     Alert.alert("Modal has been closed.");
                 }}> 
                     <View style={styles.modalView}>
-                        <Text>Password recovery link successfully sent to email.</Text>
+                        <Text style={styles.messageText}>Password recovery link successfully sent to email.</Text>
                         <TouchableHighlight style={styles.button} onPress={closeModal}>
                             <Text style={styles.modalButtonTitle}>Ok</Text>
                         </TouchableHighlight>
