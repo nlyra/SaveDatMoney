@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../firebase/config'
+import WebModal from 'modal-enhanced-react-native-web';
 import styles from './styles';
 
 export default function RegistrationPage({navigation})
@@ -11,9 +12,15 @@ export default function RegistrationPage({navigation})
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
+    }
+
+    const closeModal = () => {
+        setModalVisible(false);
+        navigation.navigate('Login');
     }
 
     /**
@@ -38,13 +45,20 @@ export default function RegistrationPage({navigation})
                 email,
                 fullName,
             };
-
+            
+            // Add data to user's db reference
             firebase.database().ref('users/' + uid).set(data).then(() => {
-                navigation.navigate('Login', data)
             }).catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 setMessage(errorMessage);
+            });
+
+            // Send verification email to user
+            firebase.auth().currentUser.sendEmailVerification().then(function () {
+                // Email sent
+                setModalVisible(true);
+
             });
             
         }).catch(function(error) {
@@ -52,7 +66,7 @@ export default function RegistrationPage({navigation})
             var errorCode = error.code;
             var errorMessage = error.message;
             setMessage(errorMessage);
-          });
+        });
     }
 
     return(
@@ -107,6 +121,30 @@ export default function RegistrationPage({navigation})
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Already have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
                 </View>
+
+                {Platform.IOS === 'ios' ?
+                <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                }}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.messageText}>Email verification link sent to {email}.</Text>
+                        <TouchableHighlight style={styles.button} onPress={closeModal}>
+                            <Text style={styles.modalButtonTitle}>Ok</Text>
+                        </TouchableHighlight>
+                    </View>
+                </Modal>
+                :
+                <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                }}> 
+                    <View style={styles.modalView}>
+                        <Text style={styles.messageText}>Email verification link sent to {email}.</Text>
+                        <TouchableHighlight style={styles.button} onPress={closeModal}>
+                            <Text style={styles.modalButtonTitle}>Ok</Text>
+                        </TouchableHighlight>
+                    </View>
+                </WebModal>
+            } 
             </ScrollView>
         </View>
     )
