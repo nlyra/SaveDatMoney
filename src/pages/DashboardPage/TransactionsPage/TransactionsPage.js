@@ -310,7 +310,7 @@ export default function TransactionsPage({navigation})
                     <DataTable>
                         <DataTable.Header>
                             <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-                            <DataTable.Title transaction>Transactions</DataTable.Title>
+                            <DataTable.Title transaction>Category</DataTable.Title>
                             <DataTable.Title description>Description</DataTable.Title>
                             <DataTable.Title cost>Cost</DataTable.Title>
                             <DataTable.Title delete>Delete</DataTable.Title>
@@ -343,7 +343,7 @@ export default function TransactionsPage({navigation})
                     <DataTable>
                         <DataTable.Header>
                             <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-                            <DataTable.Title transaction>Transactions</DataTable.Title>
+                            <DataTable.Title transaction>Category</DataTable.Title>
                             <DataTable.Title description>Description</DataTable.Title>
                             <DataTable.Title cost>Cost</DataTable.Title>
                         </DataTable.Header>
