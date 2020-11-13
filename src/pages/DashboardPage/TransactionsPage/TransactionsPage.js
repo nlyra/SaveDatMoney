@@ -116,6 +116,8 @@ export default function TransactionsPage({navigation})
             <View style={styles.topContainer}>
             <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> 
 
+
+            {/* Add Modal */}
             {/* If user  */}
             {Platform.OS === 'ios' ?
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
@@ -208,6 +210,7 @@ export default function TransactionsPage({navigation})
 
             }
 
+            {/* Edit Modal */}
             {/* If user  */}
             {Platform.OS === 'ios' ?
             <Modal animationType="slide" transparent={true} visible={modal2Visible} onRequestClose={() => {
@@ -301,20 +304,19 @@ export default function TransactionsPage({navigation})
             }
             </View>
   
-            <View style={styles.bodyContainer}>
-
-                <DataTable>
-                    <DataTable.Header>
-                    <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-                    <DataTable.Title transaction>Transactions</DataTable.Title>
-                    <DataTable.Title description>Description</DataTable.Title>
-                    <DataTable.Title cost>Cost</DataTable.Title>
-                    <DataTable.Title delete>Delete</DataTable.Title>
-                    <DataTable.Title edit>Edit</DataTable.Title>
-
-                    </DataTable.Header>
-                        {Platform.OS === 'web' ?
-                        /* Web Version */
+            {/* Table */}
+            {Platform.OS === 'web' ? 
+                <View style={styles.bodyContainer}>
+                    <DataTable>
+                        <DataTable.Header>
+                            <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
+                            <DataTable.Title transaction>Transactions</DataTable.Title>
+                            <DataTable.Title description>Description</DataTable.Title>
+                            <DataTable.Title cost>Cost</DataTable.Title>
+                            <DataTable.Title delete>Delete</DataTable.Title>
+                            <DataTable.Title edit>Edit</DataTable.Title>
+                        </DataTable.Header>
+        
                         <FlatList 
                             data={userData}
                             keyExtractor = {(col) => col.id}
@@ -333,27 +335,38 @@ export default function TransactionsPage({navigation})
                                 </DataTable.Row>
                             )}
                         />
-                        :
-                        /* Mobile Version */
+                    </DataTable>
+                </View>
+                
+            :
+                <View style={styles.bodyContainer}>
+                    <DataTable>
+                        <DataTable.Header>
+                            <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
+                            <DataTable.Title transaction>Transactions</DataTable.Title>
+                            <DataTable.Title description>Description</DataTable.Title>
+                            <DataTable.Title cost>Cost</DataTable.Title>
+                        </DataTable.Header>
+
                         <FlatList 
-                            data={userData}
-                            keyExtractor = {(col) => col.id}
-                            renderItem={({item})=> (
-                                    <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
-                                    <View style={{ paddingVertical: 1 }}>
-                                        <DataTable.Row>
-                                            <DataTable.Cell transaction>{item.category}</DataTable.Cell>
-                                            <DataTable.Cell description >{item.description}</DataTable.Cell>
-                                            <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
-                                            <Divider />
-                                        </DataTable.Row>
-                                    </View>
-                                </Swipeable>   
-                            )}
+                        data={userData}
+                        keyExtractor = {(col) => col.id}
+                        renderItem={({item})=> (
+                                <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
+                                <View style={{ paddingVertical: 1 }}>
+                                    <DataTable.Row>
+                                        <DataTable.Cell transaction>{item.category}</DataTable.Cell>
+                                        <DataTable.Cell description >{item.description}</DataTable.Cell>
+                                        <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
+                                        <Divider />
+                                    </DataTable.Row>
+                                </View>
+                            </Swipeable>   
+                        )}
                         />
-                        }
-                </DataTable>
-            </View>
+                    </DataTable>
+                </View>
+            }
 
             <View style={styles.bottomContainer}>
                     <TouchableOpacity style={[{marginRight: '5%'}, buttons.long]} onPress={() => console.log("hi there")}>
