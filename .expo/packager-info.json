@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 39433,
-  "webpackServerPort": 19006,
-  "expoServerNgrokUrl": "https://7p-tcy.anonymous.savedatmoney.exp.direct",
-  "packagerNgrokUrl": "https://packager.7p-tcy.anonymous.savedatmoney.exp.direct",
-  "ngrokPid": 39641
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "webpackServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
