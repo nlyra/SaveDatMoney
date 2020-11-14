@@ -20,6 +20,7 @@ export default function BudgetPage({navigation})
     const [category, setName] = useState('');
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [refresh, setRefresh] = useState('');
 
     var user = firebase.auth().currentUser;
     var uid;

@@ -18,6 +18,17 @@ class EditModal extends Component {
          modalVisible: false,
       }
    }
+   // showEditModal = (transaction, flatListItem) => {
+   //    this.setState({
+   //       key: transaction.key,
+   //       category: transaction.category,
+   //       description: transaction.description,
+   //       cost: transaction.cost,
+   //       flatListItem: flatListItem
+   //    })
+   //    modalVisible = true;
+   // }
+
    // state = {
    //    modalVisible: false,
    // }
@@ -52,8 +63,8 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholder='Category'
                            placeholderTextColor="black"
-                           // onChangeText={(text) => setCategory(text)}
-                           // value={category}
+                           onChangeText={(text) => setCategory(text)}
+                           value={category}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                      />
@@ -61,8 +72,8 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholderTextColor="black"
                            placeholder='Description'
-                           // onChangeText={(text) => setDescription(text)}
-                           // value={description}
+                           onChangeText={(text) => setDescription(text)}
+                           value={description}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                      />
@@ -70,8 +81,8 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholderTextColor="black"
                            placeholder='Cost'
-                           // onChangeText={(text) => setCost(text)}
-                           // value={cost}
+                           onChangeText={(text) => setCost(text)}
+                           value={cost}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                      />

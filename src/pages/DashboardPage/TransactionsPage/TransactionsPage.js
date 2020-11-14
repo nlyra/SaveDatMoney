@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated} from 'react-native';
+import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
@@ -21,8 +21,10 @@ export default function TransactionsPage({navigation})
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [modal2Visible, setModal2Visible] = useState(false);
+    const [refresh, setRefresh] = useState('');
 
     var user = firebase.auth().currentUser;
+
     var uid;
     var userData = [];
     var itemKey;
@@ -45,16 +47,17 @@ export default function TransactionsPage({navigation})
         setCategory("");
         setDescription("");
         setCost(""); 
-        
+
         setModalVisible(!modalVisible);
     }
 
     const deleteTransaction = key => {
         console.log("this is the key " + key)
         firebase.database().ref("/transaction/"+key).remove();
+        setRefresh([]);
     }
 
-    const openEditModal = key => {    
+    const openEditModal = () => {    
         console.log("hiiiii");
         setModal2Visible(!modal2Visible);
     }
@@ -123,7 +126,9 @@ export default function TransactionsPage({navigation})
         <View style={styles.mainContainer}> 
 
             <View style={styles.topContainer}>
-                <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> 
+
+                
+                {/* <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>  */}
 
 
                 {/* Add Modal */}
@@ -216,10 +221,12 @@ export default function TransactionsPage({navigation})
                             </View>
                         </View>
                     </WebModal>
-
                 }
-                
-                {/* Edit Modal
+
+                <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
+
+                {/* <EditModal></EditModal> */}
+                {/* Edit Modal */}
                 {Platform.OS === 'ios' ?
                 <Modal animationType="slide" transparent={true} visible={modal2Visible} onRequestClose={() => {
                 Alert.alert("Modal has been closed.");}}>
@@ -309,46 +316,29 @@ export default function TransactionsPage({navigation})
                         </View>
                     </WebModal>
 
-                } */}
+                }
             </View>
   
             {/* Table */}
             {Platform.OS === 'web' ? 
-                <View style={styles.bodyContainer}>
-                    <DataTable>
-                        <DataTable.Header>
-                            <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-                            <DataTable.Title transaction>Category</DataTable.Title>
-                            <DataTable.Title description>Description</DataTable.Title>
-                            <DataTable.Title cost>Cost</DataTable.Title>
-                            <DataTable.Title delete>Delete</DataTable.Title>
-                            <DataTable.Title edit>Edit</DataTable.Title>
-                        </DataTable.Header>
-        
-                        <FlatList 
+                // <View style={styles.bodyContainer}>
+                        <FlatList contentContainerStyle={{ flexGrow: 1 }}
                             data={userData}
+                            ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
                             keyExtractor = {(col) => col.id}
                             renderItem={({item})=> (
-                                <DataTable.Row>
-                                    <DataTable.Cell transaction>{item.category}</DataTable.Cell>
-                                    <DataTable.Cell description >{item.description}</DataTable.Cell>
-                                    <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
-                                        <DataTable.Cell delete>
-                                            <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
-                                        </DataTable.Cell>
-                                        <DataTable.Cell edit>
-                                            <EditModal itemKey={item.key} item={item}>
-                                                
-                                            </EditModal>
-                                            {/* <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => openEditModal}/> */}
-                                        </DataTable.Cell>
-                                    <Divider />
-                                </DataTable.Row>
+                                <View>
+                                    <Text>{item.category}</Text>
+                                    <Text>{item.description}</Text>
+                                    <Text>${item.cost}</Text>
+                                    {/* <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => {setModal2Visible(true);}}/> */}
+                                    <EditModal itemKey={item.key} item={item}></EditModal>
+                                    <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                    <Divider/>
+                                </View>
                             )}
                         />
-                    </DataTable>
-                </View>
-                
+                // </View>
             :
                 <View style={styles.bodyContainer}>
                     <DataTable>
@@ -363,7 +353,7 @@ export default function TransactionsPage({navigation})
                         data={userData}
                         keyExtractor = {(col) => col.id}
                         renderItem={({item})=> (
-                                <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
+                            <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
                                 <View style={{ paddingVertical: 1 }}>
                                     <DataTable.Row>
                                         <DataTable.Cell transaction>{item.category}</DataTable.Cell>
