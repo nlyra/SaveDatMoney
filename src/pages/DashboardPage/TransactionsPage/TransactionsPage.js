@@ -11,6 +11,7 @@ import { Divider, DataTable} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import EditModal from './EditModal';
+import render from 'react-native-web/dist/cjs/exports/render';
 
 export default function TransactionsPage({navigation})
 {
@@ -21,15 +22,29 @@ export default function TransactionsPage({navigation})
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [modal2Visible, setModal2Visible] = useState(false);
-
+    const [refresh, setRefresh] = useState('');
+    
     var user = firebase.auth().currentUser;
     var uid;
     var userData = [];
     var itemKey;
+    var num = 0;
 
     if (user != null) {
     uid = user.uid;  
     } 
+
+     /* Get data from the database */
+     var ref = firebase.database().ref("transaction");
+     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+         userData.push({
+             ...snapshot.val(),
+             key: snapshot.key,
+           });
+           console.log(format(date, 'MMMM, yyyy'));
+         console.log("here is the key" + userData[0].key);
+         console.log(userData);
+     });
 
     /**
      *
@@ -52,6 +67,7 @@ export default function TransactionsPage({navigation})
     const deleteTransaction = key => {
         console.log("this is the key " + key)
         firebase.database().ref("/transaction/"+key).remove();
+        setRefresh([]);
     }
 
     const openEditModal = key => {    
@@ -70,17 +86,6 @@ export default function TransactionsPage({navigation})
     const closeModal2 = () => {
         setModal2Visible(!modal2Visible);
     }
-
-    /* Get data from the database */
-    var ref = firebase.database().ref("transaction");
-    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-        userData.push({
-            ...snapshot.val(),
-            key: snapshot.key,
-          });
-        console.log("here is the key" + userData[0].key);
-        console.log(userData);
-    });
 
     const RightActions = (progress, dragX, item) => {
 
@@ -358,7 +363,6 @@ export default function TransactionsPage({navigation})
                             <DataTable.Title description>Description</DataTable.Title>
                             <DataTable.Title cost>Cost</DataTable.Title>
                         </DataTable.Header>
-
                         <FlatList 
                         data={userData}
                         keyExtractor = {(col) => col.id}
@@ -366,6 +370,7 @@ export default function TransactionsPage({navigation})
                                 <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
                                 <View style={{ paddingVertical: 1 }}>
                                     <DataTable.Row>
+                                        {console.log("this are the items" + num++)}
                                         <DataTable.Cell transaction>{item.category}</DataTable.Cell>
                                         <DataTable.Cell description >{item.description}</DataTable.Cell>
                                         <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
@@ -379,8 +384,8 @@ export default function TransactionsPage({navigation})
                 </View>
             }
 
-            <View style={styles.bottomContainer}>
-                    <TouchableOpacity style={[{marginRight: '5%'}, buttons.long]} onPress={() => console.log("hi there")}>
+            <View style={styles.bottomContainer} >
+                    <TouchableOpacity style={[{marginRight: '5%'}, buttons.long]} onPress={() => console.log("hi there")} >
                         <Text style={styles.buttonTitle}>Expenses</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={buttons.long} onPress={() => console.log("hi there")}>
@@ -390,3 +395,4 @@ export default function TransactionsPage({navigation})
         </View>
     );
 }
+
