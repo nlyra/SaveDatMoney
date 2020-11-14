@@ -332,8 +332,8 @@ export default function TransactionsPage({navigation})
                                             <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
                                         </DataTable.Cell>
                                         <DataTable.Cell edit>
-                                            <EditModal keyyy={item.key}>
-
+                                            <EditModal itemKey={item.key}>
+                                                
                                             </EditModal>
                                             {/* <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => openEditModal}/> */}
                                         </DataTable.Cell>

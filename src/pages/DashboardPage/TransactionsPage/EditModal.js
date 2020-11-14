@@ -7,9 +7,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { firebase } from '../../../firebase/config';
 
 class EditModal extends Component {
-   state = {
-      modalVisible: false,
+   constructor(props){
+      super(props);
+      this.state = {
+         category: null,
+         description: null,
+         cost: null,
+         modalVisible: false,
+      }
    }
+   // state = {
+   //    modalVisible: false,
+   // }
    toggleModal(visible) {
       this.setState({ modalVisible: visible });
    }
@@ -17,13 +26,13 @@ class EditModal extends Component {
    render() {
 
       const editTransaction = () => {
-         console.log("keyyyy" + this.props.keyyy)
+         console.log("keyyyy" + this.props.itemKey)
          var updates = {};
-         updates['/category'] = "example1";
-         updates['/description'] = "example2";
-         updates['/cost'] = 123;
+         updates['/category'] = this.state.category;
+         updates['/description'] = this.state.description;
+         updates['/cost'] = this.state.cost;
 
-         firebase.database().ref('transaction/'+this.props.keyyy).update(updates);
+         firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
 
          this.toggleModal(!this.state.modalVisible)
       }   
@@ -85,8 +94,8 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholder='Category'
                            placeholderTextColor="black"
-                           // onChangeText={(text) => setCategory(text)}
-                           // value={category}
+                           onChangeText={(text) => this.state.category = text}
+                           value={this.state.category}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                         />
@@ -94,8 +103,8 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholderTextColor="black"
                            placeholder='Description'
-                           // onChangeText={(text) => setDescription(text)}
-                           // value={description}
+                           onChangeText={(text) => this.state.description = text}
+                           value={this.state.description}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                         />
@@ -103,8 +112,8 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholderTextColor="black"
                            placeholder='Cost'
-                           // onChangeText={(text) => setCost(text)}
-                           // value={cost}
+                           onChangeText={(text) => this.state.cost = text}
+                           value={this.state.cost}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                         />
