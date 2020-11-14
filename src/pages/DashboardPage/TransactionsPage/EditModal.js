@@ -18,20 +18,7 @@ class EditModal extends Component {
          modalVisible: false,
       }
    }
-   // showEditModal = (transaction, flatListItem) => {
-   //    this.setState({
-   //       key: transaction.key,
-   //       category: transaction.category,
-   //       description: transaction.description,
-   //       cost: transaction.cost,
-   //       flatListItem: flatListItem
-   //    })
-   //    modalVisible = true;
-   // }
-
-   // state = {
-   //    modalVisible: false,
-   // }
+   
    toggleModal(visible) {
       this.setState({ modalVisible: visible });
    }

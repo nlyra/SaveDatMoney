@@ -33,7 +33,7 @@ export default StyleSheet.create({
         alignItems: 'flex-end',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginLeft: '2%',
+        marginLeft: '1%',
         marginBottom: '2%'
     },
     separator: {
@@ -167,6 +167,11 @@ export default StyleSheet.create({
     },
     text: { 
         margin: 6 
+    },
+    addContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: '2%'
     }
 });
 

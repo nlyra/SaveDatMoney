@@ -225,9 +225,6 @@ export default function TransactionsPage({navigation})
                     </WebModal>
                 }
 
-                {/* <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/> */}
-                <MaterialCommunityIcons name="plus-box" color={"black"} size={26} onPress={()=> {setModalVisible(true);}}/>
-
                 {/* <EditModal></EditModal> */}
                 {/* Edit Modal */}
                 {Platform.OS === 'ios' ?
@@ -334,7 +331,6 @@ export default function TransactionsPage({navigation})
                                     <Text>{item.category}</Text>
                                     <Text>{item.description}</Text>
                                     <Text>${item.cost}</Text>
-                                    {/* <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => {setModal2Visible(true);}}/> */}
                                     <EditModal itemKey={item.key} item={item}></EditModal>
                                     <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
                                     <Divider/>
@@ -373,9 +369,10 @@ export default function TransactionsPage({navigation})
             }
 
             <View style={styles.bottomContainer} >
-                    <TouchableOpacity style={[{marginRight: '5%'}, buttons.long]} onPress={() => console.log("hi there")} >
+                    <TouchableOpacity style={[{marginRight: '2%'}, buttons.long]} onPress={() => console.log("hi there")} >
                         <Text style={styles.buttonTitle}>Expenses</Text>
                     </TouchableOpacity>
+                    <MaterialCommunityIcons style={styles.addContainer} name="plus-box" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
                     <TouchableOpacity style={buttons.long} onPress={() => console.log("hi there")}>
                         <Text style={styles.buttonTitle}>Income</Text>
                     </TouchableOpacity>
