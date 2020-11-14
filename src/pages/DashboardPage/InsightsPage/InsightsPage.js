@@ -10,6 +10,7 @@ export default function InsightsPage({navigation})
     return (
         <View style={styles.container}>
             <Text>Insights Page</Text>
+            <Text>VM Test</Text>
         </View>
     )
 }
