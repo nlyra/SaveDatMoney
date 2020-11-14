@@ -23,11 +23,6 @@ export default function TransactionsPage({navigation})
     const [modalVisible, setModalVisible] = useState(false);
     const [modal2Visible, setModal2Visible] = useState(false);
     const [refresh, setRefresh] = useState('');
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 41913d79a1bb70f55bd8dfd627befd42031cd031
     var user = firebase.auth().currentUser;
 
     var uid;
@@ -230,7 +225,8 @@ export default function TransactionsPage({navigation})
                     </WebModal>
                 }
 
-                <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
+                {/* <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/> */}
+                <MaterialCommunityIcons name="plus-box" color={"black"} size={26} onPress={()=> {setModalVisible(true);}}/>
 
                 {/* <EditModal></EditModal> */}
                 {/* Edit Modal */}
