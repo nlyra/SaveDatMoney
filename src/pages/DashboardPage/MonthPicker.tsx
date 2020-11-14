@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import { Image, Text, TouchableOpacity, View, Button, Alert } from 'react-native';
 import styles from './TransactionsPage/styles';
 import {IconButton} from 'react-native-paper';
 import {format, subMonths, addMonths} from 'date-fns'; 
+import { render } from 'react-native-web';
 
 type MonthPickerProps = {
     date: Date
@@ -11,6 +12,8 @@ type MonthPickerProps = {
 
 var currentDate = ""; 
 var newDate;
+
+
 
 const MonthPicker: React.FC<MonthPickerProps> = ({date, onChange}) => {
 
@@ -25,9 +28,11 @@ const MonthPicker: React.FC<MonthPickerProps> = ({date, onChange}) => {
     };
 
     return (
+
         <View style={styles.calendar}>
+                
                 <IconButton icon = "arrow-left" onPress = {handlePrev}/>
-                <Text>{format(date, 'MMMM, yyyy')}</Text>
+                <Text>{format(date, 'MMMM, yyyy')} </Text>
                 <IconButton icon = "arrow-right" onPress = {handleNext}/>
         </View>
     )
