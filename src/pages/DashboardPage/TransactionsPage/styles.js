@@ -172,6 +172,26 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: '2%'
+    },
+    feed: {
+        marginHorizontal: 16
+    },
+    feedItem: {
+        backgroundColor: '#FFF',
+        borderRadius: 5,
+        padding: 8,
+        flexDirection: 'row',
+        marginVertical: 8,
+        flexDirection: 'column'
+    },
+    description: {
+        fontSize: 15,
+        fontWeight: "500",
+        color: colors.primary,
+    },
+    category: {
+        fontSize: 11,
+        marginTop: 4,
     }
 });
 

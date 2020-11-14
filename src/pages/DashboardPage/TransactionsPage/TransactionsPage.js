@@ -129,10 +129,6 @@ export default function TransactionsPage({navigation})
 
             <View style={styles.topContainer}>
 
-                
-                {/* <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>  */}
-
-
                 {/* Add Modal */}
                 {/* If user  */}
                 {Platform.OS === 'ios' ?
@@ -321,23 +317,29 @@ export default function TransactionsPage({navigation})
   
             {/* Table */}
             {Platform.OS === 'web' ? 
-                // <View style={styles.bodyContainer}>
-                        <FlatList contentContainerStyle={{ flexGrow: 1 }}
-                            data={userData}
-                            ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
-                            keyExtractor = {(col) => col.id}
-                            renderItem={({item})=> (
-                                <View>
-                                    <Text>{item.category}</Text>
-                                    <Text>{item.description}</Text>
-                                    <Text>${item.cost}</Text>
-                                    <EditModal itemKey={item.key} item={item}></EditModal>
-                                    <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
-                                    <Divider/>
+                <FlatList contentContainerStyle={{ flexGrow: 1 }}
+                    style={styles.feed}
+                    data={userData}
+                    ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
+                    keyExtractor = {(col) => col.id}
+                    renderItem={({item})=> (
+                        <View style={styles.feedItem}>
+                            <View style={{flex:1}}>
+                                <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                    <View>
+                                        <Text style={styles.description}> {item.description}</Text>
+                                        <Text style={styles.category}> {item.category}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
+                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                        <EditModal itemKey={item.key} item={item}></EditModal>
+                                        <Text>${item.cost}</Text>
+                                    </View>
                                 </View>
-                            )}
-                        />
-                // </View>
+                            </View>
+                        </View>
+                    )}
+                />
             :
                 <View style={styles.bodyContainer}>
                     <DataTable>

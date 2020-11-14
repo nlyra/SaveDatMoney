@@ -18,7 +18,7 @@ class EditModal extends Component {
          modalVisible: false,
       }
    }
-   
+
    toggleModal(visible) {
       this.setState({ modalVisible: visible });
    }
@@ -129,10 +129,11 @@ class EditModal extends Component {
                   </View>
             </WebModal>
             }
-            
-            <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => this.toggleModal(true)}/>
-
+            <View style={[{justifyContent: 'space-between'}, {padding: 0}, {flex: 0}]}>
+               <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => this.toggleModal(true)}/>
+            </View>
          </View>
+         
       )
    }
 }
