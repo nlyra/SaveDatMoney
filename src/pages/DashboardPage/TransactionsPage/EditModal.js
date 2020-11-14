@@ -5,14 +5,16 @@ import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { firebase } from '../../../firebase/config';
+import { isThisSecond } from 'date-fns';
 
 class EditModal extends Component {
    constructor(props){
       super(props);
+      
       this.state = {
-         category: null,
-         description: null,
-         cost: null,
+         category: props.item.category,
+         description: props.item.description,
+         cost: props.item.cost,
          modalVisible: false,
       }
    }
@@ -94,7 +96,7 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholder='Category'
                            placeholderTextColor="black"
-                           onChangeText={(text) => this.state.category = text}
+                           onChangeText={(text) => this.setState({category: text})}
                            value={this.state.category}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
@@ -103,7 +105,7 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholderTextColor="black"
                            placeholder='Description'
-                           onChangeText={(text) => this.state.description = text}
+                           onChangeText={(text) => this.setState({description: text})}
                            value={this.state.description}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
@@ -112,7 +114,7 @@ class EditModal extends Component {
                            style={styles.input}
                            placeholderTextColor="black"
                            placeholder='Cost'
-                           onChangeText={(text) => this.state.cost = text}
+                           onChangeText={(text) => this.setState({cost: text})}
                            value={this.state.cost}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"

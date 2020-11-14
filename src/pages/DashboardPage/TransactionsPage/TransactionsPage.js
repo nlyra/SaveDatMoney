@@ -41,6 +41,11 @@ export default function TransactionsPage({navigation})
         firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");
 
+        // empties out fields for adding transaction 
+        setCategory("");
+        setDescription("");
+        setCost(""); 
+        
         setModalVisible(!modalVisible);
     }
 
@@ -332,7 +337,7 @@ export default function TransactionsPage({navigation})
                                             <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
                                         </DataTable.Cell>
                                         <DataTable.Cell edit>
-                                            <EditModal itemKey={item.key}>
+                                            <EditModal itemKey={item.key} item={item}>
                                                 
                                             </EditModal>
                                             {/* <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => openEditModal}/> */}
