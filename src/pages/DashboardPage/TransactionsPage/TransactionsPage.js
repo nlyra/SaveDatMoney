@@ -70,21 +70,15 @@ export default function TransactionsPage({navigation})
         setRefresh([]);
     }
 
-    const openEditModal = () => {    
-        console.log("hiiiii");
-        setModal2Visible(!modal2Visible);
-    }
-
-    const editTransaction = key => {
-
-    }
-
     const closeModal = () => {
         setModalVisible(!modalVisible);
     }
 
-    const closeModal2 = () => {
-        setModal2Visible(!modal2Visible);
+    const editTransaction = (item) => {
+        console.log("hii");
+        console.log("this is item " + item.category);
+        console.log("this is item key " + item.key);
+        <EditModal itemKey={item.key} item={item}></EditModal>
     }
 
     const RightActions = (progress, dragX, item) => {
@@ -97,27 +91,28 @@ export default function TransactionsPage({navigation})
         return (
             <>
             <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
-            <Animated.Text
-                style={{
-                color: 'white',
-                paddingHorizontal: 10,
-                fontWeight: '600',
-                transform: [{ scale }]
-                }}onPress={() => deleteTransaction(item.key)}>
-                Delete
-            </Animated.Text>
+                <Animated.Text
+                    style={{
+                    color: 'white',
+                    paddingHorizontal: 10,
+                    fontWeight: '600',
+                    transform: [{ scale }]
+                    }}onPress={() => deleteTransaction(item.key)}>
+                    Delete
+                </Animated.Text>
             </View>
             <View style={{ backgroundColor: 'green', justifyContent: 'center' }}>
-            <Animated.Text
-                style={{
-                color: 'white',
-                paddingHorizontal: 10,
-                fontWeight: '600',
-                transform: [{ scale }]
-                }} onPress={() => editTransaction(item.key)}>
-                Edit
-            </Animated.Text>
+                <Animated.Text
+                    style={{
+                    color: 'white',
+                    paddingHorizontal: 10,
+                    fontWeight: '600',
+                    transform: [{ scale }]
+                    }} onPress={() => editTransaction}>
+                    Edit
+                </Animated.Text>
             </View>
+            {/* <EditModal itemKey={item.key} item={item}></EditModal> */}
         </>
           
         )

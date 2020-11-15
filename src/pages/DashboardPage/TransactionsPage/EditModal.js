@@ -16,6 +16,7 @@ class EditModal extends Component {
          description: props.item.description,
          cost: props.item.cost,
          modalVisible: false,
+         //dragX: props.item.dragX,
       }
    }
 
@@ -35,7 +36,12 @@ class EditModal extends Component {
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
 
          this.toggleModal(!this.state.modalVisible)
-      }   
+      }
+
+      // const scale = this.state.dragX.interpolate({
+      //    inputRange: [-100, 0],
+      //    outputRange: [0.7,0]
+      // })
 
       return (
 
@@ -129,9 +135,24 @@ class EditModal extends Component {
                   </View>
             </WebModal>
             }
-            <View style={[{justifyContent: 'space-between'}, {padding: 0}, {flex: 0}]}>
-               <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => this.toggleModal(true)}/>
-            </View>
+            
+            {Platform.OS === 'ios' ?
+               <View style={{ backgroundColor: 'green', justifyContent: 'center' }}>
+                  <Animated.Text
+                     style={{
+                     color: 'white',
+                     paddingHorizontal: 10,
+                     fontWeight: '600',
+                     transform: [{ scale }]
+                     }} onPress={() => editTransaction}>
+                     Edit
+                  </Animated.Text>
+               </View>
+            :
+               <View style={[{justifyContent: 'space-between'}, {padding: 0}, {flex: 0}]}>
+                  <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => this.toggleModal(true)}/>
+               </View>
+            }
          </View>
          
       )
