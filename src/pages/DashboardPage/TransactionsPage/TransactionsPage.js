@@ -220,99 +220,6 @@ export default function TransactionsPage({navigation})
                         </View>
                     </WebModal>
                 }
-
-                {/* <EditModal></EditModal> */}
-                {/* Edit Modal */}
-                {Platform.OS === 'ios' ?
-                <Modal animationType="slide" transparent={true} visible={modal2Visible} onRequestClose={() => {
-                Alert.alert("Modal has been closed.");}}>
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Edit</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder='Category'
-                                placeholderTextColor="black"
-                                onChangeText={(text) => setCategory(text)}
-                                value={category}
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholderTextColor="black"
-                                placeholder='Description'
-                                onChangeText={(text) => setDescription(text)}
-                                value={description}
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholderTextColor="black"
-                                placeholder='Cost'
-                                onChangeText={(text) => setCost(text)}
-                                value={cost}
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-                            />
-                            <View style={styles.modalButtons}>
-                                <TouchableHighlight style={buttons.standard} onPress={closeModal2}>
-                                    <Text style={styles.buttonTitle}>Cancel</Text>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={buttons.standard} onPress={editTransaction}>
-                                    <Text style={styles.buttonTitle}>Save</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                :
-                <WebModal animationType="slide" transparent={true} visible={modal2Visible} onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");}}>
-                        <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Edit</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder='Category'
-                                    placeholderTextColor="black"
-                                    onChangeText={(text) => setCategory(text)}
-                                    value={category}
-                                    underlineColorAndroid="transparent"
-                                    autoCapitalize="none"
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
-                                    placeholder='Description'
-                                    onChangeText={(text) => setDescription(text)}
-                                    value={description}
-                                    underlineColorAndroid="transparent"
-                                    autoCapitalize="none"
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
-                                    placeholder='Cost'
-                                    onChangeText={(text) => setCost(text)}
-                                    value={cost}
-                                    underlineColorAndroid="transparent"
-                                    autoCapitalize="none"
-                                />
-                                <View style={styles.modalButtons}>
-                                    <TouchableHighlight style={buttons.standard} onPress={closeModal2}>
-                                        <Text style={styles.buttonTitle}>Cancel</Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={buttons.standard} onPress={editTransaction}>
-                                        <Text style={styles.buttonTitle}>Save</Text>
-                                    </TouchableHighlight>
-                                </View>
-                            </View>
-                        </View>
-                    </WebModal>
-
-                }
             </View>
   
             {/* Table */}
@@ -341,33 +248,33 @@ export default function TransactionsPage({navigation})
                     )}
                 />
             :
-                <View style={styles.bodyContainer}>
-                    <DataTable>
-                        <DataTable.Header>
-                            <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-                            <DataTable.Title transaction>Category</DataTable.Title>
-                            <DataTable.Title description>Description</DataTable.Title>
-                            <DataTable.Title cost>Cost</DataTable.Title>
-                        </DataTable.Header>
-                        <FlatList 
-                        data={userData}
-                        keyExtractor = {(col) => col.id}
-                        renderItem={({item})=> (
-                            <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
-                                <View style={{ paddingVertical: 1 }}>
-                                    <DataTable.Row>
-                                        {console.log("this are the items" + num++)}
-                                        <DataTable.Cell transaction>{item.category}</DataTable.Cell>
-                                        <DataTable.Cell description >{item.description}</DataTable.Cell>
-                                        <DataTable.Cell cost >{'$' + item.cost}</DataTable.Cell>
-                                        <Divider />
-                                    </DataTable.Row>
+                <FlatList contentContainerStyle={{ flexGrow: 1 }}
+                    style={styles.feed}
+                    data={userData}
+                    ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
+                    keyExtractor = {(col) => col.id}
+                    renderItem={({item})=> (
+                        <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
+                            <View style={{ paddingVertical: 1 }}>
+                                <View style={styles.feedItem}>
+                                    <View style={{flex:1}}>
+                                        <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                            <View>
+                                                <Text style={styles.description}> {item.description}</Text>
+                                                <Text style={styles.category}> {item.category}</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
+                                                {/* <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                                <EditModal itemKey={item.key} item={item}></EditModal> */}
+                                                <Text>${item.cost}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
                                 </View>
-                            </Swipeable>   
-                        )}
-                        />
-                    </DataTable>
-                </View>
+                            </View>
+                        </Swipeable>   
+                    )}
+                />
             }
 
             <View style={styles.bottomContainer} >

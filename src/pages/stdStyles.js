@@ -35,6 +35,6 @@ export const buttons = StyleSheet.create({
         borderRadius: 5,
         alignItems: "center",
         justifyContent: "center",
-        width: '45%',
+        width: '35%',
     }
 });

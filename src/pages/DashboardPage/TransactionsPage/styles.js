@@ -32,7 +32,7 @@ export default StyleSheet.create({
         width: '100%',
         alignItems: 'flex-end',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         marginLeft: '1%',
         marginBottom: '2%'
     },
