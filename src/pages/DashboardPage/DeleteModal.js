@@ -6,6 +6,7 @@ import { buttons, colors } from '../stdStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { firebase } from '../../firebase/config';
 import { isThisSecond } from 'date-fns';
+import { Divider } from 'react-native-paper';
 
 class DeleteModal extends Component {
    constructor(props){
@@ -53,9 +54,10 @@ class DeleteModal extends Component {
             <WebModal animationType="slide" transparent={true} visible = {this.state.modalVisible} onRequestClose={() => {
                Alert.alert("Modal has been closed.");}}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Are you sure you want to delete this item?</Text>
+                        <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
+                        <Divider></Divider> 
                         <View style={styles.modalButtons}>
-                            <View style={{flexDirection: 'row', justifyContent: "center", alignItems: 'center'}}>
+                            <View style={{marginTop: 10, flexDirection: 'row', justifyContent: "center", alignItems: 'center'}}>
                                 <TouchableHighlight style={buttons.standard} color={colors.primary} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
                                     <Text style={styles.modalButtonTitle}>Cancel</Text>
                                 </TouchableHighlight>
