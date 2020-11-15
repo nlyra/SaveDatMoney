@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import EditModal from './EditModal';
 import render from 'react-native-web/dist/cjs/exports/render';
+import DeleteModal from '../DeleteModal';
 
 export default function TransactionsPage({navigation})
 {
@@ -233,7 +234,8 @@ export default function TransactionsPage({navigation})
                                         <Text style={styles.category}> {item.category}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                        {/* <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/> */}
+                                        <DeleteModal itemKey={item.key}></DeleteModal>
                                         <EditModal itemKey={item.key} item={item}></EditModal>
                                         <Text>${item.cost}</Text>
                                     </View>

@@ -111,6 +111,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    modalContainer: {
+        padding: 25,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     modalView: {
         margin: 30,
         backgroundColor: "white",

@@ -38,18 +38,12 @@ class EditModal extends Component {
          this.toggleModal(!this.state.modalVisible)
       }
 
-      // const scale = this.state.dragX.interpolate({
-      //    inputRange: [-100, 0],
-      //    outputRange: [0.7,0]
-      // })
-
       return (
 
-         <View style = {styles.container}>
+         <View style = {styles.modalContainer}>
             {Platform.OS === 'ios' ?
             <Modal animationType="slide" transparent={true} visible={this.state.modalVisible} onRequestClose={() => {
             Alert.alert("Modal has been closed.");}}>
-               <View style={styles.centeredView}>
                   <View style={styles.modalView}>
                      <Text style={styles.modalText}>Edit</Text>
                      <TextInput
@@ -88,7 +82,6 @@ class EditModal extends Component {
                         </TouchableHighlight>
                      </View>
                   </View>
-               </View>
             </Modal>
             :
             <WebModal animationType="slide" transparent={true} visible = {this.state.modalVisible} onRequestClose={() => {
