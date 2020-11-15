@@ -11,20 +11,21 @@ export default function SettingsPage({navigation})
 {
     var user = firebase.auth().currentUser;
     var uid;
+    var userData = [];
 
     if (user != null) {
       uid = user.uid;
     }
 
-    var userRef = firebase.database().ref("users/" + uid);
-    var userData = [];
-    userRef.orderByChild("fullName").on("child_added", function(snapshot) {
-      userData.push({
-          ...snapshot.val(),
-          key: snapshot.key,
-        });
-      console.log("Full Name: " + userData[0]);
-    });
+    var userRef = firebase.database().ref("users");
+    userRef.orderByChild("id").equalTo(uid).on("child_added", function(snapshot) {
+         userData.push({
+             ...snapshot.val(),
+             key: snapshot.key,
+           });
+          console.log("this is user data " + userData[0]);
+          console.log("this is user data " + userData[0].fullName);
+     });
 
     const settingsData: SettingsData = [
       {
@@ -33,12 +34,11 @@ export default function SettingsPage({navigation})
         rows: [
           {
             title: 'Email',
-            subtitle: firebase.auth().currentUser.email,
+            subtitle: user.email,
             showDisclosureIndicator: false,
           },
           {
             title: 'Name',
-            subtitle: userData[0],
             showDisclosureIndicator: false,
           },
           {
