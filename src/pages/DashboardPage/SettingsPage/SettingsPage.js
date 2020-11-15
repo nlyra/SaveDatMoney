@@ -9,6 +9,23 @@ const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'sans-serif';
 
 export default function SettingsPage({navigation})
 {
+    var user = firebase.auth().currentUser;
+    var uid;
+
+    if (user != null) {
+      uid = user.uid;
+    }
+
+    var userRef = firebase.database().ref("users/" + uid);
+    var userData = [];
+    userRef.orderByChild("fullName").on("child_added", function(snapshot) {
+      userData.push({
+          ...snapshot.val(),
+          key: snapshot.key,
+        });
+      console.log("Full Name: " + userData[0]);
+    });
+
     const settingsData: SettingsData = [
       {
         type: 'SECTION',
@@ -16,8 +33,13 @@ export default function SettingsPage({navigation})
         rows: [
           {
             title: 'Email',
-            subtitle: 'hardcoded@email.com',
-            showDisclosureIndicator: true,
+            subtitle: firebase.auth().currentUser.email,
+            showDisclosureIndicator: false,
+          },
+          {
+            title: 'Name',
+            subtitle: userData[0],
+            showDisclosureIndicator: false,
           },
           {
             title: 'Currency',
