@@ -1,14 +1,51 @@
 import React, { useState } from 'react';
-import { Alert, Image, Text, TextInput, TouchableOpacity, View, RefreshControl, Switch, Platform } from 'react-native';
-import { SettingsScreen, SettingsData } from 'react-native-settings-screen';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Alert, Image, Text, TextInput, TouchableHighlight, View,
+         Switch, Platform, ScrollView, Modal, Span } from 'react-native';
 import { firebase } from '../../../firebase/config';
-import styles from '../styles';
+import styles from './styles';
+import { buttons, colors } from '../../stdStyles';
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
+import merge from 'deepmerge';
+import { TouchableRipple } from 'react-native-paper';
 
-const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'sans-serif';
+const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 export default function SettingsPage({navigation})
 {
+    const [name, setName] = useState('');
+    const [currency, setCurrency] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isThemeDark, setIsThemeDark] = React.useState(false);
+
+    let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+
+    const toggleTheme = React.useCallback(() => {
+      return setIsThemeDark(!isThemeDark);
+    }, [isThemeDark]);
+
+    const preferences = React.useMemo(
+      () => ({
+        toggleTheme,
+        isThemeDark,
+      }),
+      [toggleTheme, isThemeDark]
+    );
+
+    const editEmail = () => {
+      user.updateEmail(email);
+    }
+
     var user = firebase.auth().currentUser;
     var uid;
     var userData = [];
@@ -23,61 +60,49 @@ export default function SettingsPage({navigation})
              ...snapshot.val(),
              key: snapshot.key,
            });
-          console.log("this is user data " + userData[0]);
           console.log("this is user data " + userData[0].fullName);
      });
 
-    const settingsData: SettingsData = [
-      {
-        type: 'SECTION',
-        header: 'General',
-        rows: [
-          {
-            title: 'Email',
-            subtitle: user.email,
-            showDisclosureIndicator: false,
-          },
-          {
-            title: 'Name',
-            showDisclosureIndicator: false,
-          },
-          {
-            title: 'Currency',
-            renderAccessory: () => (
-              <Text style={{ color: '#999', marginRight: 6, fontSize: 18 }}>
-                $
-              </Text>
-            )
-          },
-          {
-            title: 'Change Password',
-            showDisclosureIndicator: true,
-          },
-          {
-            title: 'Dark Mode',
-            renderAccessory: () => <Switch value onValueChange={() => {}} />,
-          },
-        ],
-      },
-    ]
-
     return (
-        <View style={styles.container}>
-          <SettingsScreen
-            data={settingsData}
-            globalTextStyle={{ fontFamily }}
-            scrollViewProps={{
-              refreshControl: (
-                <RefreshControl
-                  refreshing={false}
-                  onRefresh={() => {
-                    this.setState({ refreshing: true })
-                    setTimeout(() => this.setState({ refreshing: false }), 3000)
-                  }}
-                />
-              ),
-            }}
+      <ScrollView>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="black"
+            placeholder='Enter new name'
+            autoCapitalize="words"
+            onChangeText={(text) => setName(text)}
+            value={name}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            />
+          <Text style={styles.modalText}>Change Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="black"
+            placeholder='Description'
+            onChangeText={(text) => setName(text)}
+            value={password}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
           />
+          <Text style={styles.modalText}>Currency</Text>
+          <Text style={styles.textStyle}>    $</Text>
+          <Text style={styles.modalText}>Change Password</Text>
+          <ScrollView contentContainerStyle={{
+            flexDirection: "row",
+          }}>
+            <Text style={styles.modalText}>Dark Mode</Text>
+            <Switch
+              style={{
+                marginLeft: 50,
+              }}
+              onValueChange={toggleTheme}
+              value={theme}
+            />
+          </ScrollView>
         </View>
+      </ScrollView>
     )
 }
