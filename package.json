@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^5.10.0",
     "@types/react-router": "^5.1.8",
     "date-fns": "^2.16.1",
+    "deepmerge": "^4.2.2",
     "dotenv": "^8.2.0",
     "expo": "^39.0.4",
     "expo-status-bar": "~1.0.2",

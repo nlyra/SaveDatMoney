@@ -12,14 +12,27 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
+import merge from 'deepmerge';
 
+const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function DashboardPage({navigation})
 {
     return (
-      <NavigationContainer independent={true}>
+      <PaperProvider theme={CombinedDarkTheme}>
+      <NavigationContainer independent={true} theme={CombinedDarkTheme}>
         <Tab.Navigator
           initialRouteName="Budget"
           barStyle={{ backgroundColor: '#2ea44f' }}
@@ -86,5 +99,6 @@ export default function DashboardPage({navigation})
           />
         </Tab.Navigator>
       </NavigationContainer>
+      </PaperProvider>
     )
 }

@@ -20,6 +20,7 @@ import { TouchableRipple } from 'react-native-paper';
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
+
 export default function SettingsPage({navigation})
 {
     const [name, setName] = useState('');
