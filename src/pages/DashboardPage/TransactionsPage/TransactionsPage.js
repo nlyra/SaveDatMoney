@@ -13,17 +13,18 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 import EditModal from './EditModal';
 import render from 'react-native-web/dist/cjs/exports/render';
 import DeleteModal from '../DeleteModal';
+import { Actions, Router, Scene  } from "react-native-router-flux";
 
-export default function TransactionsPage({navigation})
+export default  function TransactionsPage ({navigation})
 {
+     
     const [date, setDate] = useState(new Date());
     const [message, setMessage] = useState('');
     const [cost, setCost] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [modal2Visible, setModal2Visible] = useState(false);
-    const [refresh, setRefresh] = useState('');
+
     var user = firebase.auth().currentUser;
 
     var uid;
@@ -42,9 +43,6 @@ export default function TransactionsPage({navigation})
              ...snapshot.val(),
              key: snapshot.key,
            });
-           console.log(format(date, 'MMMM, yyyy'));
-         console.log("here is the key" + userData[0].key);
-         console.log(userData);
      });
 
     /**
@@ -65,24 +63,11 @@ export default function TransactionsPage({navigation})
         setModalVisible(!modalVisible);
     }
 
-    const deleteTransaction = key => {
-        console.log("this is the key " + key)
-        firebase.database().ref("/transaction/"+key).remove();
-        setRefresh([]);
-    }
-
     const closeModal = () => {
         setModalVisible(!modalVisible);
     }
 
-    const editTransaction = (item) => {
-        console.log("hii");
-        console.log("this is item " + item.category);
-        console.log("this is item key " + item.key);
-        <EditModal itemKey={item.key} item={item}></EditModal>
-    }
-
-    const RightActions = (progress, dragX, item) => {
+    const RightActions = (progress, dragX, items) => {
 
         const scale = dragX.interpolate({
             inputRange: [-100, 0],
@@ -98,7 +83,7 @@ export default function TransactionsPage({navigation})
                     paddingHorizontal: 10,
                     fontWeight: '600',
                     transform: [{ scale }]
-                    }}onPress={() => deleteTransaction(item.key)}>
+                    }}onPress={() => {Actions.scene2({itemKey : items.key, visible : true})}}>
                     Delete
                 </Animated.Text>
             </View>
@@ -109,13 +94,11 @@ export default function TransactionsPage({navigation})
                     paddingHorizontal: 10,
                     fontWeight: '600',
                     transform: [{ scale }]
-                    }} onPress={() => editTransaction}>
+                    }}onPress = {() => {Actions.scene1({item: items, itemKey : items.key, visible : true})}}>
                     Edit
                 </Animated.Text>
             </View>
-            {/* <EditModal itemKey={item.key} item={item}></EditModal> */}
         </>
-          
         )
     }
 
@@ -234,9 +217,8 @@ export default function TransactionsPage({navigation})
                                         <Text style={styles.category}> {item.category}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                        {/* <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/> */}
-                                        <DeleteModal itemKey={item.key}></DeleteModal>
                                         <EditModal itemKey={item.key} item={item}></EditModal>
+                                        <DeleteModal itemKey={item.key}></DeleteModal>
                                         <Text>${item.cost}</Text>
                                     </View>
                                 </View>
@@ -261,9 +243,13 @@ export default function TransactionsPage({navigation})
                                                 <Text style={styles.category}> {item.category}</Text>
                                             </View>
                                             <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                                {/* <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
-                                                <EditModal itemKey={item.key} item={item}></EditModal> */}
-                                                <Text>${item.cost}</Text>
+                                                <Router>
+                                                    <Scene key = "root">
+                                                        <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} visible = {false} hideNavBar />
+                                                        <Scene key="scene2" component={DeleteModal} itemKey={item.key} visible = {false} hideNavBar />
+                                                    </Scene>
+                                                </Router>
+                                                <Text >${item.cost}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -273,7 +259,6 @@ export default function TransactionsPage({navigation})
                     )}
                 />
             }
-
             <View style={styles.bottomContainer} >
                     <TouchableOpacity style={[{marginRight: '2%'}, buttons.long]} onPress={() => console.log("hi there")} >
                         <Text style={styles.buttonTitle}>Expenses</Text>

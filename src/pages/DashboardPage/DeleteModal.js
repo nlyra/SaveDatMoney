@@ -8,19 +8,24 @@ import { firebase } from '../../firebase/config';
 import { isThisSecond } from 'date-fns';
 import { Divider } from 'react-native-paper';
 
+
 class DeleteModal extends Component {
    constructor(props){
       super(props);
-      
       this.state = {
          modalVisible: false,
+         //modalVisible2: props.visible
       }
    }
 
    toggleModal(visible) {
-      this.setState({ modalVisible: visible });
+      this.setState({ modalVisible: visible});
    }
-   
+
+   toggleModal2(visible) {
+      this.setState({ modalVisible2: visible});
+   }
+
    render() {
 
       const deleteTransaction = () => {
@@ -30,20 +35,28 @@ class DeleteModal extends Component {
          this.toggleModal(!this.state.modalVisible)
       }
 
+      const deleteTransaction2 = () => {
+         console.log("keyyyy" + this.props.itemKey)
+
+         firebase.database().ref("/transaction/"+this.props.itemKey).remove();
+         this.toggleModal2(false)
+      }
+
       return (
 
          <View style = {styles.container}>
-            {Platform.OS === 'ios' ?
-            <Modal animationType="slide" transparent={true} visible={this.state.modalVisible} onRequestClose={() => {
+
+            {Platform.OS === 'ios' ? 
+            <Modal animationType="slide" transparent={true} visible={this.state.modalVisible2} onRequestClose={() => {
             Alert.alert("Modal has been closed.");}}>
                <View style={styles.centeredView}>
                   <View style={styles.modalView}>
                      <Text style={styles.modalText}>Delete</Text>
                      <View style={styles.modalButtons}>
-                        <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
+                        <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteTransaction2}>
                            <Text style={styles.buttonTitle}>Yes</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight style={buttons.standard} color={colors.primary} onPress={deleteTransaction}>
+                        <TouchableHighlight style={buttons.standard} color={colors.primary} onPress={() => {this.toggleModal2(!this.state.modalVisible2)}}>
                            <Text style={styles.buttonTitle}>Cancel</Text>
                         </TouchableHighlight>
                      </View>
@@ -68,24 +81,14 @@ class DeleteModal extends Component {
                         </View>
                     </View>
             </WebModal>
-            }
             
+            }
             {Platform.OS === 'ios' ?
-                <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
-                    <Animated.Text
-                        style={{
-                        color: 'white',
-                        paddingHorizontal: 10,
-                        fontWeight: '600',
-                        transform: [{ scale }]
-                        }}onPress={() => deleteTransaction(item.key)}>
-                        Delete
-                    </Animated.Text>
-                </View>
+            null
             :
-               <View style={[{justifyContent: 'space-between'}, {padding: 0}, {flex: 0}]}>
-                  <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => this.toggleModal(true)}/>
-               </View>
+            <View style={[{justifyContent: 'space-between'}, {padding: 0}, {flex: 0}]}>
+               <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => this.toggleModal(true)}/>
+            </View>
             }
          </View>
          

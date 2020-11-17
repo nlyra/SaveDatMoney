@@ -10,18 +10,21 @@ import { isThisSecond } from 'date-fns';
 class EditModal extends Component {
    constructor(props){
       super(props);
-      
       this.state = {
          category: props.item.category,
          description: props.item.description,
          cost: props.item.cost,
          modalVisible: false,
-         //dragX: props.item.dragX,
+         modalVisible2: props.visible
       }
    }
 
    toggleModal(visible) {
       this.setState({ modalVisible: visible });
+   }
+
+   toggleModal2(visible) {
+      this.setState({ modalVisible2: visible });
    }
    
    render() {
@@ -38,11 +41,23 @@ class EditModal extends Component {
          this.toggleModal(!this.state.modalVisible)
       }
 
+      const editTransaction2 = () => {
+         console.log("keyyyy" + this.props.itemKey)
+         var updates = {};
+         updates['/category'] = this.state.category;
+         updates['/description'] = this.state.description;
+         updates['/cost'] = this.state.cost;
+
+         firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
+
+         this.toggleModal2(false)
+      }
+
       return (
 
          <View style = {styles.modalContainer}>
             {Platform.OS === 'ios' ?
-            <Modal animationType="slide" transparent={true} visible={this.state.modalVisible} onRequestClose={() => {
+            <Modal animationType="slide" transparent={true} visible={this.state.modalVisible2} onRequestClose={() => {
             Alert.alert("Modal has been closed.");}}>
                   <View style={styles.modalView}>
                      <Text style={styles.modalText}>Edit</Text>
@@ -74,10 +89,10 @@ class EditModal extends Component {
                         autoCapitalize="none"
                      />
                      <View style={styles.modalButtons}>
-                        <TouchableHighlight style={buttons.standard} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
+                        <TouchableHighlight style={buttons.standard} onPress={() => {this.toggleModal2(!this.state.modalVisible2)}}>
                            <Text style={styles.buttonTitle}>Cancel</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight style={buttons.standard} onPress={editTransaction}>
+                        <TouchableHighlight style={buttons.standard} onPress={editTransaction2}>
                            <Text style={styles.buttonTitle}>Save</Text>
                         </TouchableHighlight>
                      </View>
@@ -128,23 +143,12 @@ class EditModal extends Component {
                   </View>
             </WebModal>
             }
-            
             {Platform.OS === 'ios' ?
-               <View style={{ backgroundColor: 'green', justifyContent: 'center' }}>
-                  <Animated.Text
-                     style={{
-                     color: 'white',
-                     paddingHorizontal: 10,
-                     fontWeight: '600',
-                     transform: [{ scale }]
-                     }} onPress={() => editTransaction}>
-                     Edit
-                  </Animated.Text>
-               </View>
+            null
             :
-               <View style={[{justifyContent: 'space-between'}, {padding: 0}, {flex: 0}]}>
-                  <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => this.toggleModal(true)}/>
-               </View>
+            <View style={[{justifyContent: 'space-between'}, {padding: 0}, {flex: 0}]}>
+               <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => this.toggleModal(true)}/>
+            </View>
             }
          </View>
          
