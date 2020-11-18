@@ -4,8 +4,6 @@ import { colors, padding, fonts, styles } from '../../stdStyles';
 export default StyleSheet.create({
     mainContainer: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
     },
     topContainer: {
         flex: 1,
@@ -118,7 +116,23 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    centeredView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     modalView: {
+        ...Platform.select({
+            ios: {
+                width: '100%'
+            },
+            android: {
+                width: '100%'
+            },
+            default: {
+              // other platforms, web for example
+              width: '50%'
+            }
+        }),
         margin: 30,
         backgroundColor: "white",
         borderRadius: 20,
