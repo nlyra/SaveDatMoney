@@ -51,7 +51,8 @@ class DeleteModal extends Component {
             Alert.alert("Modal has been closed.");}}>
                <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                     <Text style={styles.modalText}>Delete</Text>
+                     <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
+                     <Divider></Divider> 
                      <View style={styles.modalButtons}>
                         <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteTransaction2}>
                            <Text style={styles.buttonTitle}>Yes</Text>
@@ -66,6 +67,7 @@ class DeleteModal extends Component {
             :
             <WebModal animationType="slide" transparent={true} visible = {this.state.modalVisible} onRequestClose={() => {
                Alert.alert("Modal has been closed.");}}>
+                  <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
                         <Divider></Divider> 
@@ -80,6 +82,7 @@ class DeleteModal extends Component {
                             </View>
                         </View>
                     </View>
+                  </View>
             </WebModal>
             
             }

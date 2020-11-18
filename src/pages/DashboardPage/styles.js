@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     title: {
         alignItems: 'center'
@@ -17,7 +17,23 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    centeredView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     modalView: {
+        ...Platform.select({
+            ios: {
+                width: '100%'
+            },
+            android: {
+                width: '100%'
+            },
+            default: {
+              // other platforms, web for example
+              width: '50%'
+            }
+        }),
         margin: 30,
         backgroundColor: "white",
         borderRadius: 20,
@@ -31,7 +47,7 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
     },
     modalButtonTitle: {
         color: 'white',

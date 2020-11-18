@@ -4,13 +4,14 @@ import { colors, padding, fonts, styles } from '../../stdStyles';
 export default StyleSheet.create({
     mainContainer: {
         flex: 1,
-
+        // alignItems: 'center',
+        // justifyContent: 'center',
     },
     topContainer: {
         flex: 1,
         alignItems: 'center',  
         justifyContent: 'center',  
-        marginTop: 18 
+        marginTop: 18,
     },
     calendar: {
         flex: 1,
