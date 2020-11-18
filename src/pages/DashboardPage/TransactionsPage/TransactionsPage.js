@@ -144,7 +144,7 @@ export default  function TransactionsPage ({navigation})
                                 autoCapitalize="none"
                             />
                             <View style={styles.modalButtons}>
-                                <TouchableHighlight style={buttons.standard} onPress={closeModal}>
+                                <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
                                     <Text style={styles.buttonTitle}>Cancel</Text>
                                 </TouchableHighlight>
                                 <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
@@ -188,7 +188,7 @@ export default  function TransactionsPage ({navigation})
                                     autoCapitalize="none"
                                 />
                                 <View style={styles.modalButtons}>
-                                    <TouchableHighlight style={buttons.standard} onPress={closeModal}>
+                                    <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
                                         <Text style={styles.buttonTitle}>Cancel</Text>
                                     </TouchableHighlight>
                                     <TouchableHighlight style={buttons.standard} onPress={addTransaction}>

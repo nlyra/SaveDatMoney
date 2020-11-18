@@ -56,11 +56,11 @@ class DeleteModal extends Component {
                         <Divider></Divider> 
                         <View style={styles.modalButtons}>
                            <View style={{marginTop: 10, flexDirection: 'row', justifyContent: "center", alignItems: 'center'}}>
-                              <TouchableHighlight style={buttons.standard} color={colors.primary} onPress={() => {this.toggleModal2(!this.state.modalVisible2)}}>
-                                 <Text style={styles.buttonTitle}>Cancel</Text>
+                              <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} color={colors.primary} onPress={() => {this.toggleModal2(!this.state.modalVisible2)}}>
+                                 <Text style={styles.modalButtonTitle}>Cancel</Text>
                               </TouchableHighlight>
                               <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteTransaction2}>
-                                 <Text style={styles.buttonTitle}>Yes</Text>
+                                 <Text style={styles.modalButtonTitle}>Yes</Text>
                               </TouchableHighlight>
                            </View>
                         </View>
@@ -77,7 +77,7 @@ class DeleteModal extends Component {
                         <Divider></Divider> 
                         <View style={styles.modalButtons}>
                             <View style={{marginTop: 10, flexDirection: 'row', justifyContent: "center", alignItems: 'center'}}>
-                                <TouchableHighlight style={buttons.standard} color={colors.primary} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
+                                <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} color={colors.primary} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
                                     <Text style={styles.modalButtonTitle}>Cancel</Text>
                                 </TouchableHighlight>
                                 <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteTransaction}>

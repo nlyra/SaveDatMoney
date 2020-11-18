@@ -90,7 +90,7 @@ class EditModal extends Component {
                         autoCapitalize="none"
                      />
                      <View style={styles.modalButtons}>
-                        <TouchableHighlight style={buttons.standard} onPress={() => {this.toggleModal2(!this.state.modalVisible2)}}>
+                        <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={() => {this.toggleModal2(!this.state.modalVisible2)}}>
                            <Text style={styles.buttonTitle}>Cancel</Text>
                         </TouchableHighlight>
                         <TouchableHighlight style={buttons.standard} onPress={editTransaction2}>
@@ -134,7 +134,7 @@ class EditModal extends Component {
                            autoCapitalize="none"
                         />
                         <View style={styles.modalButtons}>
-                           <TouchableHighlight style={buttons.standard} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
+                           <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
                               <Text style={styles.buttonTitle}>Cancel</Text>
                            </TouchableHighlight>
                            <TouchableHighlight style={buttons.standard} onPress={editTransaction}>
