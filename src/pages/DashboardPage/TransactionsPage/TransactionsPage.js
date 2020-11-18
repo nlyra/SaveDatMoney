@@ -7,13 +7,14 @@ import { buttons, colors } from '../../stdStyles';
 import {format} from 'date-fns'; 
 import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
-import { Divider, DataTable} from 'react-native-paper';
+import { Divider, ToggleButton } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import EditModal from './EditModal';
 import render from 'react-native-web/dist/cjs/exports/render';
 import DeleteModal from '../DeleteModal';
 import { Actions, Router, Scene  } from "react-native-router-flux";
+import SwitchSelector from "react-native-switch-selector";
 
 export default  function TransactionsPage ({navigation})
 {
@@ -24,6 +25,7 @@ export default  function TransactionsPage ({navigation})
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [radio, setRadio] = React.useState('expense');
 
     var user = firebase.auth().currentUser;
 
@@ -51,7 +53,7 @@ export default  function TransactionsPage ({navigation})
      */
 
     const addTransaction = (e) => {
-        var transaction1 = { category: category, cost: cost, description: description, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
+        var transaction1 = { category: category, cost: cost, description: description, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
         firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");
 
@@ -116,6 +118,19 @@ export default  function TransactionsPage ({navigation})
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={styles.modalText}>Add</Text>
+                            <SwitchSelector style={{padding:10}}
+                                    initial={0}
+                                    onPress={value => setRadio(value)}
+                                    textColor={colors.primary} 
+                                    selectedColor={colors.white}
+                                    buttonColor={colors.primary}
+                                    borderColor={colors.primary}
+                                    hasPadding
+                                    options={[
+                                        { label: "Expense", value: "expense" }, 
+                                        { label: "Income", value: "income"}
+                                    ]}
+                            />
                             <TextInput
                                 style={styles.input}
                                 placeholder='Category'
@@ -160,6 +175,23 @@ export default  function TransactionsPage ({navigation})
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
                                 <Text style={styles.modalText}>Add</Text>
+                                {/* <ToggleButton.Row onValueChange={value => setValue(value)} value={value}>
+                                    <ToggleButton text="expense" value="expense" />
+                                    <ToggleButton text="income" value="income" />
+                                </ToggleButton.Row> */}
+                                <SwitchSelector style={{padding:10}}
+                                    initial={0}
+                                    onPress={value => setRadio(value)}
+                                    textColor={colors.primary} 
+                                    selectedColor={colors.white}
+                                    buttonColor={colors.primary}
+                                    borderColor={colors.primary}
+                                    hasPadding
+                                    options={[
+                                        { label: "Expense", value: "expense" }, //images.feminino = require('./path_to/assets/img/feminino.png')
+                                        { label: "Income", value: "income"} //images.masculino = require('./path_to/assets/img/masculino.png')
+                                    ]}
+                                />
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Category'
@@ -262,13 +294,13 @@ export default  function TransactionsPage ({navigation})
                 />
             }
             <View style={styles.bottomContainer} >
-                    <TouchableOpacity style={[{marginRight: '2%'}, buttons.long]} onPress={() => console.log("hi there")} >
+                    {/* <TouchableOpacity style={[{marginRight: '2%'}, buttons.long]} onPress={() => console.log("hi there")} >
                         <Text style={styles.buttonTitle}>Expenses</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <MaterialCommunityIcons style={styles.addContainer} name="plus-box" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
-                    <TouchableOpacity style={buttons.long} onPress={() => console.log("hi there")}>
+                    {/* <TouchableOpacity style={buttons.long} onPress={() => console.log("hi there")}>
                         <Text style={styles.buttonTitle}>Income</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
             </View>
         </View>
     );
