@@ -12,6 +12,18 @@ export default StyleSheet.create({
         marginTop: 18,
     },
     calendar: {
+        ...Platform.select({
+            ios: {
+                width: '100%'
+            },
+            android: {
+                width: '100%'
+            },
+            default: {
+              // other platforms, web for example
+              width: '50%'
+            }
+        }),
         flex: 1,
         alignItems: 'center', 
         justifyContent: 'space-between',
@@ -203,7 +215,19 @@ export default StyleSheet.create({
         padding: 8,
         flexDirection: 'row',
         marginVertical: 8,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        ...Platform.select({
+            ios: {
+                width: '100%'
+            },
+            android: {
+                width: '100%'
+            },
+            default: {
+              // other platforms, web for example
+              width: '50%'
+            }
+        }),
     },
     description: {
         fontSize: 15,

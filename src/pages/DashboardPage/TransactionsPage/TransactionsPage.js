@@ -209,17 +209,19 @@ export default  function TransactionsPage ({navigation})
                     ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
                     keyExtractor = {(col) => col.id}
                     renderItem={({item})=> (
-                        <View style={styles.feedItem}>
-                            <View style={{flex:1}}>
-                                <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
-                                    <View>
-                                        <Text style={styles.description}> {item.description}</Text>
-                                        <Text style={styles.category}> {item.category}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                        <DeleteModal itemKey={item.key}></DeleteModal>
-                                        <EditModal itemKey={item.key} item={item}></EditModal> 
-                                        <Text>${item.cost}</Text>
+                        <View style={styles.centeredView}>
+                            <View style={styles.feedItem}>
+                                <View style={{flex:1}}>
+                                    <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                        <View>
+                                            <Text style={styles.description}> {item.description}</Text>
+                                            <Text style={styles.category}> {item.category}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
+                                            <DeleteModal itemKey={item.key}></DeleteModal>
+                                            <EditModal itemKey={item.key} item={item}></EditModal> 
+                                            <Text>${item.cost}</Text>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
@@ -234,7 +236,7 @@ export default  function TransactionsPage ({navigation})
                     keyExtractor = {(col) => col.id}
                     renderItem={({item})=> (
                         <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
-                            <View style={{ paddingVertical: 1 }}>
+                            <View style={{ paddingVertical: 1, justifyContent: 'center', alignItems: 'center'}}>
                                 <View style={styles.feedItem}>
                                     <View style={{flex:1}}>
                                         <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
@@ -242,16 +244,16 @@ export default  function TransactionsPage ({navigation})
                                                 <Text style={styles.description}> {item.description}</Text>
                                                 <Text style={styles.category}> {item.category}</Text>
                                             </View>
-                                            <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                                <Router>
+                                            <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                                <Text >${item.cost}</Text>
+                                            </View>
+                                        </View>
+                                        <Router>
                                                     <Scene key = "root">
                                                         <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} visible = {false} hideNavBar />
                                                         <Scene key="scene2" component={DeleteModal} itemKey={item.key} visible = {false} hideNavBar />
                                                     </Scene>
-                                                </Router>
-                                                <Text >${item.cost}</Text>
-                                            </View>
-                                        </View>
+                                        </Router>
                                     </View>
                                 </View>
                             </View>

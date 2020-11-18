@@ -29,10 +29,12 @@ const MonthPicker: React.FC<MonthPickerProps> = ({date, onChange}) => {
 
     return (
 
-        <View style={styles.calendar}>
-                <IconButton icon = "arrow-left" onPress = {handlePrev}/>
-                <Text>{format(date, 'MMMM, yyyy')} </Text>
-                <IconButton icon = "arrow-right" onPress = {handleNext}/>
+        <View style={styles.centeredView}>
+            <View style={styles.calendar}>
+                    <IconButton icon = "arrow-left" onPress = {handlePrev}/>
+                    <Text>{format(date, 'MMMM, yyyy')} </Text>
+                    <IconButton icon = "arrow-right" onPress = {handleNext}/>
+            </View>
         </View>
     )
 }

@@ -59,6 +59,7 @@ class EditModal extends Component {
             {Platform.OS === 'ios' ?
             <Modal animationType="slide" transparent={true} visible={this.state.modalVisible2} onRequestClose={() => {
             Alert.alert("Modal has been closed.");}}>
+               <View style={styles.centeredView}>
                   <View style={styles.modalView}>
                      <Text style={styles.modalText}>Edit</Text>
                      <TextInput
@@ -97,6 +98,7 @@ class EditModal extends Component {
                         </TouchableHighlight>
                      </View>
                   </View>
+               </View>
             </Modal>
             :
             <WebModal animationType="slide" transparent={true} visible = {this.state.modalVisible} onRequestClose={() => {
