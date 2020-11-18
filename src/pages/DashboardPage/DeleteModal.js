@@ -14,7 +14,7 @@ class DeleteModal extends Component {
       super(props);
       this.state = {
          modalVisible: false,
-         //modalVisible2: props.visible
+         modalVisible2: props.visible
       }
    }
 
