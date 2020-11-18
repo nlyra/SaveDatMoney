@@ -217,8 +217,8 @@ export default  function TransactionsPage ({navigation})
                                         <Text style={styles.category}> {item.category}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                        <EditModal itemKey={item.key} item={item}></EditModal>
                                         <DeleteModal itemKey={item.key}></DeleteModal>
+                                        <EditModal itemKey={item.key} item={item}></EditModal> 
                                         <Text>${item.cost}</Text>
                                     </View>
                                 </View>
