@@ -44,6 +44,8 @@ export default StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
         height: 48,
         borderRadius: 5,
         alignItems: "center",
@@ -68,5 +70,42 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16
     },
-
+    modalView: {
+        alignSelf: "center",
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 9,
+        ...Platform.select({
+            ios: {
+                width: '100%'
+            },
+            android: {
+                width: '100%'
+            },
+            default: {
+              // other platforms, web for example
+              width: '25%'
+            }
+          })
+      },
+    modalButtonTitle: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: "bold"
+    },
+    messageText: {
+    fontSize: 16,
+    color: "black",
+    paddingLeft: 20
+    }
 })

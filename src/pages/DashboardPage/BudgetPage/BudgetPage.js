@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
-import {format} from 'date-fns'; 
+import {format} from 'date-fns';
 import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
 import { Divider, DataTable} from 'react-native-paper';
@@ -27,8 +27,8 @@ export default function BudgetPage({navigation})
     var userData = [];
 
     if (user != null) {
-    uid = user.uid;  
-    } 
+    uid = user.uid;
+    }
 
     /**
      *
@@ -67,12 +67,12 @@ export default function BudgetPage({navigation})
         console.log(userData);
     });
 
-    return ( 
-        
-        <View style={styles.mainContainer}> 
+    return (
+
+        <View style={styles.mainContainer}>
 
             <View style={styles.topContainer}>
-            <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> 
+            <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
 
                 {/* If user  */}
                 {Platform.OS === 'ios' ?
@@ -164,9 +164,9 @@ export default function BudgetPage({navigation})
                         </View>
                     </WebModal>
                 }
-    
+
             </View>
-  
+
             <View style={styles.bodyContainer}>
 
                 <DataTable>
@@ -179,19 +179,19 @@ export default function BudgetPage({navigation})
                     <DataTable.Title delete>Edit</DataTable.Title>
 
                     </DataTable.Header>
-                        <FlatList 
+                        <FlatList
                             data={userData}
                             keyExtractor = {(col) => col.id}
                             renderItem={({item})=> (
                                 <DataTable.Row>
-                                    <DataTable.Cell category>{item.name}</DataTable.Cell>
+                                    <DataTable.Cell category>{item.category}</DataTable.Cell>
                                     <DataTable.Cell description >{item.description}</DataTable.Cell>
                                     <DataTable.Cell budget >{'$' + item.budget}</DataTable.Cell>
                                     <DataTable.Cell delete>
-                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteTransaction(item.key)}/>
+                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteCategory(item.key)}/>
                                     </DataTable.Cell>
                                     <DataTable.Cell delete>
-                                        <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editTransaction(item.key)}/>
+                                        <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editCategory(item.key)}/>
                                     </DataTable.Cell>
                                     <Divider />
                                 </DataTable.Row>
