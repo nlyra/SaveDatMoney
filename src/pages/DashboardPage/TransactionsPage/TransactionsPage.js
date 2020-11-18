@@ -294,13 +294,7 @@ export default  function TransactionsPage ({navigation})
                 />
             }
             <View style={styles.bottomContainer} >
-                    {/* <TouchableOpacity style={[{marginRight: '2%'}, buttons.long]} onPress={() => console.log("hi there")} >
-                        <Text style={styles.buttonTitle}>Expenses</Text>
-                    </TouchableOpacity> */}
-                    <MaterialCommunityIcons style={styles.addContainer} name="plus-box" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
-                    {/* <TouchableOpacity style={buttons.long} onPress={() => console.log("hi there")}>
-                        <Text style={styles.buttonTitle}>Income</Text>
-                    </TouchableOpacity> */}
+                <MaterialCommunityIcons style={styles.addContainer} name="plus-box" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
             </View>
         </View>
     );

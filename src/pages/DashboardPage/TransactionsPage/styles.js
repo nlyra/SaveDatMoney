@@ -42,8 +42,7 @@ export default StyleSheet.create({
         flex: 3,
         width: '100%',
         alignItems: 'flex-end',
-        flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         marginLeft: '1%',
         marginBottom: '2%'
     },
@@ -203,7 +202,7 @@ export default StyleSheet.create({
     },
     addContainer: {
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         marginRight: '2%'
     },
     feed: {
