@@ -253,7 +253,11 @@ export default function TransactionsPage ({navigation})
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
                                             <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal> 
-                                            <Text>${item.cost}</Text>
+                                            {item.expenseOrIncome === "expense" ? 
+                                                <Text style={{color: colors.danger}} >-${item.cost}</Text>
+                                            : 
+                                                <Text style={{color: colors.primary}} >${item.cost}</Text>
+                                            }
                                         </View>
                                     </View>
                                 </View>
