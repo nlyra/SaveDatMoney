@@ -18,6 +18,7 @@ class DeleteModal extends Component {
       }
    }
 
+   
    toggleModal(visible) {
       this.setState({ modalVisible: visible});
    }
@@ -26,12 +27,19 @@ class DeleteModal extends Component {
       this.setState({ modalVisible2: visible});
    }
 
+
    render() {
+
+      const _onPress = () => {
+         console.log("getting called");
+         this.props.onPressModelItem()
+       }
 
       const deleteTransaction = () => {
          console.log("keyyyy" + this.props.itemKey)
 
          firebase.database().ref("/transaction/"+this.props.itemKey).remove();
+         _onPress()
          this.toggleModal(!this.state.modalVisible)
       }
 
@@ -39,6 +47,7 @@ class DeleteModal extends Component {
          console.log("keyyyy" + this.props.itemKey)
 
          firebase.database().ref("/transaction/"+this.props.itemKey).remove();
+         _onPress()
          this.toggleModal2(false)
       }
 

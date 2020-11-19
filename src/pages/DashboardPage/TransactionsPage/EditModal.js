@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { firebase } from '../../../firebase/config';
 import { isThisSecond } from 'date-fns';
 
-class EditModal extends Component {
+export default class EditModal extends Component {
    constructor(props){
       super(props);
       this.state = {
@@ -37,7 +37,9 @@ class EditModal extends Component {
          updates['/cost'] = this.state.cost;
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
-
+         this.forceUpdate();
+         console.log("edittttt");
+         _onPress()
          this.toggleModal(!this.state.modalVisible)
       }
 
@@ -49,9 +51,16 @@ class EditModal extends Component {
          updates['/cost'] = this.state.cost;
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
-
+         this.forceUpdate();
+         _onPress()
          this.toggleModal2(false)
       }
+
+      const _onPress = () => {
+         console.log("getting called");
+         this.props.onPressModelItem()
+       }
+       
 
       return (
 
@@ -157,4 +166,3 @@ class EditModal extends Component {
       )
    }
 }
-export default EditModal

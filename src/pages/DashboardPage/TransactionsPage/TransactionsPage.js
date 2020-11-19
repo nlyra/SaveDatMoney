@@ -16,7 +16,7 @@ import DeleteModal from '../DeleteModal';
 import { Actions, Router, Scene  } from "react-native-router-flux";
 import SwitchSelector from "react-native-switch-selector";
 
-export default  function TransactionsPage ({navigation})
+export default function TransactionsPage ({navigation})
 {
      
     const [date, setDate] = useState(new Date());
@@ -25,7 +25,8 @@ export default  function TransactionsPage ({navigation})
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [radio, setRadio] = React.useState('expense');
+    const [radio, setRadio] = useState('expense');
+    const [refresh, setRefresh] = useState("")
 
     var user = firebase.auth().currentUser;
 
@@ -85,7 +86,7 @@ export default  function TransactionsPage ({navigation})
                     paddingHorizontal: 10,
                     fontWeight: '600',
                     transform: [{ scale }]
-                    }}onPress={() => {Actions.scene2({itemKey : items.key, visible : true})}}>
+                    }}onPress={() => {Actions.scene2({itemKey : items.key, visible : true, onPressModelItem : _onPressModelItem})}}>
                     Delete
                 </Animated.Text>
             </View>
@@ -96,12 +97,17 @@ export default  function TransactionsPage ({navigation})
                     paddingHorizontal: 10,
                     fontWeight: '600',
                     transform: [{ scale }]
-                    }}onPress = {() => {Actions.scene1({item: items, itemKey : items.key, visible : true})}}>
+                    }}onPress = {() => {Actions.scene1({item: items, itemKey : items.key, visible : true , onPressModelItem : _onPressModelItem})}}>
                     Edit
                 </Animated.Text>
             </View>
         </>
         )
+    }
+
+    const _onPressModelItem = () => {
+        console.log("ONPRESSSSSS");
+        setRefresh({})
     }
 
     return ( 
@@ -250,8 +256,8 @@ export default  function TransactionsPage ({navigation})
                                             <Text style={styles.category}> {item.category}</Text>
                                         </View>
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                            <DeleteModal itemKey={item.key}></DeleteModal>
-                                            <EditModal itemKey={item.key} item={item}></EditModal> 
+                                            <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
+                                            <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal> 
                                             <Text>${item.cost}</Text>
                                         </View>
                                     </View>
@@ -281,10 +287,10 @@ export default  function TransactionsPage ({navigation})
                                             </View>
                                         </View>
                                         <Router>
-                                                    <Scene key = "root">
-                                                        <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} visible = {false} hideNavBar />
-                                                        <Scene key="scene2" component={DeleteModal} itemKey={item.key} visible = {false} hideNavBar />
-                                                    </Scene>
+                                            <Scene key = "root">
+                                                <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                <Scene key="scene2" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                            </Scene>
                                         </Router>
                                     </View>
                                 </View>
