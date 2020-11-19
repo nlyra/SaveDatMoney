@@ -59,8 +59,7 @@ export default class EditModal extends Component {
       const _onPress = () => {
          console.log("getting called");
          this.props.onPressModelItem()
-       }
-       
+      }
 
       return (
 
@@ -92,7 +91,7 @@ export default class EditModal extends Component {
                      <TextInput
                         style={styles.input}
                         placeholderTextColor="black"
-                        placeholder='Cost'
+                        placeholder='Amount'
                         onChangeText={(text) => this.setState({cost: text})}
                         value={this.state.cost}
                         underlineColorAndroid="transparent"
@@ -136,7 +135,7 @@ export default class EditModal extends Component {
                         <TextInput
                            style={styles.input}
                            placeholderTextColor="black"
-                           placeholder='Cost'
+                           placeholder='Amount'
                            onChangeText={(text) => this.setState({cost: text})}
                            value={this.state.cost}
                            underlineColorAndroid="transparent"

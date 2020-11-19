@@ -79,7 +79,7 @@ export default function TransactionsPage ({navigation})
 
         return (
             <>
-            <View style={{ backgroundColor: 'red', justifyContent: 'center' }}>
+            <View style={{ backgroundColor: colors.danger, justifyContent: 'center' }}>
                 <Animated.Text
                     style={{
                     color: 'white',
@@ -90,7 +90,7 @@ export default function TransactionsPage ({navigation})
                     Delete
                 </Animated.Text>
             </View>
-            <View style={{ backgroundColor: 'green', justifyContent: 'center' }}>
+            <View style={{ backgroundColor: colors.warning, justifyContent: 'center' }}>
                 <Animated.Text
                     style={{
                     color: 'white',
@@ -106,7 +106,6 @@ export default function TransactionsPage ({navigation})
     }
 
     const _onPressModelItem = () => {
-        console.log("ONPRESSSSSS");
         setRefresh({})
     }
 
@@ -158,7 +157,7 @@ export default function TransactionsPage ({navigation})
                             <TextInput
                                 style={styles.input}
                                 placeholderTextColor="black"
-                                placeholder='Cost'
+                                placeholder='Amount'
                                 onChangeText={(text) => setCost(text)}
                                 value={cost}
                                 underlineColorAndroid="transparent"
@@ -181,10 +180,6 @@ export default function TransactionsPage ({navigation})
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
                                 <Text style={styles.modalText}>Add</Text>
-                                {/* <ToggleButton.Row onValueChange={value => setValue(value)} value={value}>
-                                    <ToggleButton text="expense" value="expense" />
-                                    <ToggleButton text="income" value="income" />
-                                </ToggleButton.Row> */}
                                 <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
@@ -194,8 +189,8 @@ export default function TransactionsPage ({navigation})
                                     borderColor={colors.primary}
                                     hasPadding
                                     options={[
-                                        { label: "Expense", value: "expense" }, //images.feminino = require('./path_to/assets/img/feminino.png')
-                                        { label: "Income", value: "income"} //images.masculino = require('./path_to/assets/img/masculino.png')
+                                        { label: "Expense", value: "expense" }, 
+                                        { label: "Income", value: "income"} 
                                     ]}
                                 />
                                 <TextInput
@@ -219,7 +214,7 @@ export default function TransactionsPage ({navigation})
                                 <TextInput
                                     style={styles.input}
                                     placeholderTextColor="black"
-                                    placeholder='Cost'
+                                    placeholder='Amount'
                                     onChangeText={(text) => setCost(text)}
                                     value={cost}
                                     underlineColorAndroid="transparent"
@@ -283,7 +278,12 @@ export default function TransactionsPage ({navigation})
                                                 <Text style={styles.category}> {item.category}</Text>
                                             </View>
                                             <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                                <Text >${item.cost}</Text>
+                                                {item.expenseOrIncome === "expense" ? 
+                                                    <Text style={{color: colors.danger}} >-${item.cost}</Text>
+                                                : 
+                                                    <Text style={{color: colors.primary}} >${item.cost}</Text>
+                                                }
+                                                
                                             </View>
                                         </View>
                                         <Router>
