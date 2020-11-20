@@ -269,7 +269,7 @@ export default function BudgetPage ({navigation})
                                             {item.planned - item.spent >= 0 ? 
                                                 <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
                                             : 
-                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${abs(item.planned - item.spent)}</Text>
+                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                             }
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
@@ -297,8 +297,13 @@ export default function BudgetPage ({navigation})
                                                     <Text style={styles.category}> {item.category}</Text>
                                                 </View>
                                                 <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                                    <Text style={{color: colors.primary}} >${item.planned}</Text>
-                                                    <Text style={{color: colors.primary}} >${item.spent}</Text>   
+                                                    {item.planned - item.spent >= 0 ? 
+                                                    <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
+                                                    : 
+                                                    <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
+                                                    }
+                                                    <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
+                                                    <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
                                                 </View>
                                             </View>
                                             <Router>
