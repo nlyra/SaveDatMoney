@@ -6,7 +6,7 @@ import WebModal from 'modal-enhanced-react-native-web';
 import styles from './styles';
 
 export default function RegistrationPage({navigation})
-{   
+{
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -26,7 +26,7 @@ export default function RegistrationPage({navigation})
     /**
      * @param {React.FormEvent<HTMLFormElement>} e
      */
-    const doRegister = (e) => 
+    const doRegister = (e) =>
     {
         e.preventDefault(); // to prevent webpage from realoading on submit each time login is pressed.
 
@@ -38,14 +38,18 @@ export default function RegistrationPage({navigation})
         }
 
         firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
-            
+
             const uid = response.user.uid
             const data = {
                 id: uid,
                 email,
                 fullName,
             };
-            
+
+            firebase.auth().currentUser.updateProfile({
+              displayName: data.fullName,
+            });
+
             // Add data to user's db reference
             firebase.database().ref('users/' + uid).set(data).then(() => {
             }).catch((error) => {
@@ -60,7 +64,7 @@ export default function RegistrationPage({navigation})
                 setModalVisible(true);
 
             });
-            
+
         }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -136,7 +140,7 @@ export default function RegistrationPage({navigation})
                 :
                 <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
-                }}> 
+                }}>
                     <View style={styles.modalView}>
                         <Text style={styles.messageText}>Email verification link sent to {email}.</Text>
                         <TouchableHighlight style={styles.button} onPress={closeModal}>
@@ -144,7 +148,7 @@ export default function RegistrationPage({navigation})
                         </TouchableHighlight>
                     </View>
                 </WebModal>
-            } 
+            }
             </ScrollView>
         </View>
     )

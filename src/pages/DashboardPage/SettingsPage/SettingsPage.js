@@ -30,8 +30,15 @@ export default function SettingsPage({navigation})
     const [isThemeDark, setIsThemeDark] = React.useState(false);
 
     let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+    var user = firebase.auth().currentUser;
+    var uid;
+    var userData = [];
 
     const toggleTheme = () => setIsThemeDark(!isThemeDark);
+
+    const changePassword = () => {
+      user.updatePassword(password);
+    };
 
     // const preferences = React.useMemo(
     //   () => ({
@@ -45,36 +52,33 @@ export default function SettingsPage({navigation})
       user.updateEmail(email);
     };
 
-    var user = firebase.auth().currentUser;
-    var uid;
-    var userData = [];
-
     if (user != null) {
       uid = user.uid;
     };
 
     var userRef = firebase.database().ref("users");
     userRef.orderByChild("id").equalTo(uid).on("child_added", function(snapshot) {
-          userData.push({
-              ...snapshot.val(),
-             key: snapshot.key,
-          });
-          console.log("this is user data " + userData[0].fullName);
-          console.log(userData);
+        userData.push({
+            ...snapshot.val(),
+           key: snapshot.key,
+        });
+        console.log("this is user data " + userData[0].fullName);
+        console.log(userData);
     });
+
 
 
     return (
       <ScrollView>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Name</Text>
-          <Text style={styles.textStyle}>     Pedro Castano</Text>
+          <Text style={styles.textStyle}>     {user.displayName}</Text>
           <Text style={styles.modalText}>Change Password</Text>
           <TextInput
             style={styles.input}
             placeholderTextColor="black"
-            placeholder='Description'
-            onChangeText={(text) => setName(text)}
+            placeholder='Change Password'
+            onChangeText={(text) => setPassword(text)}
             value={password}
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -95,6 +99,9 @@ export default function SettingsPage({navigation})
               value={isThemeDark}
             />
           </ScrollView>
+          <TouchableHighlight style={buttons.standard}>
+              <Text style={styles.buttonTitle}>Save</Text>
+          </TouchableHighlight>
         </View>
       </ScrollView>
     )
