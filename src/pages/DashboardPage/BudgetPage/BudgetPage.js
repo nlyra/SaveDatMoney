@@ -21,9 +21,8 @@ export default function BudgetPage ({navigation})
      
     const [date, setDate] = useState(new Date());
     const [message, setMessage] = useState('');
-    const [cost, setCost] = useState('');
+    const [planned, setPlanned] = useState('');
     const [category, setCategory] = useState('');
-    const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [radio, setRadio] = useState('expense');
     const [refresh, setRefresh] = useState("")
@@ -53,15 +52,14 @@ export default function BudgetPage ({navigation})
      * @param {React.FormEvent<HTMLFormElement>} e
      */
 
-    const addTransaction = (e) => {
-        var transaction1 = { category: category, cost: cost, description: description, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
-        firebase.database().ref('/transaction').push(transaction1);
+    const addCategory = (e) => {
+        var category1 = { category: category, planned: planned, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
+        firebase.database().ref('/category').push(category1);
         console.log("pushed");
 
         // empties out fields for adding transaction 
         setCategory("");
-        setDescription("");
-        setCost(""); 
+        setPlanned(""); 
 
         setModalVisible(!modalVisible);
     }
@@ -179,7 +177,7 @@ export default function BudgetPage ({navigation})
                     Alert.alert("Modal has been closed.");}}>
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Add</Text>
+                                <Text style={styles.modalText}>Add category</Text>
                                 <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
@@ -205,18 +203,9 @@ export default function BudgetPage ({navigation})
                                 <TextInput
                                     style={styles.input}
                                     placeholderTextColor="black"
-                                    placeholder='Description'
-                                    onChangeText={(text) => setDescription(text)}
-                                    value={description}
-                                    underlineColorAndroid="transparent"
-                                    autoCapitalize="none"
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
-                                    placeholder='Amount'
-                                    onChangeText={(text) => setCost(text)}
-                                    value={cost}
+                                    placeholder='Planned spending'
+                                    onChangeText={(text) => setPlanned(text)}
+                                    value={planned}
                                     underlineColorAndroid="transparent"
                                     autoCapitalize="none"
                                 />
@@ -224,7 +213,7 @@ export default function BudgetPage ({navigation})
                                     <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
                                         <Text style={styles.buttonTitle}>Cancel</Text>
                                     </TouchableHighlight>
-                                    <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                    <TouchableHighlight style={buttons.standard} onPress={addCategory}>
                                         <Text style={styles.buttonTitle}>Save</Text>
                                     </TouchableHighlight>
                                 </View>
