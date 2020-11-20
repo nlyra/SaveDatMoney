@@ -233,7 +233,13 @@ export default function BudgetPage ({navigation})
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
                                             <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal> 
-                                            <Text style={{color: colors.primary}} >${item.planned}</Text>
+                                            {item.planned - item.spent >= 0 ? 
+                                                <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
+                                            : 
+                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${item.planned - item.spent}</Text>
+                                            }
+                                            <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
+                                            <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -258,7 +264,8 @@ export default function BudgetPage ({navigation})
                                                     <Text style={styles.category}> {item.category}</Text>
                                                 </View>
                                                 <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                                    <Text style={{color: colors.primary}} >${item.planned}</Text>   
+                                                    <Text style={{color: colors.primary}} >${item.planned}</Text>
+                                                    <Text style={{color: colors.primary}} >${item.spent}</Text>   
                                                 </View>
                                             </View>
                                             <Router>

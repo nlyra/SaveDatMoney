@@ -5,6 +5,7 @@ export const colors = {
     danger: '#F85757',
     warning: '#ffe700',
     white: '#FFFFFF',
+    black: '#000000',
 }
 
 export const fonts = {
