@@ -26,8 +26,35 @@ export default function BudgetPage ({navigation})
     const [modalVisible, setModalVisible] = useState(false);
     const [radio, setRadio] = useState('expense');
     const [refresh, setRefresh] = useState("");
-    // const [spent, setSpent] = useState(0);
+    const [spent, setSpent] = useState("");
 
+    // // Get how much was spent in each category
+    var refTransaction = firebase.database().ref("transaction");
+    var ref = firebase.database().ref("category");
+
+    // refTransaction.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + uid).on("child_added", function(snapshot){
+    //     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).orderByChild("category").equalTo(snapshot.category).on("child_added", function(snapshot) {
+    //         // userData.push({
+    //         //     ...snapshot.val(),
+    //         //     key: snapshot.key,
+    //         //   });
+    //     });
+    // });
+
+    // ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+        //       userData.push({
+        //           ...snapshot.val(),
+        //           key: snapshot.key,
+        //         });
+        //   });
+
+      //    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+      //       userData.push({
+      //           ...snapshot.val(),
+      //           key: snapshot.key,
+      //         });
+      //   });
+      //    firebase.database().ref('category/').orderByChild("date_uid").equalTo(format(this.props.item.date, "MMMM, yyyy") + user).orderByChild("category").equalTo(this.state.category)
     var user = firebase.auth().currentUser;
 
     var uid;
@@ -40,10 +67,16 @@ export default function BudgetPage ({navigation})
     } 
 
      /* Get data from the database */
-     var ref = firebase.database().ref("category");
+     
      ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+         var total = 0;
+        //  console.log("category is " + snapshot.val().category);
+         refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
+            total = total + snapshot2.val().cost;
+         })
          userData.push({
              ...snapshot.val(),
+             spent: total,
              key: snapshot.key,
            });
      });
@@ -236,7 +269,7 @@ export default function BudgetPage ({navigation})
                                             {item.planned - item.spent >= 0 ? 
                                                 <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
                                             : 
-                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${item.planned - item.spent}</Text>
+                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${abs(item.planned - item.spent)}</Text>
                                             }
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>

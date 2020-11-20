@@ -54,7 +54,10 @@ export default function TransactionsPage ({navigation})
      */
 
     const addTransaction = (e) => {
-        var transaction1 = { category: category, cost: parseInt(cost), description: description, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
+        var transaction1 = { category: category, cost: parseInt(cost), description: description, 
+            expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid,
+            date_uid_category: format(date, 'MMMM, yyyy') + "_" + uid + "_" + category
+        };
         firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");
 
@@ -122,7 +125,7 @@ export default function TransactionsPage ({navigation})
                 Alert.alert("Modal has been closed.");}}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Add</Text>
+                            <Text style={styles.modalText}>Add transaction</Text>
                             <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
@@ -179,7 +182,7 @@ export default function TransactionsPage ({navigation})
                     Alert.alert("Modal has been closed.");}}>
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Add</Text>
+                                <Text style={styles.modalText}>Add transaction</Text>
                                 <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}

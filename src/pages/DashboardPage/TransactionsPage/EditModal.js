@@ -30,6 +30,16 @@ export default class EditModal extends Component {
    render() {
 
       const editTransaction = () => {
+
+      //    var user = firebase.auth().currentUser.uid;
+
+      //    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+      //       userData.push({
+      //           ...snapshot.val(),
+      //           key: snapshot.key,
+      //         });
+      //   });
+      //    firebase.database().ref('category/').orderByChild("date_uid").equalTo(format(this.props.item.date, "MMMM, yyyy") + user).orderByChild("category").equalTo(this.state.category)
          console.log("keyyyy" + this.props.itemKey)
          var updates = {};
          updates['/category'] = this.state.category;
