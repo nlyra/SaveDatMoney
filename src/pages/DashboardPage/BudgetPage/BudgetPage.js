@@ -1,79 +1,121 @@
 import React, { useState} from 'react';
-import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
+import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
-import {format} from 'date-fns';
+import {format} from 'date-fns'; 
 import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
-import { Divider, DataTable} from 'react-native-paper';
+import { Divider, ToggleButton } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import EditModal from './EditModal';
+import render from 'react-native-web/dist/cjs/exports/render';
+import DeleteModal from './DeleteModal';
+import { Actions, Router, Scene  } from "react-native-router-flux";
+import SwitchSelector from "react-native-switch-selector";
 
-export default function BudgetPage({navigation})
+export default function BudgetPage ({navigation})
 {
+     
     const [date, setDate] = useState(new Date());
     const [message, setMessage] = useState('');
     const [cost, setCost] = useState('');
-    const [spent, setSpent] = useState('');
-    const [budget, setBudget] = useState('');
-    const [category, setName] = useState('');
+    const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [refresh, setRefresh] = useState('');
+    const [radio, setRadio] = useState('expense');
+    const [refresh, setRefresh] = useState("")
 
     var user = firebase.auth().currentUser;
+
     var uid;
     var userData = [];
+    var itemKey;
+    var num = 0;
 
     if (user != null) {
-    uid = user.uid;
-    }
+    uid = user.uid;  
+    } 
+
+     /* Get data from the database */
+     var ref = firebase.database().ref("transaction");
+     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+         userData.push({
+             ...snapshot.val(),
+             key: snapshot.key,
+           });
+     });
 
     /**
      *
      * @param {React.FormEvent<HTMLFormElement>} e
      */
 
-    const addCategory = (e) => {
-        var category1 = { userId: uid, category: category, description: description, budget: budget, spentAmount: spent, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy')+'_'+uid};
-        firebase.database().ref('/category').push(category1);
+    const addTransaction = (e) => {
+        var transaction1 = { category: category, cost: cost, description: description, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
+        firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");
 
+        // empties out fields for adding transaction 
+        setCategory("");
+        setDescription("");
+        setCost(""); 
+
         setModalVisible(!modalVisible);
     }
 
-    const deleteCategory = key => {
-        console.log("this is the key " + key)
-        firebase.database().ref("/category/"+key).remove();
-    }
-
-    const editCategory = key => {
-        console.log("this is the key " + key)
-    }
-
-    const closeModal = (e) => {
+    const closeModal = () => {
         setModalVisible(!modalVisible);
     }
 
-    /* Get data from the database */
-    var ref = firebase.database().ref("category");
-    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-        userData.push({
-            ...snapshot.val(),
-            key: snapshot.key,
-          });
-        console.log("here is the key" + userData[0].key);
-        console.log(userData);
-    });
+    const RightActions = (progress, dragX, items) => {
 
-    return (
+        const scale = dragX.interpolate({
+            inputRange: [-100, 0],
+            outputRange: [0.7,0]
+        })
 
-        <View style={styles.mainContainer}>
+        return (
+            <>
+            <View style={{ backgroundColor: colors.danger, justifyContent: 'center' }}>
+                <Animated.Text
+                    style={{
+                    color: 'white',
+                    paddingHorizontal: 10,
+                    fontWeight: '600',
+                    transform: [{ scale }]
+                    }}onPress={() => {Actions.scene2({itemKey : items.key, visible : true, onPressModelItem : _onPressModelItem})}}>
+                    Delete
+                </Animated.Text>
+            </View>
+            <View style={{ backgroundColor: colors.warning, justifyContent: 'center' }}>
+                <Animated.Text
+                    style={{
+                    color: 'white',
+                    paddingHorizontal: 10,
+                    fontWeight: '600',
+                    transform: [{ scale }]
+                    }}onPress = {() => {Actions.scene1({item: items, itemKey : items.key, visible : true , onPressModelItem : _onPressModelItem})}}>
+                    Edit
+                </Animated.Text>
+            </View>
+        </>
+        )
+    }
+
+    const _onPressModelItem = () => {
+        setRefresh({})
+    }
+
+    return ( 
+        
+        <View style={styles.mainContainer}> 
 
             <View style={styles.topContainer}>
-            <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
 
+                {/* Add Modal */}
                 {/* If user  */}
                 {Platform.OS === 'ios' ?
                 <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
@@ -81,11 +123,24 @@ export default function BudgetPage({navigation})
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={styles.modalText}>Add</Text>
+                            <SwitchSelector style={{padding:10}}
+                                    initial={0}
+                                    onPress={value => setRadio(value)}
+                                    textColor={colors.primary} 
+                                    selectedColor={colors.white}
+                                    buttonColor={colors.primary}
+                                    borderColor={colors.primary}
+                                    hasPadding
+                                    options={[
+                                        { label: "Expense", value: "expense" }, 
+                                        { label: "Income", value: "income"}
+                                    ]}
+                            />
                             <TextInput
                                 style={styles.input}
                                 placeholder='Category'
                                 placeholderTextColor="black"
-                                onChangeText={(text) => setName(text)}
+                                onChangeText={(text) => setCategory(text)}
                                 value={category}
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
@@ -102,17 +157,17 @@ export default function BudgetPage({navigation})
                             <TextInput
                                 style={styles.input}
                                 placeholderTextColor="black"
-                                placeholder='Cost'
-                                onChangeText={(text) => setBudget(text)}
-                                value={budget}
+                                placeholder='Amount'
+                                onChangeText={(text) => setCost(text)}
+                                value={cost}
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                             />
                             <View style={styles.modalButtons}>
-                                <TouchableHighlight style={buttons.standard} onPress={closeModal}>
+                                <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
                                     <Text style={styles.buttonTitle}>Cancel</Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={buttons.standard} onPress={addCategory}>
+                                <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
                                     <Text style={styles.buttonTitle}>Save</Text>
                                 </TouchableHighlight>
                             </View>
@@ -124,12 +179,25 @@ export default function BudgetPage({navigation})
                     Alert.alert("Modal has been closed.");}}>
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Expense</Text>
+                                <Text style={styles.modalText}>Add</Text>
+                                <SwitchSelector style={{padding:10}}
+                                    initial={0}
+                                    onPress={value => setRadio(value)}
+                                    textColor={colors.primary} 
+                                    selectedColor={colors.white}
+                                    buttonColor={colors.primary}
+                                    borderColor={colors.primary}
+                                    hasPadding
+                                    options={[
+                                        { label: "Expense", value: "expense" }, 
+                                        { label: "Income", value: "income"} 
+                                    ]}
+                                />
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Category'
                                     placeholderTextColor="black"
-                                    onChangeText={(text) => setName(text)}
+                                    onChangeText={(text) => setCategory(text)}
                                     value={category}
                                     underlineColorAndroid="transparent"
                                     autoCapitalize="none"
@@ -146,17 +214,17 @@ export default function BudgetPage({navigation})
                                 <TextInput
                                     style={styles.input}
                                     placeholderTextColor="black"
-                                    placeholder='Cost'
-                                    onChangeText={(text) => setBudget(text)}
-                                    value={budget}
+                                    placeholder='Amount'
+                                    onChangeText={(text) => setCost(text)}
+                                    value={cost}
                                     underlineColorAndroid="transparent"
                                     autoCapitalize="none"
                                 />
                                 <View style={styles.modalButtons}>
-                                    <TouchableHighlight style={buttons.standard} onPress={closeModal}>
+                                    <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
                                         <Text style={styles.buttonTitle}>Cancel</Text>
                                     </TouchableHighlight>
-                                    <TouchableHighlight style={buttons.standard} onPress={addCategory}>
+                                    <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
                                         <Text style={styles.buttonTitle}>Save</Text>
                                     </TouchableHighlight>
                                 </View>
@@ -164,50 +232,83 @@ export default function BudgetPage({navigation})
                         </View>
                     </WebModal>
                 }
-
             </View>
-
-            <View style={styles.bodyContainer}>
-
-                <DataTable>
-                    <DataTable.Header>
-                    <Button title="+" color= "black" onPress={()=> {setModalVisible(true);}}/>
-                    <DataTable.Title category>Category</DataTable.Title>
-                    <DataTable.Title description>Description</DataTable.Title>
-                    <DataTable.Title budget>Budget</DataTable.Title>
-                    <DataTable.Title delete>Delete</DataTable.Title>
-                    <DataTable.Title delete>Edit</DataTable.Title>
-
-                    </DataTable.Header>
-                        <FlatList
-                            data={userData}
-                            keyExtractor = {(col) => col.id}
-                            renderItem={({item})=> (
-                                <DataTable.Row>
-                                    <DataTable.Cell category>{item.category}</DataTable.Cell>
-                                    <DataTable.Cell description >{item.description}</DataTable.Cell>
-                                    <DataTable.Cell budget >{'$' + item.budget}</DataTable.Cell>
-                                    <DataTable.Cell delete>
-                                        <MaterialCommunityIcons name="trash-can-outline" color={colors.danger} size={26} onPress={() => deleteCategory(item.key)}/>
-                                    </DataTable.Cell>
-                                    <DataTable.Cell delete>
-                                        <MaterialCommunityIcons name="pencil-outline" color={colors.warning} size={26} onPress={() => editCategory(item.key)}/>
-                                    </DataTable.Cell>
-                                    <Divider />
-                                </DataTable.Row>
-                            )}
-                        />
-                </DataTable>
-            </View>
-
+  
+            {/* Table */}
+            {Platform.OS === 'web' ? 
+                <FlatList contentContainerStyle={{ flexGrow: 1 }}
+                    style={styles.feed}
+                    data={userData}
+                    ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
+                    keyExtractor = {(col) => col.id}
+                    renderItem={({item})=> (
+                        <View style={styles.centeredView}>
+                            <View style={styles.feedItem}>
+                                <View style={{flex:1}}>
+                                    <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                        <View>
+                                            <Text style={styles.description}> {item.description}</Text>
+                                            <Text style={styles.category}> {item.category}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
+                                            <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
+                                            <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal> 
+                                            {item.expenseOrIncome === "expense" ? 
+                                                <Text style={{color: colors.danger}} >-${item.cost}</Text>
+                                            : 
+                                                <Text style={{color: colors.primary}} >${item.cost}</Text>
+                                            }
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    )}
+                />
+            :
+                <FlatList contentContainerStyle={{ flexGrow: 1 }}
+                    style={styles.feed}
+                    data={userData}
+                    ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
+                    keyExtractor = {(col) => col.id}
+                    renderItem={({item})=> (
+                        <View style={{ paddingBottom: 10}}>
+                            <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
+                                <View style={{ paddingVertical: 0.2, justifyContent: 'center', alignItems: 'center'}}>
+                                    <View style={styles.feedItem}>
+                                        <View style={{flex:1}}>
+                                            <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                                <View>
+                                                    <Text style={styles.description}> {item.description}</Text>
+                                                    <Text style={styles.category}> {item.category}</Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                                    {item.expenseOrIncome === "expense" ? 
+                                                        <Text style={{color: colors.danger}} >-${item.cost}</Text>
+                                                    : 
+                                                        <Text style={{color: colors.primary}} >${item.cost}</Text>
+                                                    }
+                                                    
+                                                </View>
+                                            </View>
+                                            <Router>
+                                                <Scene key = "root">
+                                                    <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                    <Scene key="scene2" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                </Scene>
+                                            </Router>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Swipeable>   
+                        </View>
+                    )}
+                />
+            }
             <View style={styles.bottomContainer}>
-                    <TouchableOpacity style={[{marginRight: '5%'}, buttons.long]} onPress={() => console.log("hi there")}>
-                        <Text style={styles.buttonTitle}>Expenses</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={buttons.long} onPress={() => console.log("hi there")}>
-                        <Text style={styles.buttonTitle}>Income</Text>
-                    </TouchableOpacity>
+                <MaterialCommunityIcons style={styles.elevationLow} name="plus-circle" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
             </View>
         </View>
     );
 }
+

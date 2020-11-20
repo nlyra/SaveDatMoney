@@ -12,7 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import EditModal from './EditModal';
 import render from 'react-native-web/dist/cjs/exports/render';
-import DeleteModal from '../DeleteModal';
+import DeleteModal from './DeleteModal';
 import { Actions, Router, Scene  } from "react-native-router-flux";
 import SwitchSelector from "react-native-switch-selector";
 
