@@ -85,7 +85,7 @@ export default function BudgetPage ({navigation})
                     paddingHorizontal: 10,
                     fontWeight: '600',
                     transform: [{ scale }]
-                    }}onPress={() => {Actions.scene2({itemKey : items.key, visible : true, onPressModelItem : _onPressModelItem})}}>
+                    }}onPress={() => {Actions.scene4({itemKey : items.key, visible : true, onPressModelItem : _onPressModelItem})}}>
                     Delete
                 </Animated.Text>
             </View>
@@ -96,7 +96,7 @@ export default function BudgetPage ({navigation})
                     paddingHorizontal: 10,
                     fontWeight: '600',
                     transform: [{ scale }]
-                    }}onPress = {() => {Actions.scene1({item: items, itemKey : items.key, visible : true , onPressModelItem : _onPressModelItem})}}>
+                    }}onPress = {() => {Actions.scene3({item: items, itemKey : items.key, visible : true , onPressModelItem : _onPressModelItem})}}>
                     Edit
                 </Animated.Text>
             </View>
@@ -263,8 +263,8 @@ export default function BudgetPage ({navigation})
                                             </View>
                                             <Router>
                                                 <Scene key = "root">
-                                                    <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
-                                                    <Scene key="scene2" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                    <Scene key="scene3" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                    <Scene key="scene4" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
                                                 </Scene>
                                             </Router>
                                         </View>

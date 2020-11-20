@@ -93,7 +93,7 @@ export default class EditModal extends Component {
                         placeholderTextColor="black"
                         placeholder='Amount'
                         onChangeText={(text) => this.setState({cost: text})}
-                        value={this.state.cost}
+                        value={this.state.cost.toString()}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"
                      />
@@ -137,7 +137,7 @@ export default class EditModal extends Component {
                            placeholderTextColor="black"
                            placeholder='Amount'
                            onChangeText={(text) => this.setState({cost: text})}
-                           value={this.state.cost}
+                           value={this.state.cost.toString()}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                         />

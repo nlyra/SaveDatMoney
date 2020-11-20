@@ -16,6 +16,7 @@ export default class EditModal extends Component {
          modalVisible: false,
          modalVisible2: props.visible
       }
+      console.log("planned is" + this.state.planned);
    }
 
    toggleModal(visible) {
@@ -81,7 +82,7 @@ export default class EditModal extends Component {
                         placeholderTextColor="black"
                         placeholder='Planned'
                         onChangeText={(text) => this.setState({planned: text})}
-                        value={this.state.planned}
+                        value={this.state.planned.toString()}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"
                      />
@@ -116,7 +117,7 @@ export default class EditModal extends Component {
                            placeholderTextColor="black"
                            placeholder='Planned'
                            onChangeText={(text) => this.setState({planned: text})}
-                           value={this.state.planned}
+                           value={this.state.planned.toString()}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                         />
