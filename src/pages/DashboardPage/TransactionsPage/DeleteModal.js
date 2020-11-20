@@ -81,7 +81,7 @@ class DeleteModal extends Component {
                   <View style={styles.centeredView}>
                   <View style={{marginTop: -80, width: '50%',margin: 30,backgroundColor: "white",borderRadius: 20,padding: 35,
                      alignItems: 'stretch',justifyContent: 'center',shadowColor: "#000",shadowOffset: {width: 0,height: 2},shadowOpacity: 0.75,shadowRadius: 4.84,elevation: 5}}>
-                        <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
+                        <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this transaction?</Text>
                         <Divider></Divider> 
                         <View style={styles.modalButtons}>
                             <View style={{marginTop: 10, flexDirection: 'row', justifyContent: "center", alignItems: 'center'}}>

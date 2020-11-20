@@ -67,7 +67,7 @@ export default class EditModal extends Component {
             Alert.alert("Modal has been closed.");}}>
                <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                     <Text style={styles.modalText}>Edit</Text>
+                     <Text style={styles.modalText}>Edit Category</Text>
                      <TextInput
                         style={styles.input}
                         placeholder='Category'
@@ -102,7 +102,7 @@ export default class EditModal extends Component {
                Alert.alert("Modal has been closed.");}}>
                   <View style={styles.centeredView}>
                      <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Edit</Text>
+                        <Text style={styles.modalText}>Edit Category</Text>
                         <TextInput
                            style={styles.input}
                            placeholder='Category'
