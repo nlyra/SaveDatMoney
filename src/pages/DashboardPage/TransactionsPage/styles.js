@@ -6,10 +6,9 @@ export default StyleSheet.create({
         flex: 1,
     },
     topContainer: {
-        flex: 1,
-        alignItems: 'center',  
-        justifyContent: 'center',  
-        marginTop: 18,
+        alignItems: 'center',
+        justifyContent: 'center', 
+        marginTop: 1
     },
     calendar: {
         ...Platform.select({
@@ -29,23 +28,26 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',  
     },
-    list: {
-        flex: 2,
-        flexDirection: 'row', 
-    },
-    bodyContainer: {
-        flex: 1,
-        //width: '100%',
-        alignItems: 'stretch'
-    },
     bottomContainer: {
-        flex: 3,
-        width: '100%',
-        alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        marginLeft: '1%',
+        alignItems: 'flex-end',
+        marginTop: '2%',
+        marginRight: '2%',
         marginBottom: '2%'
     },
+    elevationLow: {
+        ...Platform.select({
+          ios: {
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.4,
+            shadowRadius: 0.7,    
+          },
+          android: {
+            elevation: 5,
+          },
+        }),
+      },
     separator: {
         marginVertical: 8,
         borderBottomColor: '#737373',
@@ -134,10 +136,12 @@ export default StyleSheet.create({
     modalView: {
         ...Platform.select({
             ios: {
-                width: '100%'
+                width: '90%',
+                marginTop: 170,
             },
             android: {
-                width: '100%'
+                width: '100%',
+                marginTop: 170,
             },
             default: {
               // other platforms, web for example
@@ -155,8 +159,8 @@ export default StyleSheet.create({
           width: 0,
           height: 2
         },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        shadowOpacity: 0.75,
+        shadowRadius: 4.84,
         elevation: 5
     },
     openButton: {
@@ -186,12 +190,6 @@ export default StyleSheet.create({
         marginBottom: '2%',
         marginTop: '5%',
     },
-    tableContainer: { 
-        flex: 1, 
-        padding: 16, 
-        paddingTop: 30, 
-        backgroundColor: '#fff' 
-    },
     head: 
     { 
         height: 40, 
@@ -200,10 +198,8 @@ export default StyleSheet.create({
     text: { 
         margin: 6 
     },
-    addContainer: {
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        marginRight: '2%'
+    addButton: {
+        borderRadius: 100
     },
     feed: {
         marginHorizontal: 16
@@ -211,20 +207,22 @@ export default StyleSheet.create({
     feedItem: {
         backgroundColor: '#FFF',
         borderRadius: 5,
-        padding: 8,
         flexDirection: 'row',
-        marginVertical: 8,
         flexDirection: 'column',
         ...Platform.select({
             ios: {
-                width: '100%'
+                width: '100%',
+                padding: 15,
             },
             android: {
-                width: '100%'
+                width: '100%',
+                padding: 15,
             },
             default: {
               // other platforms, web for example
-              width: '50%'
+              width: '50%',
+              padding: 8,
+              marginVertical: 8,
             }
         }),
     },

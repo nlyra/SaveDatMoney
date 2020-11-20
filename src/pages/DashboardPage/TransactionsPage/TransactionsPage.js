@@ -272,39 +272,41 @@ export default function TransactionsPage ({navigation})
                     ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
                     keyExtractor = {(col) => col.id}
                     renderItem={({item})=> (
-                        <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
-                            <View style={{ paddingVertical: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={styles.feedItem}>
-                                    <View style={{flex:1}}>
-                                        <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
-                                            <View>
-                                                <Text style={styles.description}> {item.description}</Text>
-                                                <Text style={styles.category}> {item.category}</Text>
+                        <View style={{ paddingBottom: 10}}>
+                            <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
+                                <View style={{ paddingVertical: 0.2, justifyContent: 'center', alignItems: 'center'}}>
+                                    <View style={styles.feedItem}>
+                                        <View style={{flex:1}}>
+                                            <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                                <View>
+                                                    <Text style={styles.description}> {item.description}</Text>
+                                                    <Text style={styles.category}> {item.category}</Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                                    {item.expenseOrIncome === "expense" ? 
+                                                        <Text style={{color: colors.danger}} >-${item.cost}</Text>
+                                                    : 
+                                                        <Text style={{color: colors.primary}} >${item.cost}</Text>
+                                                    }
+                                                    
+                                                </View>
                                             </View>
-                                            <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                                {item.expenseOrIncome === "expense" ? 
-                                                    <Text style={{color: colors.danger}} >-${item.cost}</Text>
-                                                : 
-                                                    <Text style={{color: colors.primary}} >${item.cost}</Text>
-                                                }
-                                                
-                                            </View>
+                                            <Router>
+                                                <Scene key = "root">
+                                                    <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                    <Scene key="scene2" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                </Scene>
+                                            </Router>
                                         </View>
-                                        <Router>
-                                            <Scene key = "root">
-                                                <Scene key="scene1" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
-                                                <Scene key="scene2" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
-                                            </Scene>
-                                        </Router>
                                     </View>
                                 </View>
-                            </View>
-                        </Swipeable>   
+                            </Swipeable>   
+                        </View>
                     )}
                 />
             }
-            <View style={styles.bottomContainer} >
-                <MaterialCommunityIcons style={styles.addContainer} name="plus-box" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
+            <View style={styles.bottomContainer}>
+                <MaterialCommunityIcons style={styles.elevationLow} name="plus-circle" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
             </View>
         </View>
     );

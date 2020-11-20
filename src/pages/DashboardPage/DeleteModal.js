@@ -53,14 +53,13 @@ class DeleteModal extends Component {
 
       return (
 
-         <View style = {styles.container}>
-
+         <View style = {styles.modalContainer}>
             {Platform.OS === 'ios' ?
-            <View style={styles.centeredView}> 
                <Modal animationType="slide" transparent={true} visible={this.state.modalVisible2} onRequestClose={() => {
                Alert.alert("Modal has been closed.");}}>
-                  <View style={styles.centeredView}>
-                     <View style={styles.modalView}>
+                  <View style={{alignItems: 'center',justifyContent: 'center', paddingTop:140}}>
+                     <View style={{width: '90%',margin: 30,backgroundColor: "white",borderRadius: 20,padding: 35,
+                     alignItems: 'stretch',justifyContent: 'center',shadowColor: "#000",shadowOffset: {width: 0,height: 2},shadowOpacity: 0.75,shadowRadius: 4.84,elevation: 5}}>
                         <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
                         <Divider></Divider> 
                         <View style={styles.modalButtons}>
@@ -76,12 +75,12 @@ class DeleteModal extends Component {
                      </View>
                   </View>
                </Modal>
-            </View>
             :
             <WebModal animationType="slide" transparent={true} visible = {this.state.modalVisible} onRequestClose={() => {
                Alert.alert("Modal has been closed.");}}>
                   <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
+                  <View style={{marginTop: -80, width: '50%',margin: 30,backgroundColor: "white",borderRadius: 20,padding: 35,
+                     alignItems: 'stretch',justifyContent: 'center',shadowColor: "#000",shadowOffset: {width: 0,height: 2},shadowOpacity: 0.75,shadowRadius: 4.84,elevation: 5}}>
                         <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
                         <Divider></Divider> 
                         <View style={styles.modalButtons}>
