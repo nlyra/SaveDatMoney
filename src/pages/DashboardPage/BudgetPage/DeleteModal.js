@@ -2,9 +2,9 @@ import React, { useState, Component} from 'react';
 import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated} from 'react-native';
 import WebModal from 'modal-enhanced-react-native-web';
 import styles from './styles';
-import { buttons, colors } from '../stdStyles';
+import { buttons, colors } from '../../stdStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { firebase } from '../../firebase/config';
+import { firebase } from '../../../firebase/config';
 import { isThisSecond } from 'date-fns';
 import { Divider } from 'react-native-paper';
 
