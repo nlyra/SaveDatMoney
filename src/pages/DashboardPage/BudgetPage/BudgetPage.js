@@ -32,29 +32,6 @@ export default function BudgetPage ({navigation})
     var refTransaction = firebase.database().ref("transaction");
     var ref = firebase.database().ref("category");
 
-    // refTransaction.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + uid).on("child_added", function(snapshot){
-    //     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).orderByChild("category").equalTo(snapshot.category).on("child_added", function(snapshot) {
-    //         // userData.push({
-    //         //     ...snapshot.val(),
-    //         //     key: snapshot.key,
-    //         //   });
-    //     });
-    // });
-
-    // ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-        //       userData.push({
-        //           ...snapshot.val(),
-        //           key: snapshot.key,
-        //         });
-        //   });
-
-      //    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-      //       userData.push({
-      //           ...snapshot.val(),
-      //           key: snapshot.key,
-      //         });
-      //   });
-      //    firebase.database().ref('category/').orderByChild("date_uid").equalTo(format(this.props.item.date, "MMMM, yyyy") + user).orderByChild("category").equalTo(this.state.category)
     var user = firebase.auth().currentUser;
 
     var uid;
@@ -69,17 +46,27 @@ export default function BudgetPage ({navigation})
      /* Get data from the database */
      
      ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-         var total = 0;
+        // var total = 0;
         //  console.log("category is " + snapshot.val().category);
-         refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
-            total = total + snapshot2.val().cost;
-         })
+        //  refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
+        //     total = total + snapshot2.val().cost;
+        //  })
          userData.push({
              ...snapshot.val(),
-             spent: total,
+            //  spent: total,
              key: snapshot.key,
            });
      });
+     console.log(userData);
+     console.log(userData[0]);
+     for(var i = 0; i < userData.length; i++){
+        var total = 0;
+         console.log("category is " + userData[i].category);
+         refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category).on("child_added", function(snapshot2){
+            total = total + snapshot2.val().cost;
+         })
+         userData[i].spent = total;
+     }
 
     /**
      *
