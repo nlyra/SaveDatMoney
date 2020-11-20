@@ -1,7 +1,7 @@
 import React, { useState, Component} from 'react';
 import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated} from 'react-native';
 import WebModal from 'modal-enhanced-react-native-web';
-import styles from './styles';
+import styles from '../styles';
 import { buttons, colors } from '../../stdStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { firebase } from '../../../firebase/config';
@@ -35,18 +35,18 @@ class DeleteModal extends Component {
          this.props.onPressModelItem()
        }
 
-      const deleteTransaction = () => {
+      const deleteCategory = () => {
          console.log("keyyyy" + this.props.itemKey)
 
-         firebase.database().ref("/transaction/"+this.props.itemKey).remove();
+         firebase.database().ref("/category/"+this.props.itemKey).remove();
          _onPress()
          this.toggleModal(!this.state.modalVisible)
       }
 
-      const deleteTransaction2 = () => {
+      const deleteCategory2 = () => {
          console.log("keyyyy" + this.props.itemKey)
 
-         firebase.database().ref("/transaction/"+this.props.itemKey).remove();
+         firebase.database().ref("/category/"+this.props.itemKey).remove();
          _onPress()
          this.toggleModal2(false)
       }
@@ -60,14 +60,14 @@ class DeleteModal extends Component {
                   <View style={{alignItems: 'center',justifyContent: 'center', paddingTop:140}}>
                      <View style={{width: '90%',margin: 30,backgroundColor: "white",borderRadius: 20,padding: 35,
                      alignItems: 'stretch',justifyContent: 'center',shadowColor: "#000",shadowOffset: {width: 0,height: 2},shadowOpacity: 0.75,shadowRadius: 4.84,elevation: 5}}>
-                        <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
+                        <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this category?</Text>
                         <Divider></Divider> 
                         <View style={styles.modalButtons}>
                            <View style={{marginTop: 10, flexDirection: 'row', justifyContent: "center", alignItems: 'center'}}>
                               <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} color={colors.primary} onPress={() => {this.toggleModal2(!this.state.modalVisible2)}}>
                                  <Text style={styles.modalButtonTitle}>Cancel</Text>
                               </TouchableHighlight>
-                              <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteTransaction2}>
+                              <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteCategory2}>
                                  <Text style={styles.modalButtonTitle}>Yes</Text>
                               </TouchableHighlight>
                            </View>
@@ -81,14 +81,14 @@ class DeleteModal extends Component {
                   <View style={styles.centeredView}>
                   <View style={{marginTop: -80, width: '50%',margin: 30,backgroundColor: "white",borderRadius: 20,padding: 35,
                      alignItems: 'stretch',justifyContent: 'center',shadowColor: "#000",shadowOffset: {width: 0,height: 2},shadowOpacity: 0.75,shadowRadius: 4.84,elevation: 5}}>
-                        <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this item?</Text>
+                        <Text style={{color: "black", fontSize: 16, marginBottom: 10, fontWeight: "bold", textAlign: "center",}}>Are you sure you want to delete this category?</Text>
                         <Divider></Divider> 
                         <View style={styles.modalButtons}>
                             <View style={{marginTop: 10, flexDirection: 'row', justifyContent: "center", alignItems: 'center'}}>
                                 <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} color={colors.primary} onPress={() => {this.toggleModal(!this.state.modalVisible)}}>
                                     <Text style={styles.modalButtonTitle}>Cancel</Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteTransaction}>
+                                <TouchableHighlight style={buttons.standard} color={colors.danger} onPress={deleteCategory}>
                                     <Text style={styles.modalButtonTitle}>Yes</Text>
                                 </TouchableHighlight>
                             </View>

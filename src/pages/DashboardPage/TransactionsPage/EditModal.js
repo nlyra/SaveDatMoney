@@ -34,7 +34,7 @@ export default class EditModal extends Component {
          var updates = {};
          updates['/category'] = this.state.category;
          updates['/description'] = this.state.description;
-         updates['/cost'] = this.state.cost;
+         updates['/cost'] = parseInt(this.state.cost);
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
          this.forceUpdate();
@@ -48,7 +48,7 @@ export default class EditModal extends Component {
          var updates = {};
          updates['/category'] = this.state.category;
          updates['/description'] = this.state.description;
-         updates['/cost'] = this.state.cost;
+         updates['/cost'] = parseInt(this.state.cost);
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
          this.forceUpdate();

@@ -25,7 +25,8 @@ export default function BudgetPage ({navigation})
     const [category, setCategory] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [radio, setRadio] = useState('expense');
-    const [refresh, setRefresh] = useState("")
+    const [refresh, setRefresh] = useState("");
+    // const [spent, setSpent] = useState(0);
 
     var user = firebase.auth().currentUser;
 
@@ -39,7 +40,7 @@ export default function BudgetPage ({navigation})
     } 
 
      /* Get data from the database */
-     var ref = firebase.database().ref("transaction");
+     var ref = firebase.database().ref("category");
      ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
          userData.push({
              ...snapshot.val(),
@@ -53,13 +54,13 @@ export default function BudgetPage ({navigation})
      */
 
     const addCategory = (e) => {
-        var category1 = { category: category, planned: planned, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
+        var category1 = { category: category, planned: parseInt(planned), spent: 0, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
         firebase.database().ref('/category').push(category1);
         console.log("pushed");
 
         // empties out fields for adding transaction 
         setCategory("");
-        setPlanned(""); 
+        setPlanned("");
 
         setModalVisible(!modalVisible);
     }
@@ -146,18 +147,9 @@ export default function BudgetPage ({navigation})
                             <TextInput
                                 style={styles.input}
                                 placeholderTextColor="black"
-                                placeholder='Description'
-                                onChangeText={(text) => setDescription(text)}
-                                value={description}
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholderTextColor="black"
-                                placeholder='Amount'
-                                onChangeText={(text) => setCost(text)}
-                                value={cost}
+                                placeholder='Planned'
+                                onChangeText={(text) => setPlanned(text)}
+                                value={planned}
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                             />
@@ -165,7 +157,7 @@ export default function BudgetPage ({navigation})
                                 <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
                                     <Text style={styles.buttonTitle}>Cancel</Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={buttons.standard} onPress={addTransaction}>
+                                <TouchableHighlight style={buttons.standard} onPress={addCategory}>
                                     <Text style={styles.buttonTitle}>Save</Text>
                                 </TouchableHighlight>
                             </View>
@@ -236,17 +228,12 @@ export default function BudgetPage ({navigation})
                                 <View style={{flex:1}}>
                                     <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
                                         <View>
-                                            <Text style={styles.description}> {item.description}</Text>
                                             <Text style={styles.category}> {item.category}</Text>
                                         </View>
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
                                             <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal> 
-                                            {item.expenseOrIncome === "expense" ? 
-                                                <Text style={{color: colors.danger}} >-${item.cost}</Text>
-                                            : 
-                                                <Text style={{color: colors.primary}} >${item.cost}</Text>
-                                            }
+                                            <Text style={{color: colors.primary}} >${item.planned}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -268,16 +255,10 @@ export default function BudgetPage ({navigation})
                                         <View style={{flex:1}}>
                                             <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
                                                 <View>
-                                                    <Text style={styles.description}> {item.description}</Text>
                                                     <Text style={styles.category}> {item.category}</Text>
                                                 </View>
                                                 <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                                    {item.expenseOrIncome === "expense" ? 
-                                                        <Text style={{color: colors.danger}} >-${item.cost}</Text>
-                                                    : 
-                                                        <Text style={{color: colors.primary}} >${item.cost}</Text>
-                                                    }
-                                                    
+                                                    <Text style={{color: colors.primary}} >${item.planned}</Text>   
                                                 </View>
                                             </View>
                                             <Router>

@@ -226,14 +226,10 @@ export default StyleSheet.create({
             }
         }),
     },
-    description: {
+    category: {
         fontSize: 15,
         fontWeight: "500",
         color: colors.primary,
-    },
-    category: {
-        fontSize: 11,
-        marginTop: 4,
     }
 });
 
