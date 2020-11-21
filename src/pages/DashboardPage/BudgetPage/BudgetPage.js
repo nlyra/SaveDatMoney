@@ -74,7 +74,7 @@ export default function BudgetPage ({navigation})
      */
 
     const addCategory = (e) => {
-        var category1 = { category: category, planned: parseInt(planned), spent: 0, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
+        var category1 = { category: category, planned: parseFloat(planned), spent: 0, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
         firebase.database().ref('/category').push(category1);
         console.log("pushed");
 
@@ -256,7 +256,7 @@ export default function BudgetPage ({navigation})
                                             {item.planned - item.spent >= 0 ? 
                                                 <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
                                             : 
-                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
+                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseFloat(item.planned - item.spent)))}</Text>
                                             }
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
@@ -287,7 +287,7 @@ export default function BudgetPage ({navigation})
                                                     {item.planned - item.spent >= 0 ? 
                                                     <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
                                                     : 
-                                                    <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
+                                                    <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseFloat(item.planned - item.spent)))}</Text>
                                                     }
                                                     <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
                                                     <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
