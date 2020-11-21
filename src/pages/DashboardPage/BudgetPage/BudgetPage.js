@@ -62,38 +62,38 @@ export default function BudgetPage ({navigation})
      for(var i = 0; i < userData.length; i++){
         var total = 0;
          console.log("category is " + userData[i].category);
-         refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category).on("child_added", function(snapshot2){
+         refTransaction.orderByChild("date_uid_category_expenseOrIncome").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category + "_" + userData[i].expenseOrIncome).on("child_added", function(snapshot2){
             total = total + snapshot2.val().cost;
          })
          userData[i].spent = total;
      }
 
-     const loadData = () => {
-        var userData = [];
-        ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-            // var total = 0;
-            //  console.log("category is " + snapshot.val().category);
-            //  refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
-            //     total = total + snapshot2.val().cost;
-            //  })
-             userData.push({
-                 ...snapshot.val(),
-                //  spent: total,
-                 key: snapshot.key,
-               });
-         });
-         console.log(userData);
-         console.log(userData[0]);
-         for(var i = 0; i < userData.length; i++){
-            var total = 0;
-             console.log("category is " + userData[i].category);
-             refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category).on("child_added", function(snapshot2){
-                total = total + snapshot2.val().cost;
-             })
-             userData[i].spent = total;
-         }
-         setRefresh({});
-     }
+    //  const loadData = () => {
+    //     var userData = [];
+    //     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+    //         // var total = 0;
+    //         //  console.log("category is " + snapshot.val().category);
+    //         //  refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
+    //         //     total = total + snapshot2.val().cost;
+    //         //  })
+    //          userData.push({
+    //              ...snapshot.val(),
+    //             //  spent: total,
+    //              key: snapshot.key,
+    //            });
+    //      });
+    //      console.log(userData);
+    //      console.log(userData[0]);
+    //      for(var i = 0; i < userData.length; i++){
+    //         var total = 0;
+    //          console.log("category is " + userData[i].category);
+    //          refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category).on("child_added", function(snapshot2){
+    //             total = total + snapshot2.val().cost;
+    //          })
+    //          userData[i].spent = total;
+    //      }
+    //      setRefresh({});
+    //  }
     /**
      *
      * @param {React.FormEvent<HTMLFormElement>} e

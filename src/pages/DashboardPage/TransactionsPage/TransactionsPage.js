@@ -56,7 +56,7 @@ export default function TransactionsPage ({navigation})
     const addTransaction = (e) => {
         var transaction1 = { category: category, cost: parseInt(cost), description: description, 
             expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid,
-            date_uid_category: format(date, 'MMMM, yyyy') + "_" + uid + "_" + category
+            date_uid_category_expenseOrIncome: format(date, 'MMMM, yyyy') + "_" + uid + "_" + category + "_" + radio
         };
         firebase.database().ref('/transaction').push(transaction1);
         console.log("pushed");

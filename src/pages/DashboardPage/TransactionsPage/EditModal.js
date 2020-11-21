@@ -50,7 +50,7 @@ export default class EditModal extends Component {
          updates['/description'] = this.state.description;
          updates['/cost'] = parseInt(this.state.cost);
          updates['/expenseOrIncome'] = this.state.radio;
-         updates['/date_uid_category'] = this.state.date + "_" + this.state.uid + "_" + this.state.category 
+         updates['/date_uid_category_expenseOrIncome'] = this.state.date + "_" + this.state.uid + "_" + this.state.category + "_" + this.state.radio
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
          this.forceUpdate();
@@ -66,7 +66,7 @@ export default class EditModal extends Component {
          updates['/description'] = this.state.description;
          updates['/cost'] = parseInt(this.state.cost);
          updates['/expenseOrIncome'] = this.state.radio;
-         updates['/date_uid_category'] = this.state.date + "_" + this.state.uid + "_" + this.state.category 
+         updates['/date_uid_category_expenseOrIncome'] = this.state.date + "_" + this.state.uid + "_" + this.state.category + "_" + this.state.radio
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
          this.forceUpdate();
