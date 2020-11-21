@@ -68,13 +68,39 @@ export default function BudgetPage ({navigation})
          userData[i].spent = total;
      }
 
+     const loadData = () => {
+        var userData = [];
+        ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+            // var total = 0;
+            //  console.log("category is " + snapshot.val().category);
+            //  refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
+            //     total = total + snapshot2.val().cost;
+            //  })
+             userData.push({
+                 ...snapshot.val(),
+                //  spent: total,
+                 key: snapshot.key,
+               });
+         });
+         console.log(userData);
+         console.log(userData[0]);
+         for(var i = 0; i < userData.length; i++){
+            var total = 0;
+             console.log("category is " + userData[i].category);
+             refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category).on("child_added", function(snapshot2){
+                total = total + snapshot2.val().cost;
+             })
+             userData[i].spent = total;
+         }
+         setRefresh({});
+     }
     /**
      *
      * @param {React.FormEvent<HTMLFormElement>} e
      */
 
     const addCategory = (e) => {
-        var category1 = { category: category, planned: parseFloat(planned), spent: 0, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
+        var category1 = { category: category, planned: parseInt(planned), spent: 0, expenseOrIncome: radio, userId: uid, date: format(date, 'MMMM, yyyy'), date_uid: format(date, 'MMMM, yyyy') + "_" + uid};
         firebase.database().ref('/category').push(category1);
         console.log("pushed");
 
@@ -240,7 +266,7 @@ export default function BudgetPage ({navigation})
                 <FlatList contentContainerStyle={{ flexGrow: 1 }}
                     style={styles.feed}
                     data={userData}
-                    ListHeaderComponent = {<MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/> }
+                    ListHeaderComponent = {<MonthPicker date={date} onChange={() => loadData(), (newDate) => setDate(newDate)}/> }
                     keyExtractor = {(col) => col.id}
                     renderItem={({item})=> (
                         <View style={styles.centeredView}>
@@ -256,7 +282,7 @@ export default function BudgetPage ({navigation})
                                             {item.planned - item.spent >= 0 ? 
                                                 <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
                                             : 
-                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseFloat(item.planned - item.spent)))}</Text>
+                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                             }
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
                                             <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
@@ -287,7 +313,7 @@ export default function BudgetPage ({navigation})
                                                     {item.planned - item.spent >= 0 ? 
                                                     <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
                                                     : 
-                                                    <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseFloat(item.planned - item.spent)))}</Text>
+                                                    <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                                     }
                                                     <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
                                                     <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>

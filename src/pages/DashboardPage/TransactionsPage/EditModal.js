@@ -6,6 +6,7 @@ import { buttons, colors } from '../../stdStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { firebase } from '../../../firebase/config';
 import { isThisSecond } from 'date-fns';
+import SwitchSelector from "react-native-switch-selector";
 
 export default class EditModal extends Component {
    constructor(props){
@@ -14,6 +15,9 @@ export default class EditModal extends Component {
          category: props.item.category,
          description: props.item.description,
          cost: props.item.cost,
+         radio: props.item.expenseOrIncome,
+         date: props.item.date,
+         uid: props.item.userId,
          modalVisible: false,
          modalVisible2: props.visible
       }
@@ -45,6 +49,8 @@ export default class EditModal extends Component {
          updates['/category'] = this.state.category;
          updates['/description'] = this.state.description;
          updates['/cost'] = parseInt(this.state.cost);
+         updates['/expenseOrIncome'] = this.state.radio;
+         updates['/date_uid_category'] = this.state.date + "_" + this.state.uid + "_" + this.state.category 
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
          this.forceUpdate();
@@ -59,6 +65,8 @@ export default class EditModal extends Component {
          updates['/category'] = this.state.category;
          updates['/description'] = this.state.description;
          updates['/cost'] = parseInt(this.state.cost);
+         updates['/expenseOrIncome'] = this.state.radio;
+         updates['/date_uid_category'] = this.state.date + "_" + this.state.uid + "_" + this.state.category 
 
          firebase.database().ref('transaction/'+this.props.itemKey).update(updates);
          this.forceUpdate();
@@ -80,6 +88,19 @@ export default class EditModal extends Component {
                <View style={styles.centeredView}>
                   <View style={styles.modalView}>
                      <Text style={styles.modalText}>Edit Transaction</Text>
+                     <SwitchSelector style={{padding:10}}
+                        initial={0}
+                        onPress={value => this.setState({radio: value})}
+                        textColor={colors.primary} 
+                        selectedColor={colors.white}
+                        buttonColor={colors.primary}
+                        borderColor={colors.primary}
+                        hasPadding
+                        options={[
+                              { label: "Expense", value: "expense" }, 
+                              { label: "Income", value: "income"} 
+                        ]}
+                     />
                      <TextInput
                         style={styles.input}
                         placeholder='Category'
@@ -124,6 +145,19 @@ export default class EditModal extends Component {
                   <View style={styles.centeredView}>
                      <View style={styles.modalView}>
                         <Text style={styles.modalText}>Edit Transaction</Text>
+                        <SwitchSelector style={{padding:10}}
+                           initial={0}
+                           onPress={value => this.setState({radio: value})}
+                           textColor={colors.primary} 
+                           selectedColor={colors.white}
+                           buttonColor={colors.primary}
+                           borderColor={colors.primary}
+                           hasPadding
+                           options={[
+                                 { label: "Expense", value: "expense" }, 
+                                 { label: "Income", value: "income"} 
+                           ]}
+                        />
                         <TextInput
                            style={styles.input}
                            placeholder='Category'
