@@ -39,6 +39,14 @@ export default function BudgetPage ({navigation})
     var itemKey;
     var num = 0;
 
+    const editSpent = (key, total) => {
+
+        var updates = {};
+        updates['/spent'] = total;
+
+        firebase.database().ref('category/' + key).update(updates);
+     }
+
     if (user != null) {
     uid = user.uid;  
     } 
@@ -46,14 +54,8 @@ export default function BudgetPage ({navigation})
      /* Get data from the database */
      
      ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-        // var total = 0;
-        //  console.log("category is " + snapshot.val().category);
-        //  refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
-        //     total = total + snapshot2.val().cost;
-        //  })
          userData.push({
              ...snapshot.val(),
-            //  spent: total,
              key: snapshot.key,
            });
      });
@@ -66,34 +68,12 @@ export default function BudgetPage ({navigation})
             total = total + snapshot2.val().cost;
          })
          userData[i].spent = total;
+        //  setSpent(total);
+         editSpent(userData[i].key, total);
      }
 
-    //  const loadData = () => {
-    //     var userData = [];
-    //     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
-    //         // var total = 0;
-    //         //  console.log("category is " + snapshot.val().category);
-    //         //  refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + snapshot.val().category).on("child_added", function(snapshot2){
-    //         //     total = total + snapshot2.val().cost;
-    //         //  })
-    //          userData.push({
-    //              ...snapshot.val(),
-    //             //  spent: total,
-    //              key: snapshot.key,
-    //            });
-    //      });
-    //      console.log(userData);
-    //      console.log(userData[0]);
-    //      for(var i = 0; i < userData.length; i++){
-    //         var total = 0;
-    //          console.log("category is " + userData[i].category);
-    //          refTransaction.orderByChild("date_uid_category").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category).on("child_added", function(snapshot2){
-    //             total = total + snapshot2.val().cost;
-    //          })
-    //          userData[i].spent = total;
-    //      }
-    //      setRefresh({});
-    //  }
+
+
     /**
      *
      * @param {React.FormEvent<HTMLFormElement>} e
@@ -279,8 +259,8 @@ export default function BudgetPage ({navigation})
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
                                             <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal> 
-                                            {item.planned - item.spent >= 0 ? 
-                                                <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
+                                            {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
+                                                <Text style={{color: colors.primary, marginLeft: '10%'}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
                                             : 
                                                 <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                             }
@@ -310,8 +290,8 @@ export default function BudgetPage ({navigation})
                                                     <Text style={styles.category}> {item.category}</Text>
                                                 </View>
                                                 <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                                    {item.planned - item.spent >= 0 ? 
-                                                    <Text style={{color: colors.primary, marginLeft: '10%'}} >${item.planned - item.spent}</Text>
+                                                    {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
+                                                    <Text style={{color: colors.primary, marginLeft: '10%'}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
                                                     : 
                                                     <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                                     }
