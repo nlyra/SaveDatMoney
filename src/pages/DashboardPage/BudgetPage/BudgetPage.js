@@ -257,20 +257,24 @@ export default function BudgetPage ({navigation})
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
                                             <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal>
-                                            <View style={{flexDirection: 'column', alignContent: 'flex-end', marginLeft: '15%'}}> 
-                                                <Text style={{color: colors.grey, fontSize: 11}}>Difference </Text>
+                                            <View style={{flexDirection: 'column', alignContent: 'flex-end', alignItems: 'center', marginLeft: '15%'}}> 
+                                                <Text style={{color: colors.grey, fontSize: 11, marginBottom: 5}}>Difference</Text>
                                                 {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
                                                     <Text style={{color: colors.primary}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
                                                 : 
                                                     <Text style={{color: colors.danger}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                                 }
                                             </View>
-                                            <View style={{flexDirection: 'column', alignContent: 'flex-end', marginLeft: '15%'}}> 
-                                                <Text style={{color: colors.grey, fontSize: 11}}>Spent</Text>
+                                            <View style={{flexDirection: 'column', alignContent: 'flex-end', alignItems: 'center', marginLeft: '15%'}}> 
+                                                {item.expenseOrIncome === "expense" ? 
+                                                    <Text style={{color: colors.grey, fontSize: 11, marginBottom: 5}}>Spent</Text>
+                                                :
+                                                    <Text style={{color: colors.grey, fontSize: 11, marginBottom: 5}}>Earned</Text>
+                                                }
                                                 <Text style={{color: colors.black}} >${item.spent}</Text>
                                             </View>
-                                            <View style={{flexDirection: 'column', alignContent: 'flex-end'}}> 
-                                                <Text style={{color: colors.grey, fontSize: 11}}>Planned</Text>
+                                            <View style={{flexDirection: 'column', alignContent: 'flex-end', alignItems: 'center'}}> 
+                                                <Text style={{color: colors.grey, fontSize: 11, marginBottom: 5}}>Expected</Text>
                                                 <Text style={{color: colors.black}} >${item.planned}</Text>
                                             </View>
                                         </View>
