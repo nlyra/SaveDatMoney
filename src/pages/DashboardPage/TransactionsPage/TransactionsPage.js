@@ -1,24 +1,23 @@
-import React, { useState} from 'react';
+import React, { useEffect,useState} from 'react';
 import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated, Dimensions} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
 import {format} from 'date-fns'; 
 import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
-import { Divider, ToggleButton } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import EditModal from './EditModal';
-import render from 'react-native-web/dist/cjs/exports/render';
 import DeleteModal from './DeleteModal';
 import { Actions, Router, Scene  } from "react-native-router-flux";
 import SwitchSelector from "react-native-switch-selector";
 
+    
 export default function TransactionsPage ({navigation})
 {
-     
+  
+    const [refresh, setRefresh] = useState("");
     const [date, setDate] = useState(new Date());
     const [message, setMessage] = useState('');
     const [cost, setCost] = useState('');
@@ -26,7 +25,7 @@ export default function TransactionsPage ({navigation})
     const [description, setDescription] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [radio, setRadio] = useState('expense');
-    const [refresh, setRefresh] = useState("")
+    const {currentlyOpenSwipeable, setCurrentlyOpenSwipeable} = useState(null);
 
     var user = firebase.auth().currentUser;
 
@@ -38,6 +37,20 @@ export default function TransactionsPage ({navigation})
     if (user != null) {
     uid = user.uid;  
     } 
+
+    useEffect(() => {
+        // Interval to update count
+        // Subscribe for the focus Listener
+        const unsubscribe = navigation.addListener('focus', () => {
+            setRefresh({});
+            console.log("Blur")
+        });
+    
+        return () => {
+            // Unsubscribe for the focus Listener
+            unsubscribe;
+        };
+    }, [navigation]);
 
      /* Get data from the database */
      var ref = firebase.database().ref("transaction");
@@ -81,6 +94,8 @@ export default function TransactionsPage ({navigation})
         })
 
         return (
+
+            
             <>
             <View style={{ backgroundColor: colors.danger, justifyContent: 'center' }}>
                 <Animated.Text
@@ -276,7 +291,9 @@ export default function TransactionsPage ({navigation})
                     keyExtractor = {(col) => col.id}
                     renderItem={({item})=> (
                         <View style={{ paddingBottom: 10}}>
-                            <Swipeable  renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}>
+                            <Swipeable  
+                            renderRightActions={(progress,dragX) => RightActions(progress, dragX, item)}
+                            >
                                 <View style={{ paddingVertical: 0.2, justifyContent: 'center', alignItems: 'center'}}>
                                     <View style={styles.feedItem}>
                                         <View style={{flex:1}}>

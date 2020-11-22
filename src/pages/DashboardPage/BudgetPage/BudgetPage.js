@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal, Animated, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase/config';
@@ -39,6 +39,21 @@ export default function BudgetPage ({navigation})
     var itemKey;
     var num = 0;
 
+    useEffect(() => {
+        // Interval to update count
+        // Subscribe for the focus Listener
+        const unsubscribe = navigation.addListener('focus', () => {
+            console.log("Blur")
+            setRefresh({});
+        });
+    
+        return () => {
+            // Unsubscribe for the focus Listener
+            unsubscribe;
+        };
+        }, [navigation]);
+
+
     const editSpent = (key, total) => {
 
         var updates = {};
@@ -70,7 +85,6 @@ export default function BudgetPage ({navigation})
         userData[i].spent = total;
         editSpent(userData[i].key, total);
     }
-
 
     /**
      *
@@ -316,7 +330,7 @@ export default function BudgetPage ({navigation})
                                                 </View>
                                             </View>
                                             <Router>
-                                                <Scene key = "root">
+                                                <Scene key = "root2">
                                                     <Scene key="scene3" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
                                                     <Scene key="scene4" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
                                                 </Scene>
