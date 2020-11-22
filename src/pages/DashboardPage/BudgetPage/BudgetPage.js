@@ -53,25 +53,23 @@ export default function BudgetPage ({navigation})
 
      /* Get data from the database */
      
-     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
          userData.push({
              ...snapshot.val(),
              key: snapshot.key,
            });
-     });
-     console.log(userData);
-     console.log(userData[0]);
-     for(var i = 0; i < userData.length; i++){
+    });
+    console.log("WE HEREEEEE" + userData);
+    console.log(userData[0]);
+    for(var i = 0; i < userData.length; i++){
         var total = 0;
-         console.log("category is " + userData[i].category);
-         refTransaction.orderByChild("date_uid_category_expenseOrIncome").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category + "_" + userData[i].expenseOrIncome).on("child_added", function(snapshot2){
-            total = total + snapshot2.val().cost;
-         })
-         userData[i].spent = total;
-        //  setSpent(total);
-         editSpent(userData[i].key, total);
-     }
-
+        console.log("category is " + userData[i].category);
+        refTransaction.orderByChild("date_uid_category_expenseOrIncome").equalTo(format(date, 'MMMM, yyyy') + '_' + uid + "_" + userData[i].category + "_" + userData[i].expenseOrIncome).on("child_added", function(snapshot2){
+        total = total + snapshot2.val().cost;
+        })
+        userData[i].spent = total;
+        editSpent(userData[i].key, total);
+    }
 
 
     /**
@@ -258,14 +256,23 @@ export default function BudgetPage ({navigation})
                                         </View>
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
-                                            <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal> 
-                                            {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
-                                                <Text style={{color: colors.primary, marginLeft: '10%'}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
-                                            : 
-                                                <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
-                                            }
-                                            <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
-                                            <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
+                                            <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal>
+                                            <View style={{flexDirection: 'column', alignContent: 'flex-end', marginLeft: '15%'}}> 
+                                                <Text style={{color: colors.grey, fontSize: 11}}>Difference </Text>
+                                                {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
+                                                    <Text style={{color: colors.primary}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
+                                                : 
+                                                    <Text style={{color: colors.danger}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
+                                                }
+                                            </View>
+                                            <View style={{flexDirection: 'column', alignContent: 'flex-end', marginLeft: '15%'}}> 
+                                                <Text style={{color: colors.grey, fontSize: 11}}>Spent</Text>
+                                                <Text style={{color: colors.black}} >${item.spent}</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'column', alignContent: 'flex-end'}}> 
+                                                <Text style={{color: colors.grey, fontSize: 11}}>Planned</Text>
+                                                <Text style={{color: colors.black}} >${item.planned}</Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
@@ -319,4 +326,5 @@ export default function BudgetPage ({navigation})
         </View>
     );
 }
+
 

@@ -6,6 +6,7 @@ export const colors = {
     warning: '#ffe700',
     white: '#FFFFFF',
     black: '#000000',
+    grey: '#808080',
 }
 
 export const fonts = {
