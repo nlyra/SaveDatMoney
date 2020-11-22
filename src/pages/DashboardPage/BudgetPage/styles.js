@@ -190,6 +190,17 @@ export default StyleSheet.create({
         marginBottom: '2%',
         marginTop: '5%',
     },
+    amountsContainer: {
+        flexDirection: 'column', 
+        alignContent: 'flex-end', 
+        alignItems: 'center', 
+        marginLeft: '15%'
+    },
+    subtext:{
+        color: colors.grey, 
+        fontSize: 11, 
+        marginBottom: 5
+    },
     head: 
     { 
         height: 40, 
