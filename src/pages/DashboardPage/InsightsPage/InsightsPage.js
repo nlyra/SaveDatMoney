@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
@@ -8,8 +8,9 @@ import MonthPicker from '../MonthPicker';
 
 import { VictoryPie, VictoryTooltip, VictoryLabel, VictoryChart, VictoryScatter, VictoryTheme } from "./Victory";
 
-function InsightsPage() {
+function InsightsPage({navigation}) {
 
+    const [refresh, setRefresh] = useState("");
     const [date, setDate] = useState(new Date());
     var user = firebase.auth().currentUser;
     var uid;
@@ -35,12 +36,25 @@ function InsightsPage() {
         x: userData[i].category,
         y: userData[i].cost
       });
-      console.log(data);
-      console.log("this is data ^");
-      console.log(userData[i].category)
     }
-    
-    console.log(data);
+
+    useEffect(() => {
+      // Interval to update count
+      // Subscribe for the focus Listener
+      const unsubscribe = navigation.addListener('focus', () => {
+          console.log("Blur")
+          setRefresh({});
+      });
+
+      const _onPressModelItem = () => {
+        setRefresh({})
+    }
+  
+      return () => {
+          // Unsubscribe for the focus Listener
+          unsubscribe;
+      };
+      }, [navigation]);
 
     return (
       <View style={styles.mainContainer}>
@@ -52,7 +66,7 @@ function InsightsPage() {
       <VictoryPie
           style={{
             data: {
-              stroke: ({ datum }) => (datum.y > 9 ? "black" : "green"),
+              stroke: ({ datum }) => ("black"),
               opacity: ({ datum }) => (datum.y > 9 ? 1 : 0.4)
             }
           }}
@@ -66,5 +80,3 @@ function InsightsPage() {
 };
 
 export default InsightsPage;
-
-/* */
