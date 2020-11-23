@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 2074,
-  "webpackServerPort": 19006,
+  "packagerPid": 5301,
+  "webpackServerPort": null,
   "expoServerNgrokUrl": "https://w8-gj6.anonymous.savedatmoney.exp.direct",
   "packagerNgrokUrl": "https://packager.w8-gj6.anonymous.savedatmoney.exp.direct",
-  "ngrokPid": 2353
+  "ngrokPid": 2989
 }
