@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
@@ -8,8 +8,9 @@ import MonthPicker from '../MonthPicker';
 
 import { VictoryPie, VictoryTooltip, VictoryLabel, VictoryChart, VictoryScatter, VictoryTheme } from "./Victory";
 
-function InsightsPage() {
+function InsightsPage({navigation}) {
 
+    const [refresh, setRefresh] = useState("");
     const [date, setDate] = useState(new Date());
     var user = firebase.auth().currentUser;
     var uid;
@@ -20,35 +21,56 @@ function InsightsPage() {
     }
 
     /* Get data from the database */
-    var userData = [];
-    var ref = firebase.database().ref("category");
-    ref.orderByChild("dateuid").equalTo(format(date, 'MMMM, yyyy') + "" + uid).on("child_added", function(snapshot) {
-         userData.push({
-             ...snapshot.val(),
-             key: snapshot.key,
-           });
+    var ref = firebase.database().ref("transaction");
+    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+        userData.push({
+            ...snapshot.val(),
+            key: snapshot.key,
+          });
+        console.log(userData);
     });
 
-    console.log("please help");
+    var data = [];
+    for(var i = 0; i < userData.length; i++) {
+      data.push({
+        x: userData[i].category,
+        y: userData[i].cost
+      });
+    }
+
+    useEffect(() => {
+      // Interval to update count
+      // Subscribe for the focus Listener
+      const unsubscribe = navigation.addListener('focus', () => {
+          console.log("Blur")
+          setRefresh({});
+      });
+
+      const _onPressModelItem = () => {
+        setRefresh({})
+    }
+  
+      return () => {
+          // Unsubscribe for the focus Listener
+          unsubscribe;
+      };
+      }, [navigation]);
 
     return (
       <View style={styles.mainContainer}>
         <View style={styles.topContainer}>
           <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
-        
-          <VictoryPie
+      </View>
+
+      <View style={styles.graphContainer}>
+      <VictoryPie
           style={{
             data: {
-              stroke: ({ datum }) => (datum.y > 75 ? "black" : "none"),
-              opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
+              stroke: ({ datum }) => ("black"),
+              opacity: ({ datum }) => (datum.y > 9 ? 1 : 0.4)
             }
           }}
-          data={[
-            { x: "Food", y: 62 },
-            { x: "Rent", y: 91 },
-            { x: "Tuition", y: 55 },
-          {x: "Miscellaneous", y: 55 }
-          ]}
+          data={data}
         />
       </View>
     </View>
@@ -58,5 +80,3 @@ function InsightsPage() {
 };
 
 export default InsightsPage;
-
-/* */

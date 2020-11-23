@@ -12,6 +12,11 @@ export default StyleSheet.create({
         justifyContent: 'center',  
         marginTop: 18 
     },
+    graphContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     calendar: {
         flex: 1,
         alignItems: 'center', 
