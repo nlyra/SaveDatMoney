@@ -20,35 +20,43 @@ function InsightsPage() {
     }
 
     /* Get data from the database */
-    var userData = [];
-    var ref = firebase.database().ref("category");
-    ref.orderByChild("dateuid").equalTo(format(date, 'MMMM, yyyy') + "" + uid).on("child_added", function(snapshot) {
-         userData.push({
-             ...snapshot.val(),
-             key: snapshot.key,
-           });
+    var ref = firebase.database().ref("transaction");
+    ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
+        userData.push({
+            ...snapshot.val(),
+            key: snapshot.key,
+          });
+        console.log(userData);
     });
 
-    console.log("please help");
+    var data = [];
+    for(var i = 0; i < userData.length; i++) {
+      data.push({
+        x: userData[i].category,
+        y: userData[i].cost
+      });
+      console.log(data);
+      console.log("this is data ^");
+      console.log(userData[i].category)
+    }
+    
+    console.log(data);
 
     return (
       <View style={styles.mainContainer}>
         <View style={styles.topContainer}>
           <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
-        
-          <VictoryPie
+      </View>
+
+      <View style={styles.graphContainer}>
+      <VictoryPie
           style={{
             data: {
-              stroke: ({ datum }) => (datum.y > 75 ? "black" : "none"),
-              opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
+              stroke: ({ datum }) => (datum.y > 9 ? "black" : "green"),
+              opacity: ({ datum }) => (datum.y > 9 ? 1 : 0.4)
             }
           }}
-          data={[
-            { x: "Food", y: 62 },
-            { x: "Rent", y: 91 },
-            { x: "Tuition", y: 55 },
-          {x: "Miscellaneous", y: 55 }
-          ]}
+          data={data}
         />
       </View>
     </View>
