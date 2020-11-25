@@ -8,6 +8,19 @@ import { Value } from 'react-native-reanimated';
 import {AppearanceProvider} from 'react-native-appearance';
 import { TouchableRipple, useTheme } from 'react-native-paper';
 import {AuthContext} from '../../../../components/context'
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
+import merge from 'deepmerge';
+import { TouchableRipple } from 'react-native-paper';
+import WebModal from 'modal-enhanced-react-native-web';
 
 
 
@@ -17,6 +30,8 @@ export default function SettingsPage({navigation})
     const [currency, setCurrency] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isThemeDark, setIsThemeDark] = React.useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
 
     var user = firebase.auth().currentUser;
@@ -25,11 +40,24 @@ export default function SettingsPage({navigation})
 
     const changePassword = () => {
       user.updatePassword(password);
+      setModalVisible(!modalVisible);
     };
 
 
     const editEmail = () => {
       user.updateEmail(email);
+    };
+
+    const closeModal = () => {
+        setModalVisible(!modalVisible);
+    };
+
+    const doLogout = () => {
+      firebase.auth().signOut().then(function() {
+          console.log('signout sucessful');
+      }, function(error) {
+          // An error happened.
+      });
     };
 
     if (user != null) {
@@ -52,36 +80,65 @@ export default function SettingsPage({navigation})
     const { colors } = useTheme();
 
     return (
-          <ScrollView>
-            <View style={[styles.modalView, {
-              backgroundColor: colors.card
-            }]}>
-              <Text style={[styles.modalText, {
-                color: colors.text
-              }]}>Name</Text>
+      <View>
+        {Platform.OS === 'ios' ?
+          <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {Alert.alert("Modal has been closed.");}}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Change Password</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor="black"
+                  placeholder='New Password'
+                  onChangeText={(text) => setPassword(text)}
+                  value={password}
+                  underlineColorAndroid="transparent"
+                  autoCapitalize="none"
+                />
+                <View style={styles.modalButtons}>
+                  <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={changePassword}>
+                    <Text style={styles.buttonTitle}>Save</Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
+                    <Text style={styles.buttonTitle}>Cancel</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </View>
+          </Modal>
+          :
+          <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {Alert.alert("Modal has been closed.");}}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Change Password</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor="black"
+                  placeholder='New Password'
+                  onChangeText={(text) => setPassword(text)}
+                  value={password}
+                  underlineColorAndroid="transparent"
+                  autoCapitalize="none"
+                />
+                <View style={styles.modalButtons}>
+                  <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={changePassword}>
+                    <Text style={styles.buttonTitle}>Save</Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight style={[{marginRight: '10%'}, buttons.standard]} onPress={closeModal}>
+                    <Text style={styles.buttonTitle}>Cancel</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </View>
+          </WebModal>
+        }
+        <ScrollView>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Name</Text>
               <Text style={styles.textStyle}>     {user.displayName}</Text>
-              <Text style={[styles.modalText, {
-                color: colors.text
-              }]}>Change Password</Text>
-              <TextInput
-                style={[styles.input, {
-                  backgroundColor: colors.accent,
-                  color: colors.text
-                }]}
-                placeholderTextColor={ colors.text}
-                placeholder='Change Password'
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-              />
-              <Text style={[styles.modalText, {
-                color: colors.text
-              }]}>Currency</Text>
+              <Text style={styles.modalText}>Currency</Text>
               <Text style={styles.textStyle}>     $</Text>
-              <Text style={[styles.modalText, {
-                color: colors.text
-              }]}>Change Password</Text>
               <ScrollView contentContainerStyle={{
                 flexDirection: "row",
                 marginTop: 15,
@@ -97,10 +154,17 @@ export default function SettingsPage({navigation})
                      value={paperTheme.dark}/>
                   </TouchableRipple>
               </ScrollView>
-              <TouchableHighlight style={buttons.standard}>
-                  <Text style={styles.buttonTitle}>Save</Text>
-              </TouchableHighlight>
+              <View style={styles.bottomContainer}>
+                <TouchableHighlight style={buttons.standard} onPress={closeModal}>
+                    <Text style={styles.buttonTitle}>Change Password</Text>
+                </TouchableHighlight>
+                <TouchableHighlight style={buttons.standard} onPress={doLogout}>
+                    <Text style={styles.buttonTitle}>Logout</Text>
+                </TouchableHighlight>
+              </View>
             </View>
-          </ScrollView>
+          </View>
+        </ScrollView>
+      </View>
     )
 }
