@@ -319,22 +319,39 @@ export default function BudgetPage ({navigation})
                                                 <View>
                                                     <Text style={styles.category}> {item.category}</Text>
                                                 </View>
-                                                <View style={{flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                                    {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
-                                                    <Text style={{color: colors.primary, marginLeft: '10%'}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
-                                                    : 
-                                                    <Text style={{color: colors.danger, marginLeft: '10%'}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
-                                                    }
-                                                    <Text style={{color: colors.black, marginLeft: '10%'}} >${item.spent}</Text>
-                                                    <Text style={{color: colors.black, marginLeft: '10%'}} >${item.planned}</Text>
+                                                <Router>
+                                                        <Scene key = "root2">
+                                                            <Scene key="scene3" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                            <Scene key="scene4" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
+                                                        </Scene>
+                                                </Router>
+                                                <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
+
+                                                    <View style={styles.amountsContainer}> 
+                                                        <Text style={styles.subtext}>Difference</Text>
+                                                        {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
+                                                            <Text style={{color: colors.primary}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
+                                                        : 
+                                                            <Text style={{color: colors.danger}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
+                                                        }
+                                                    </View>
+
+                                                    <View style={styles.amountsContainer}> 
+                                                        {item.expenseOrIncome === "expense" ? 
+                                                            <Text style={styles.subtext}>Spent</Text>
+                                                        :
+                                                            <Text style={styles.subtext}>Earned</Text>
+                                                        }
+                                                        <Text style={{color: colors.black}} >${item.spent}</Text>
+                                                    </View>
+
+                                                    <View style={styles.amountsContainer}> 
+                                                        <Text style={styles.subtext}>Expected</Text>
+                                                        <Text style={{color: colors.black}} >${item.planned}</Text>
+                                                    </View>
+
                                                 </View>
                                             </View>
-                                            <Router>
-                                                <Scene key = "root2">
-                                                    <Scene key="scene3" component={EditModal} item={item} itemKey = {item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
-                                                    <Scene key="scene4" component={DeleteModal} itemKey={item.key} onPressModelItem={_onPressModelItem} visible = {false} hideNavBar />
-                                                </Scene>
-                                            </Router>
                                         </View>
                                     </View>
                                 </View>
