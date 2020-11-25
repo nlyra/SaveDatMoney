@@ -62,11 +62,13 @@ export default StyleSheet.create({
         fontWeight: "bold",
         marginRight: '2%'
     },
-    transactionButton: {
-        color: 'white',
-        fontSize: 10,
-        fontWeight: "bold",
-        textAlign: "center",
+    logoutButton: {
+        backgroundColor: 'red',
+        height: 48,
+        borderRadius: 5,
+        justifyContent: "center",
+        width: '40%',
+        alignItems: 'center',
     },
     date:{
         fontSize: 16,

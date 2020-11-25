@@ -17,6 +17,7 @@ import {
 import merge from 'deepmerge';
 import { TouchableRipple } from 'react-native-paper';
 import WebModal from 'modal-enhanced-react-native-web';
+import { Actions, Router, Scene  } from "react-native-router-flux";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -30,6 +31,7 @@ export default function SettingsPage({navigation})
     const [password, setPassword] = useState('');
     const [isThemeDark, setIsThemeDark] = React.useState(false);
     const [modalVisible, setModalVisible] = useState(false);
+    const [refresh, setRefresh] = useState('');
 
     let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
     var user = firebase.auth().currentUser;
@@ -60,11 +62,7 @@ export default function SettingsPage({navigation})
     };
 
     const doLogout = () => {
-      firebase.auth().signOut().then(function() {
-          console.log('signout sucessful');
-      }, function(error) {
-          // An error happened.
-      });
+      window.location.reload(false);
     };
 
     if (user != null) {
@@ -157,10 +155,10 @@ export default function SettingsPage({navigation})
                 />
               </ScrollView>
               <View style={styles.bottomContainer}>
-                <TouchableHighlight style={buttons.standard} onPress={closeModal}>
+                <TouchableHighlight style={[buttons.standard, {margin: 20}]} onPress={closeModal}>
                     <Text style={styles.buttonTitle}>Change Password</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={buttons.standard} onPress={doLogout}>
+                <TouchableHighlight style={[styles.logoutButton, {margin:20}]} onPress={doLogout}>
                     <Text style={styles.buttonTitle}>Logout</Text>
                 </TouchableHighlight>
               </View>
