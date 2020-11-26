@@ -3,7 +3,10 @@ import { Platform, StyleSheet, Dimensions } from 'react-native';
 export const colors = {
     primary: '#2ea44f',
     danger: '#F85757',
-    warning: '#ffe700'
+    warning: '#ffe700',
+    white: '#FFFFFF',
+    black: '#000000',
+    grey: '#808080',
 }
 
 export const fonts = {
@@ -26,7 +29,7 @@ export const buttons = StyleSheet.create({
         height: 48,
         borderRadius: 5,
         justifyContent: "center",
-        width: '40%',
+        width: '25%',
         alignItems: 'center',
     },
     long: {
@@ -35,6 +38,6 @@ export const buttons = StyleSheet.create({
         borderRadius: 5,
         alignItems: "center",
         justifyContent: "center",
-        width: '45%',
+        width: '35%',
     }
 });
