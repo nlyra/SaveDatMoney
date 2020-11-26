@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, Button, Alert, FlatList, TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
+import { Text, TouchableOpacity, View, Button, Alert, ScrollView, 
+    TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
@@ -38,13 +39,36 @@ function InsightsPage({navigation}) {
       });
     }
 
+
+    console.log("Data for pie chart: ");
+    console.log(data);
+
+    var maxNum = 0;
+    var sum = 0, avg = 0;
+    var maxCat;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].y > maxNum) {
+            maxCat = data[i].x;
+            maxNum = data[i].y;
+        }
+        sum = parseInt(sum) + parseInt(data[i].y);
+    }
+    console.log("the largest category is ");
+    console.log(maxCat);
+
+    avg = data.length > 0 ? (sum/data.length).toFixed(2) : 0;
+
     useEffect(() => {
       // Interval to update count
       // Subscribe for the focus Listener
-      const unsubscribe = navigation.addListener('focus', () => {
+      const unsubscribe = navigation.addListener('blur', () => {
           console.log("Blur")
           setRefresh({});
       });
+      const first = navigation.addListener('focus', () => {
+        console.log("Focus")
+        setRefresh({});
+    });
 
       const _onPressModelItem = () => {
         setRefresh({})
@@ -56,23 +80,54 @@ function InsightsPage({navigation}) {
       };
       }, [navigation]);
 
+    
+
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.topContainer}>
+        <View>
           <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
       </View>
-
+      <ScrollView>
       <View style={styles.graphContainer}>
-      <VictoryPie
-          style={{
-            data: {
-              stroke: ({ datum }) => ("black"),
-              opacity: ({ datum }) => (datum.y > 9 ? 1 : 0.4)
-            }
-          }}
+        { data.length > 0 ?
+          <VictoryPie
+            style={{
+                labels: {
+                    fill: "white",
+                    fontSize: 5
+                },
+                data: {
+                    stroke: ({ datum }) => ("black"),
+                    opacity: ({ datum }) => (datum.y > 9 ? 1 : 0.4)
+                }
+            }}
           data={data}
-        />
+          height={200}
+          labelPlacement={({index}) => index
+              ? "parallel"
+              : "vertical"
+          }
+          labelRadius={5}
+          sortKey = "y"
+          />
+          
+          :
+          <Text>
+            Nothing to show yet
+          </Text>
+        }
+        {
+          data.length > 0 ?
+          <Text>
+            You have spent the most on {maxCat}.
+            The average money you have spent per transaction is {avg}.
+            SAVE THAT MONEY BOIIIII!!!
+          </Text>
+          :
+          null
+        }
       </View>
+      </ScrollView>
     </View>
   )
 

@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 5301,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
   "webpackServerPort": null,
-  "expoServerNgrokUrl": "https://w8-gj6.anonymous.savedatmoney.exp.direct",
-  "packagerNgrokUrl": "https://packager.w8-gj6.anonymous.savedatmoney.exp.direct",
-  "ngrokPid": 2989
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

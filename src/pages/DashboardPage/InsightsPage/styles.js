@@ -7,15 +7,15 @@ export default StyleSheet.create({
 
     },
     topContainer: {
-        flex: 1,
+        flex: 2,
         alignItems: 'center',  
         justifyContent: 'center',  
-        marginTop: 18 
+        marginTop: 15 
     },
     graphContainer: {
-        flex: 2,
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        //justifyContent: 'center'
     },
     calendar: {
         flex: 1,
