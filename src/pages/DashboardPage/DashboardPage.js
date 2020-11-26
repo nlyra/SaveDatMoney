@@ -9,16 +9,18 @@ import InsightsPage from './InsightsPage/InsightsPage';
 import SettingsPage from './SettingsPage/SettingsPage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
 
 
 const Tab = createMaterialBottomTabNavigator();
 
+
 export default function DashboardPage({navigation})
 {
     return (
+
+
       <NavigationContainer independent={true}>
         <Tab.Navigator
           initialRouteName="Budget"
@@ -26,6 +28,7 @@ export default function DashboardPage({navigation})
           backBehavior='history'
           shifting={false}
           labeled={false}
+          
         >
           <Tab.Screen
             name="Budget"
@@ -86,5 +89,6 @@ export default function DashboardPage({navigation})
           />
         </Tab.Navigator>
       </NavigationContainer>
+
     )
 }
