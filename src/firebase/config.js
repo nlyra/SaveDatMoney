@@ -14,10 +14,6 @@ const firebaseConfig = {
     measurementId: "G-E03V4J17J6",
 
   };
-  passwordReset: email => {
-    return firebase.auth().sendPasswordResetEmail(email)
-  },
-
 
   firebase.initializeApp(firebaseConfig);
 
