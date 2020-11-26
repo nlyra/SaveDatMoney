@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PureComponent } from 'react';
 import { Text, TouchableOpacity, View, Button, Alert, ScrollView, 
     TouchableHighlight, TextInput, Platform, Modal} from 'react-native';
 import { firebase } from '../../../firebase/config';
@@ -6,6 +6,9 @@ import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
 import {format} from 'date-fns'; 
 import MonthPicker from '../MonthPicker';
+import {
+  PieChart, Pie, Sector, Cell,
+} from 'recharts';
 
 import { VictoryPie, VictoryTooltip, VictoryLabel, VictoryChart, VictoryScatter, VictoryTheme } from "./Victory";
 
@@ -21,7 +24,6 @@ function InsightsPage({navigation}) {
     uid = user.uid;  
     }
 
-    /* Get data from the database */
     var ref = firebase.database().ref("transaction");
     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
         userData.push({
@@ -79,7 +81,7 @@ function InsightsPage({navigation}) {
           unsubscribe;
       };
       }, [navigation]);
-
+    
     
 
     return (
@@ -98,15 +100,10 @@ function InsightsPage({navigation}) {
                 },
                 data: {
                     stroke: ({ datum }) => ("black"),
-                    opacity: ({ datum }) => (datum.y > 9 ? 1 : 0.4)
                 }
             }}
           data={data}
           height={200}
-          labelPlacement={({index}) => index
-              ? "parallel"
-              : "vertical"
-          }
           labelRadius={5}
           sortKey = "y"
           />
@@ -131,7 +128,36 @@ function InsightsPage({navigation}) {
     </View>
   )
 
+
+/*
+const data01 = [
+  { name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
+  { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 },
+];
+const data02 = [
+  { name: 'random', value: 100 },
+  { name: 'random2', value: 300 },
+  { name: 'B1', value: 100 },
+  { name: 'B2', value: 80 },
+  { name: 'B3', value: 40 },
+  { name: 'B4', value: 30 },
+  { name: 'B5', value: 50 },
+  { name: 'C1', value: 100 },
+  { name: 'C2', value: 200 },
+  { name: 'D1', value: 150 },
+  { name: 'D2', value: 50 },
+];
+
+
+    return (
+      <PieChart width={400} height={400}>
+        <Pie data={data01} dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" />
+        <Pie data={data02} dataKey="value" cx={200} cy={200} innerRadius={70} outerRadius={90} fill="#82ca9d" label />
+      </PieChart>
+    );
+}
+*/
   
-};
+ };
 
 export default InsightsPage;
