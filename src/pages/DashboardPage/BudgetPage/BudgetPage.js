@@ -9,9 +9,12 @@ import MonthPicker from '../MonthPicker'
 import WebModal from 'modal-enhanced-react-native-web';
 import { Divider, DataTable} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTheme } from '@react-navigation/native'
 
 export default function BudgetPage({navigation})
 {
+ 
+
     const [date, setDate] = useState(new Date());
     const [message, setMessage] = useState('');
     const [cost, setCost] = useState('');
@@ -66,13 +69,13 @@ export default function BudgetPage({navigation})
         console.log(userData);
     });
 
+    const { colors } = useTheme();
+ 
     return (
-
+        
         <View style={styles.mainContainer}>
-
             <View style={styles.topContainer}>
             <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
-
                 {/* If user  */}
                 {Platform.OS === 'ios' ?
                 <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
