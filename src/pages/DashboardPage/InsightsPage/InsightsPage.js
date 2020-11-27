@@ -6,11 +6,10 @@ import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
 import {format} from 'date-fns'; 
 import MonthPicker from '../MonthPicker';
-import {
-  PieChart, Pie, Sector, Cell,
-} from 'recharts';
-
-import { VictoryPie, VictoryTooltip, VictoryLabel, VictoryChart, VictoryScatter, VictoryTheme } from "./Victory";
+//import { PieChart, Pie, Sector, Cell } from 'recharts';
+//import { VictoryPie, VictoryTooltip, VictoryLabel, VictoryChart, VictoryScatter, VictoryTheme } from "./Victory";
+import * as shape from 'd3-shape';
+import { AreaChart, BarChart, ProgressCircle, Grid } from 'react-native-svg-charts';
 
 function InsightsPage({navigation}) {
 
@@ -82,15 +81,7 @@ function InsightsPage({navigation}) {
       };
       }, [navigation]);
     
-    
-
-    return (
-      <View style={styles.mainContainer}>
-        <View>
-          <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
-      </View>
-      <ScrollView>
-      <View style={styles.graphContainer}>
+      /*<View style={styles.graphContainer}>
         { data.length > 0 ?
           <VictoryPie
             style={{
@@ -112,21 +103,69 @@ function InsightsPage({navigation}) {
           <Text>
             Nothing to show yet
           </Text>
-        }
-        {
-          data.length > 0 ?
-          <Text>
-            You have spent the most on {maxCat}.
-            The average money you have spent per transaction is {avg}.
-            SAVE THAT MONEY BOIIIII!!!
-          </Text>
-          :
-          null
-        }
-      </View>
-      </ScrollView>
-    </View>
-  )
+        }*/
+
+        /*<AreaChart
+            style={{ height: 200 }}
+            data = {chData}
+            contentInset = {{top: 30, bottom: 30}}
+            curve = { shape.curveNatural }
+            svg = {{ fill: 'rgba(134, 55, 244, 0.8)' }}
+          >
+            <Grid />
+          </AreaChart>*/
+
+          /*<BarChart 
+              style = {{ height: 200 }}
+              data = {chData}
+              svg = {{ fill }}
+              contentInset = {{top: 30, bottom: 30}}
+            >
+                <Grid />
+            </BarChart>*/
+    
+    
+      const chData = [50, 10, 40, 95, 85, 35, 53]
+      const fill = 'rgb(135, 55, 230)'
+
+      return (        
+        <View style={styles.mainContainer}>
+          <View>
+            <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
+          </View>
+          <ScrollView>
+          
+          <View>
+            <ProgressCircle
+              style = {{height: 300}}
+              progress = {.7}
+              progressColor = {'rgb(255, 55, 55)'}
+            />
+
+            <ProgressCircle
+              style = {{height: 300}}
+              progress = {.3}
+              progressColor = {'rgb(55, 255, 55)'}
+            />
+          </View>
+          
+
+          
+          {
+            data.length > 0 ?
+            <Text>
+              You have spent the most on {maxCat}.
+              The average money you have spent per transaction is {avg}.
+              SAVE THAT MONEY BOIIIII!!!
+            </Text>
+            :
+            null
+          }
+          </ScrollView>
+        </View>
+
+      )
+}
 
 
 /*
@@ -158,6 +197,5 @@ const data02 = [
 }
 */
   
- };
 
 export default InsightsPage;

@@ -147,7 +147,7 @@ export default class EditModal extends Component {
                            placeholderTextColor="black"
                            placeholder='Planned'
                            onChangeText={(text) => this.setState({planned: text})}
-                           value={this.state.planned.toString()}
+                           //value={this.state.planned.toString()}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                         />
