@@ -12,9 +12,9 @@
   "dependencies": {
     "@mdi/font": "^5.8.55",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/material-bottom-tabs": "^5.3.0",
-    "@react-navigation/native": "^5.8.0",
-    "@react-navigation/stack": "^5.10.0",
+    "@react-navigation/material-bottom-tabs": "^5.3.9",
+    "@react-navigation/native": "^5.8.9",
+    "@react-navigation/stack": "^5.12.6",
     "@types/react-router": "^5.1.8",
     "date-fns": "^2.16.1",
     "deepmerge": "^4.2.2",
@@ -22,31 +22,52 @@
     "expo": "^39.0.4",
     "expo-status-bar": "~1.0.2",
     "firebase": "^7.24.0",
+    "install": "^0.13.0",
     "modal-enhanced-react-native-web": "^0.2.0",
     "moment": "^2.29.1",
+    "npm": "^6.14.9",
     "react": "16.13.1",
+    "react-art": "^17.0.1",
     "react-dom": "16.13.1",
     "react-native": "^0.63.3",
+<<<<<<< HEAD
+    "react-native-appearance": "^0.3.4",
     "react-native-gesture-handler": "~1.7.0",
+=======
+    "react-native-gesture-handler": "^1.8.0",
+>>>>>>> main
     "react-native-modal": "^11.5.6",
-    "react-native-month-year-picker": "^1.5.0",
+    "react-native-month-year-picker": "^1.6.0",
     "react-native-navbar": "^2.1.0",
+<<<<<<< HEAD
     "react-native-paper": "^4.3.1",
     "react-native-reanimated": "~1.13.0",
+    "react-native-router-flux": "^4.2.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-settings-page": "^2.0.6",
     "react-native-settings-screen": "^2.2.1",
+    "react-native-tab-view": "^2.14.2",
+=======
+    "react-native-paper": "^4.4.0",
+    "react-native-reanimated": "^1.13.2",
+    "react-native-restart": "0.0.17",
+    "react-native-router-flux": "^4.2.0",
+    "react-native-safe-area-context": "3.1.4",
+    "react-native-screens": "~2.10.1",
+    "react-native-swipeout": "^2.3.6",
+    "react-native-switch-selector": "^2.0.6",
+>>>>>>> main
     "react-native-table-component": "^1.2.1",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-web": "~0.13.12",
+    "react-native-web": "^0.13.18",
     "react-router-dom": "^5.2.0",
     "yup": "^0.29.3"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
     "@types/react": "^16.9.55",
-    "@types/react-native": "^0.63.32"
+    "@types/react-native": "^0.63.35"
   },
   "private": true,
   "name": "SaveDatMoney"

@@ -4,6 +4,10 @@ import { Alert, Image, Text, TextInput, TouchableHighlight, View,
 import { firebase } from '../../../firebase/config';
 import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
+import { Value } from 'react-native-reanimated';
+import {AppearanceProvider} from 'react-native-appearance';
+import { TouchableRipple, useTheme } from 'react-native-paper';
+import {AuthContext} from '../../../../components/context'
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
@@ -18,8 +22,6 @@ import merge from 'deepmerge';
 import { TouchableRipple } from 'react-native-paper';
 import WebModal from 'modal-enhanced-react-native-web';
 
-const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
-const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 
 export default function SettingsPage({navigation})
@@ -32,12 +34,10 @@ export default function SettingsPage({navigation})
     const [modalVisible, setModalVisible] = useState(false);
     const [message, setMessage] = useState('');
 
-    let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+
     var user = firebase.auth().currentUser;
     var uid;
     var userData = [];
-
-    const toggleTheme = () => setIsThemeDark(!isThemeDark);
 
     const changePassword = () => {
       if (password !== confirmPassword){
@@ -68,12 +68,20 @@ export default function SettingsPage({navigation})
     };
 
     const doLogout = () => {
-      window.location.reload(false);
+      firebase.auth().signOut().then(function() {
+          console.log('signout sucessful');
+      }, function(error) {
+          // An error happened.
+      });
     };
 
     if (user != null) {
       uid = user.uid;
     };
+
+    const {toggleTheme} = React.useContext(AuthContext);
+    const paperTheme = useTheme();
+    const { colors } = useTheme();
 
     return (
       <View style={styles.mainContainer}>
@@ -196,13 +204,13 @@ export default function SettingsPage({navigation})
               <Text style={styles.separator}></Text>
               <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={styles.modalText}>Dark Mode</Text>
-                <Switch
-                  style={{
-                    marginRight: 10,
-                  }}
-                  onValueChange={toggleTheme}
-                  value={isThemeDark}
-                />
+                <TouchableRipple onPress={() => {toggleTheme()}}>
+                  <Switch
+                    style={{
+                    marginLeft: 50,
+                    }}
+                   value={paperTheme.dark}/>
+                </TouchableRipple>
               </ScrollView>
               <Text style={styles.separator}></Text>
               <View style={styles.bottomContainer}>
