@@ -62,11 +62,13 @@ export default StyleSheet.create({
         fontWeight: "bold",
         marginRight: '2%'
     },
-    transactionButton: {
-        color: 'white',
-        fontSize: 10,
-        fontWeight: "bold",
-        textAlign: "center",
+    logoutButton: {
+        backgroundColor: 'red',
+        height: 48,
+        borderRadius: 5,
+        justifyContent: "center",
+        width: '40%',
+        alignItems: 'center',
     },
     date:{
         fontSize: 16,
@@ -81,15 +83,19 @@ export default StyleSheet.create({
         backgroundColor: '#f2f2f2',
         marginTop: 0,
         marginBottom: 10,
-        marginLeft: 0,
+        marginLeft: 10,
         marginRight: 100,
-        paddingLeft: 16
+        paddingLeft: 16,
     },
     buttonTitle: {
         color: 'white',
         fontSize: 16,
         fontWeight: "bold",
         textAlign: "center",
+    },
+    button: {
+        color: 'red',
+        flexDirection: 'row',
     },
     footerView: {
         flex: 1,
@@ -117,21 +123,39 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    modalView: {
-        margin: 10,
-        backgroundColor: "white",
-        borderRadius: 0,
-        padding: 15,
-        alignItems: 'stretch',
+    centeredView: {
+        alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
+    },
+    modalView: {
+      ...Platform.select({
+          ios: {
+              width: '90%',
+              marginTop: 170,
+          },
+          android: {
+              width: '100%',
+              marginTop: 170,
+          },
+          default: {
+            // other platforms, web for example
+            width: '50%'
+          }
+      }),
+      margin: 30,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.75,
+      shadowRadius: 4.84,
+      elevation: 5
     },
     openButton: {
         backgroundColor: "#F194FF",
@@ -156,8 +180,8 @@ export default StyleSheet.create({
         width: '100%',
         alignItems: 'flex-end',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        marginLeft: '10%',
+        justifyContent: 'center',
+        marginLeft: '2%',
         marginBottom: '2%',
         marginTop: '5%',
     },
