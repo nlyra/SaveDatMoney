@@ -6,10 +6,9 @@ import styles from './styles';
 import { buttons, colors } from '../../stdStyles';
 import {format} from 'date-fns'; 
 import MonthPicker from '../MonthPicker';
-//import { PieChart, Pie, Sector, Cell } from 'recharts';
-//import { VictoryPie, VictoryTooltip, VictoryLabel, VictoryChart, VictoryScatter, VictoryTheme } from "./Victory";
 import * as shape from 'd3-shape';
-import { AreaChart, BarChart, ProgressCircle, Grid } from 'react-native-svg-charts';
+import * as scale from 'd3-scale';
+import { AreaChart, BarChart, AnimatedProgressCircle, ProgressCircle, Grid, YAxis } from 'react-native-svg-charts';
 
 function InsightsPage({navigation}) {
 
@@ -80,30 +79,6 @@ function InsightsPage({navigation}) {
           unsubscribe;
       };
       }, [navigation]);
-    
-      /*<View style={styles.graphContainer}>
-        { data.length > 0 ?
-          <VictoryPie
-            style={{
-                labels: {
-                    fill: "white",
-                    fontSize: 5
-                },
-                data: {
-                    stroke: ({ datum }) => ("black"),
-                }
-            }}
-          data={data}
-          height={200}
-          labelRadius={5}
-          sortKey = "y"
-          />
-          
-          :
-          <Text>
-            Nothing to show yet
-          </Text>
-        }*/
 
         /*<AreaChart
             style={{ height: 200 }}
@@ -125,8 +100,12 @@ function InsightsPage({navigation}) {
             </BarChart>*/
     
     
-      const chData = [50, 10, 40, 95, 85, 35, 53]
-      const fill = 'rgb(135, 55, 230)'
+      const data2 = [ {value: 50, label: "Food",},
+                      {value: 30, label: "Shopping",},
+                      {value: 100, label: "Clothes",},
+                      {value: 25, label: "Gas",},
+                      {value: 150, label: "Misc",},]
+      const chData2 = [20, 20, 30, 15, 85, 35, 51]
 
       return (        
         <View style={styles.mainContainer}>
@@ -135,18 +114,86 @@ function InsightsPage({navigation}) {
           </View>
           <ScrollView>
           
-          <View>
-            <ProgressCircle
-              style = {{height: 300}}
-              progress = {.7}
-              progressColor = {'rgb(255, 55, 55)'}
-            />
+          <View style = {{flexDirection: "row"}}>
+              <View style={{flex:1}}>
+                <ProgressCircle
+                  style = {{height: 300}}
+                  progress = {.7}
+                  progressColor = {'rgb(255, 55, 55)'}
+                  strokeWidth = {10}
+                  backgroundColor = {'rgb(155, 155, 155)'}
+                />
+                
+              </View>
 
-            <ProgressCircle
-              style = {{height: 300}}
-              progress = {.3}
-              progressColor = {'rgb(55, 255, 55)'}
-            />
+              <View 
+                style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                justifyContent: "center",
+                alignItems: "center"
+              }}>
+                <Text>Test</Text>
+              </View>
+
+              <View style={{flex:1}}>
+                <ProgressCircle
+                  style = {{height: 300}}
+                  progress = {.4}
+                  progressColor = {'rgb(55, 255, 55)'}
+                  strokeWidth = {10}
+                  backgroundColor = {'rgb(155, 155, 155)'}
+                  label = {"test"}
+                />
+                
+              </View>
+
+              <View 
+                style={{
+
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                justifyContent: "center",
+                alignItems: "center"
+              }}>
+                <Text>Test</Text>
+              </View>
+            </View>
+
+
+
+
+          <View style = {{flexDirection: "row"}}>
+            <View style={{flex:1}}>
+              <BarChart 
+                style = {{height: 300, padding: 20}}
+                data = {chData2}                
+                svg = {{ fill: 'rgb(255, 55, 55)' }}          
+                contentInset = {{top: 30, bottom: 30}}
+                spacingOuter = {0.3}
+                yMax = {1000}
+              >
+                  <Grid/>
+              </BarChart>
+            </View>
+
+            <View style={{flex:1}}>
+              <BarChart 
+                style = {{height: 300, padding: 20}}
+                data = {chData2}
+                svg = {{ fill: 'rgb(55, 255, 55)' }}
+                contentInset = {{top: 30, bottom: 30}}
+                spacingOuter = {0.3}
+                yMax = {1000}
+              >
+                  <Grid />
+              </BarChart>
+            </View>
           </View>
           
 
@@ -166,36 +213,6 @@ function InsightsPage({navigation}) {
 
       )
 }
-
-
-/*
-const data01 = [
-  { name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 },
-];
-const data02 = [
-  { name: 'random', value: 100 },
-  { name: 'random2', value: 300 },
-  { name: 'B1', value: 100 },
-  { name: 'B2', value: 80 },
-  { name: 'B3', value: 40 },
-  { name: 'B4', value: 30 },
-  { name: 'B5', value: 50 },
-  { name: 'C1', value: 100 },
-  { name: 'C2', value: 200 },
-  { name: 'D1', value: 150 },
-  { name: 'D2', value: 50 },
-];
-
-
-    return (
-      <PieChart width={400} height={400}>
-        <Pie data={data01} dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" />
-        <Pie data={data02} dataKey="value" cx={200} cy={200} innerRadius={70} outerRadius={90} fill="#82ca9d" label />
-      </PieChart>
-    );
-}
-*/
   
 
 export default InsightsPage;
