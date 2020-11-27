@@ -12,11 +12,11 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginTop: 18
     },
-    calendar: {
-        flex: 1,
+    setting: {
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
+        marginTop: 10,
     },
     list: {
         flex: 2,
@@ -30,15 +30,15 @@ export default StyleSheet.create({
     bottomContainer: {
         flex: 3,
         width: '100%',
-        alignItems: 'flex-end',
-        flexDirection: 'row',
+        alignItems: 'center',
+        flexDirection: 'col',
         justifyContent: 'center',
-        marginLeft: '1%',
+        marginTop: '2%',
         marginBottom: '2%'
     },
     separator: {
         marginVertical: 8,
-        borderBottomColor: '#737373',
+        borderBottomColor: '#d3d3d3',
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
     title: {
@@ -67,7 +67,15 @@ export default StyleSheet.create({
         height: 48,
         borderRadius: 5,
         justifyContent: "center",
-        width: '40%',
+        width: '80%',
+        alignItems: 'center',
+    },
+    saveButton: {
+        backgroundColor: colors.primary,
+        height: 48,
+        borderRadius: 5,
+        justifyContent: "center",
+        width: '80%',
         alignItems: 'center',
     },
     date:{
@@ -80,11 +88,12 @@ export default StyleSheet.create({
         height: 35,
         borderRadius: 5,
         overflow: 'hidden',
+        width: '90%',
         backgroundColor: '#f2f2f2',
         marginTop: 0,
         marginBottom: 10,
         marginLeft: 10,
-        marginRight: 100,
+        marginRight: 10,
         paddingLeft: 16,
     },
     buttonTitle: {
@@ -127,6 +136,11 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    scrollView: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        marginTop: 10,
+    },
     modalView: {
       ...Platform.select({
           ios: {
@@ -139,12 +153,42 @@ export default StyleSheet.create({
           },
           default: {
             // other platforms, web for example
-            width: '50%'
+            width: '20%'
           }
       }),
-      margin: 30,
+      margin: 20,
       backgroundColor: "white",
-      borderRadius: 20,
+      borderRadius: 10,
+      padding: 25,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.75,
+      shadowRadius: 4.84,
+      elevation: 5
+    },
+    settingsModal: {
+      ...Platform.select({
+          ios: {
+              width: '90%',
+              marginTop: 170,
+          },
+          android: {
+              width: '100%',
+              marginTop: 170,
+          },
+          default: {
+            // other platforms, web for example
+            width: '20%'
+          }
+      }),
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 10,
       padding: 35,
       alignItems: 'stretch',
       justifyContent: 'center',
@@ -166,22 +210,35 @@ export default StyleSheet.create({
     textStyle: {
         color: "gray",
         fontSize: 16,
-        fontWeight: "bold",
         marginBottom: 15,
-        textAlign: "left"
+        textAlign: "right"
     },
     modalText: {
+        color: colors.primary,
         fontSize: 16,
         fontWeight: "bold",
         marginBottom: 15,
         textAlign: "left"
     },
+    modalText2: {
+      color: colors.primary,
+      fontSize: 20,
+      fontWeight: "bold",
+      marginBottom: 15,
+      textAlign: "center"
+    },
+    modalTitle: {
+        color: colors.primary,
+        fontSize: 26,
+        fontWeight: "bold",
+        marginBottom: 25,
+        textAlign: "center"
+    },
     modalButtons: {
         width: '100%',
         alignItems: 'flex-end',
         flexDirection: 'row',
-        justifyContent: 'center',
-        marginLeft: '2%',
+        justifyContent: 'space-evenly',
         marginBottom: '2%',
         marginTop: '5%',
     },
@@ -220,8 +277,12 @@ export default StyleSheet.create({
         fontWeight: "500",
         color: colors.primary,
     },
-    category: {
+    edit: {
         fontSize: 11,
-        marginTop: 4,
+        color: colors.primary,
+        textDecorationLine: 'underline',
+        marginBottom: 15,
+        marginLeft: 20,
+        textAlign: "left"
     }
 });
