@@ -22,7 +22,9 @@ import {
 import {AuthContext} from '../../../components/context'
 import { useTheme } from '@react-navigation/native'
 
+
 const Tab = createMaterialBottomTabNavigator();
+
 
 export default function DashboardPage({navigation})
 {
@@ -66,71 +68,72 @@ const CustomDarkTheme = {
       <PaperProvider theme={theme}>
         <AuthContext.Provider value={authContext}>
           <NavigationContainer independent={true} theme={theme}>
-            <Tab.Navigator
-              initialRouteName="Budget"
-              barStyle={{ backgroundColor: '#2ea44f' }}
-              backBehavior='history'
-              shifting={false}
-              labeled={false}
-            >
-              <Tab.Screen 
-                name="Budget"
-                component={BudgetPage}
-                options={{
-                  tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="currency-usd" color={color} size={26} />
-                  ),
-                }}
-                listeners={{
-                  tabPress: e => {
-                    navigation.setOptions({ title: 'Budget' })
-                  },
-                }}
-              />
-              <Tab.Screen
-                name="Transactions"
-                component={TransactionsPage}
-                options={{
-                  tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26} />
-                  ),
-                }}
-                listeners={{
-                  tabPress: e => {
-                    navigation.setOptions({ title: 'Transactions' } )
+          <Tab.Navigator
+          initialRouteName="Budget"
+          barStyle={{ backgroundColor: '#2ea44f' }}
+          backBehavior='history'
+          shifting={false}
+          labeled={false}
+          
+        >
+          <Tab.Screen
+            name="Budget"
+            component={BudgetPage}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="currency-usd" color={color} size={26} />
+              ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Budget' })
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Transactions"
+            component={TransactionsPage}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26} />
+              ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Transactions' } )
 
-                  },
-                }}
-              />
-              <Tab.Screen
-                name="Insights"
-                component={InsightsPage}
-                options={{
-                  tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
-                  ),
-                }}
-                listeners={{
-                  tabPress: e => {
-                    navigation.setOptions({ title: 'Insights' })
-                  },
-                }}
-              />
-              <Tab.Screen
-                name="Settings"
-                component={SettingsPage}
-                options={{
-                  tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="video-input-svideo" color={color} size={26} />
-                  ),
-                }}
-                listeners={{
-                  tabPress: e => {
-                    navigation.setOptions({ title: 'Settings' })
-                  },
-                }}
-              />
-            </Tab.Navigator>
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Insights"
+            component={InsightsPage}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
+              ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Insights' })
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Settings"
+            component={SettingsPage}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="video-input-svideo" color={color} size={26} />
+              ),
+            }}
+            listeners={{
+              tabPress: e => {
+                navigation.setOptions({ title: 'Settings' })
+              },
+            }}
+          />
+        </Tab.Navigator>
           </NavigationContainer>
           </AuthContext.Provider>
           </PaperProvider>

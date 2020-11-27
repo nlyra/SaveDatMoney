@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
@@ -107,7 +107,7 @@ export default function LoginPage({navigation})
                     <Text onPress={onFooterLinkPress2} style={styles.footerLink}>Forgot Password?</Text>
                 </View>
 
-                {Platform.IOS === 'ios' ?
+                {Platform.OS === 'ios' ?
                 <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
                 }}>
