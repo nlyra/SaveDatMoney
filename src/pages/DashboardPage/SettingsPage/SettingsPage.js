@@ -205,10 +205,8 @@ export default function SettingsPage({navigation})
                 <Text style={styles.modalText}>Dark Mode</Text>
                 <TouchableRipple onPress={() => {toggleTheme()}}>
                   <Switch
-                    style={{
-                    marginLeft: 50,
-                    }}
-                   value={paperTheme.dark}/>
+                   value={paperTheme.dark}
+                  />
                 </TouchableRipple>
               </ScrollView>
               <Text style={styles.separator}></Text>
