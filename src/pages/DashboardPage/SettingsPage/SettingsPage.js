@@ -211,9 +211,13 @@ export default function SettingsPage({navigation})
                 <TouchableHighlight style={[styles.saveButton, {marginBottom: 15}]} onPress={saveChanges}>
                   <Text style={styles.buttonTitle}>Save Changes</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.logoutButton} onPress={doLogout}>
-                    <Text style={styles.buttonTitle}>Logout</Text>
-                </TouchableHighlight>
+                {Platform.OS !== 'ios' && Platform.OS !== 'android' ?
+                  <TouchableHighlight style={styles.logoutButton} onPress={doLogout}>
+                      <Text style={styles.buttonTitle}>Logout</Text>
+                  </TouchableHighlight>
+                  :
+                  <Text></Text>
+                }
               </View>
             </View>
           </View>
