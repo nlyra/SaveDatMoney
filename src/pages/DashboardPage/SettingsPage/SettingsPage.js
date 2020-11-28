@@ -67,11 +67,7 @@ export default function SettingsPage({navigation})
     };
 
     const doLogout = () => {
-      firebase.auth().signOut().then(function() {
-          console.log('signout sucessful');
-      }, function(error) {
-          // An error happened.
-      });
+      window.location.reload(false);
     };
 
     if (user != null) {
@@ -163,7 +159,7 @@ export default function SettingsPage({navigation})
             </View>
           </WebModal>
         }
-        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}} scrollEnabled={false}>
           <View style={styles.centeredView}>
             <View style={styles.settingsModal}>
               <Text style={styles.modalTitle}>Account Settings</Text>
@@ -201,13 +197,14 @@ export default function SettingsPage({navigation})
                 </TouchableOpacity>
               </View>
               <Text style={styles.separator}></Text>
-              <ScrollView contentContainerStyle={styles.scrollView}>
+              <ScrollView contentContainerStyle={styles.scrollView} scrollEnabled={false}>
                 <Text style={styles.modalText}>Dark Mode</Text>
-                <TouchableRipple onPress={() => {toggleTheme()}}>
+                <TouchableOpacity style={styles.centeredView} activeOpacity='1' onPress={() => {toggleTheme()}}>
                   <Switch
-                   value={paperTheme.dark}
+                    style={styles.switch}
+                    value={paperTheme.dark}
                   />
-                </TouchableRipple>
+                </TouchableOpacity>
               </ScrollView>
               <Text style={styles.separator}></Text>
               <View style={styles.bottomContainer}>

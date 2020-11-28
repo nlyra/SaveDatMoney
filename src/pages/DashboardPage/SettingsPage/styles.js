@@ -31,7 +31,7 @@ export default StyleSheet.create({
         flex: 3,
         width: '100%',
         alignItems: 'center',
-        flexDirection: 'col',
+        flexDirection: 'column',
         justifyContent: 'center',
         marginTop: '2%',
         marginBottom: '2%'
@@ -77,6 +77,10 @@ export default StyleSheet.create({
         justifyContent: "center",
         width: '80%',
         alignItems: 'center',
+    },
+    switch: {
+        marginBottom: 10,
+        marginRight: 10,
     },
     date:{
         fontSize: 16,
@@ -175,11 +179,9 @@ export default StyleSheet.create({
       ...Platform.select({
           ios: {
               width: '90%',
-              marginTop: 170,
           },
           android: {
               width: '100%',
-              marginTop: 170,
           },
           default: {
             // other platforms, web for example
