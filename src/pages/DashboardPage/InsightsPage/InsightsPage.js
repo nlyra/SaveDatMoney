@@ -89,6 +89,7 @@ function InsightsPage({navigation}) {
           
           <View style = {{flexDirection: "row"}}>
               <View style={{flex:1}}>
+      <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold'}}>Expense{"\n\n"}</Text>
                 <ProgressCircle
                   style = {{height: 300}}
                   progress = {expenseProgress}
@@ -96,12 +97,13 @@ function InsightsPage({navigation}) {
                   strokeWidth = {10}
                   backgroundColor = {'rgb(155, 155, 155)'}
                 />
-                
+                <Text style={{textAlign: 'center', fontSize: 20}}>{"\n\n"}You have spent {expenseProgress*100}% of what you planned.{"\n\n"}</Text>
               </View>
 
 
 
               <View style={{flex:1}}>
+                <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold'}}>Income{"\n\n"}</Text>
                 <ProgressCircle
                   style = {{height: 300}}
                   progress = {incomeProgress}
@@ -110,46 +112,51 @@ function InsightsPage({navigation}) {
                   backgroundColor = {'rgb(155, 155, 155)'}
                   label = {"test"}
                 />
+                <Text style={{textAlign: 'center', fontSize: 20}}>{"\n\n"}You have earned {incomeProgress*100}% of what you planned.{"\n\n"}</Text>
                 
               </View>
             </View>
 
           <View style = {{flexDirection: "row"}}>
             <View style={{flex:1}}>
+              <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>Expenses Visualized</Text>
               <BarChart 
                 style = {{height: 300, padding: 20}}
                 data = {expenseData}                
                 svg = {{ fill: 'rgb(255, 55, 55)' }}          
                 contentInset = {{top: 30, bottom: 30}}
                 yMax = {1000}
+                gridMin = {0}
               >
                   <Grid/>
               </BarChart>
               <XAxis
-                    style={{ marginHorizontal: -10 }}
+                    style = {{height: 300, padding: 20}}
                     data={expenseLabels}
-                    formatLabel={(value, index) => expenseLabels[index]}
-                    contentInset={{ left: 10, right: 10 }}
-                    svg={{ fontSize: 10, fill: 'black' }}
+                    formatLabel={(value, index) => "    "+expenseLabels[index]}
+                    contentInset={{ left: 40, right: 40 }}
+                    svg={{ fontSize: 16, fill: 'black', fontFamily: 'Arial' }}
                 />
             </View>
 
             <View style={{flex:1}}>
+              <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>Income Visualized</Text>
               <BarChart 
                 style = {{height: 300, padding: 20}}
                 data = {incomeData}
                 svg = {{ fill: 'rgb(55, 255, 55)' }}
                 contentInset = {{top: 30, bottom: 30}}
                 yMax = {1000}
+                gridMin = {0}
               >
                   <Grid />
               </BarChart>
               <XAxis
                     style={{ marginHorizontal: -10, padding: 20 }}
                     data={incomeLabels}
-                    formatLabel={(value, index) => incomeLabels[index]}
-                    contentInset={{ left: 10, right: 10 }}
-                    svg={{ fontSize: 10, fill: 'black' }}
+                    formatLabel={(value, index) => "    "+incomeLabels[index]}
+                    contentInset={{ left: 40, right: 40 }}
+                    svg={{ fontSize: 16, fill: 'black', fontFamily: 'Arial' }}
 
                 />
             </View>
