@@ -22,7 +22,7 @@ function InsightsPage({navigation}) {
     uid = user.uid;  
     }
 
-    var ref = firebase.database().ref("transaction");
+    var ref = firebase.database().ref("category");
     ref.orderByChild("date_uid").equalTo(format(date, 'MMMM, yyyy') + "_" + uid).on("child_added", function(snapshot) {
         userData.push({
             ...snapshot.val(),
@@ -31,32 +31,24 @@ function InsightsPage({navigation}) {
         console.log(userData);
     });
 
-    var data = [];
+    var expenseData = [], incomeData = [], expenseLabels = [], incomeLabels = [], totalExpense = 0, totalIncome = 0, plannedExpense = 0, plannedIncome = 0;
     for(var i = 0; i < userData.length; i++) {
-      data.push({
-        x: userData[i].category,
-        y: userData[i].cost
-      });
+      if(userData[i].expenseOrIncome == 'expense') {
+        expenseData.push(userData[i].spent);
+        expenseLabels.push(userData[i].category);
+        totalExpense += userData[i].spent;
+        plannedExpense += userData[i].planned;
+      }
+      else if(userData[i].expenseOrIncome == 'income') {
+        incomeData.push(userData[i].spent);
+        incomeLabels.push(userData[i].category);
+        plannedIncome += userData[i].planned;
+        totalIncome += userData[i].spent;
+      }
     }
+    var expenseProgress = totalExpense/plannedExpense, incomeProgress = totalIncome/plannedIncome;
 
-
-    console.log("Data for pie chart: ");
-    console.log(data);
-
-    var maxNum = 0;
-    var sum = 0, avg = 0;
-    var maxCat;
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].y > maxNum) {
-            maxCat = data[i].x;
-            maxNum = data[i].y;
-        }
-        sum = parseInt(sum) + parseInt(data[i].y);
-    }
-    console.log("the largest category is ");
-    console.log(maxCat);
-
-    avg = data.length > 0 ? (sum/data.length).toFixed(2) : 0;
+   
 
     useEffect(() => {
       // Interval to update count
@@ -80,36 +72,17 @@ function InsightsPage({navigation}) {
       };
       }, [navigation]);
 
-        /*<AreaChart
-            style={{ height: 200 }}
-            data = {chData}
-            contentInset = {{top: 30, bottom: 30}}
-            curve = { shape.curveNatural }
-            svg = {{ fill: 'rgba(134, 55, 244, 0.8)' }}
-          >
-            <Grid />
-          </AreaChart>*/
-
-          /*<BarChart 
-              style = {{ height: 200 }}
-              data = {chData}
-              svg = {{ fill }}
-              contentInset = {{top: 30, bottom: 30}}
-            >
-                <Grid />
-            </BarChart>*/
-    
-    
-      const data2 = [ {value: 50, label: "Food",},
-                      {value: 30, label: "Shopping",},
-                      {value: 100, label: "Clothes",},
-                      {value: 25, label: "Gas",},
-                      {value: 150, label: "Misc",},]
-      const chData2 = [20, 20, 30, 15, 85, 35, 51]
+      var labels = "";
+      for(var i = 0; i < expenseLabels; i++) {
+        labels += expenseLabels[i]+" ";
+      }
+      for(var i = 0; i < incomeLabels; i++) {
+        labels += incomeLabels+" ";
+      }
 
       return (        
         <View style={styles.mainContainer}>
-          <View>
+          <View styles={{marginTop: 20}}>
             <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
           </View>
           <ScrollView>
@@ -118,7 +91,7 @@ function InsightsPage({navigation}) {
               <View style={{flex:1}}>
                 <ProgressCircle
                   style = {{height: 300}}
-                  progress = {.7}
+                  progress = {expenseProgress}
                   progressColor = {'rgb(255, 55, 55)'}
                   strokeWidth = {10}
                   backgroundColor = {'rgb(155, 155, 155)'}
@@ -136,13 +109,12 @@ function InsightsPage({navigation}) {
                 justifyContent: "center",
                 alignItems: "center"
               }}>
-                <Text>Test</Text>
               </View>
 
               <View style={{flex:1}}>
                 <ProgressCircle
                   style = {{height: 300}}
-                  progress = {.4}
+                  progress = {incomeProgress}
                   progressColor = {'rgb(55, 255, 55)'}
                   strokeWidth = {10}
                   backgroundColor = {'rgb(155, 155, 155)'}
@@ -161,7 +133,6 @@ function InsightsPage({navigation}) {
                 justifyContent: "center",
                 alignItems: "center"
               }}>
-                <Text>Test</Text>
               </View>
             </View>
 
@@ -172,7 +143,7 @@ function InsightsPage({navigation}) {
             <View style={{flex:1}}>
               <BarChart 
                 style = {{height: 300, padding: 20}}
-                data = {chData2}                
+                data = {expenseData}                
                 svg = {{ fill: 'rgb(255, 55, 55)' }}          
                 contentInset = {{top: 30, bottom: 30}}
                 spacingOuter = {0.3}
@@ -185,7 +156,7 @@ function InsightsPage({navigation}) {
             <View style={{flex:1}}>
               <BarChart 
                 style = {{height: 300, padding: 20}}
-                data = {chData2}
+                data = {incomeData}
                 svg = {{ fill: 'rgb(55, 255, 55)' }}
                 contentInset = {{top: 30, bottom: 30}}
                 spacingOuter = {0.3}
@@ -194,20 +165,9 @@ function InsightsPage({navigation}) {
                   <Grid />
               </BarChart>
             </View>
+            <Text>{labels}</Text>
           </View>
-          
-
-          
-          {
-            data.length > 0 ?
-            <Text>
-              You have spent the most on {maxCat}.
-              The average money you have spent per transaction is {avg}.
-              SAVE THAT MONEY BOIIIII!!!
-            </Text>
-            :
-            null
-          }
+            
           </ScrollView>
         </View>
 

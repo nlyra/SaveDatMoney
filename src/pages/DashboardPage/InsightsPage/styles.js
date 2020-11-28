@@ -10,7 +10,7 @@ export default StyleSheet.create({
         flex: 2,
         alignItems: 'center',  
         justifyContent: 'center',  
-        marginTop: 15 
+        marginTop: 15
     },
     graphContainer: {
         flex: 1,

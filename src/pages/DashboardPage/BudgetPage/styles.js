@@ -8,7 +8,7 @@ export default StyleSheet.create({
     topContainer: {
         alignItems: 'center',
         justifyContent: 'center', 
-        marginTop: 1
+        marginTop: 15
     },
     calendar: {
         ...Platform.select({
