@@ -19,7 +19,6 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 import merge from 'deepmerge';
-import { TouchableRipple } from 'react-native-paper';
 import WebModal from 'modal-enhanced-react-native-web';
 
 
