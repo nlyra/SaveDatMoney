@@ -97,7 +97,7 @@ function InsightsPage({navigation}) {
                   strokeWidth = {10}
                   backgroundColor = {'rgb(155, 155, 155)'}
                 />
-                <Text style={{textAlign: 'center', fontSize: 20}}>{"\n\n"}You have spent {expenseProgress*100}% of what you planned.{"\n\n"}</Text>
+                <Text style={{textAlign: 'center', fontSize: 20}}>{"\n\n"}You have spent {expenseProgress.toFixed(2)*100}% of what you planned.{"\n\n"}</Text>
               </View>
 
 
@@ -112,7 +112,7 @@ function InsightsPage({navigation}) {
                   backgroundColor = {'rgb(155, 155, 155)'}
                   label = {"test"}
                 />
-                <Text style={{textAlign: 'center', fontSize: 20}}>{"\n\n"}You have earned {incomeProgress*100}% of what you planned.{"\n\n"}</Text>
+                <Text style={{textAlign: 'center', fontSize: 20}}>{"\n\n"}You have earned {incomeProgress.toFixed(2)*100}% of what you planned.{"\n\n"}</Text>
                 
               </View>
             </View>
