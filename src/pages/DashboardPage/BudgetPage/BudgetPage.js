@@ -15,6 +15,7 @@ import render from 'react-native-web/dist/cjs/exports/render';
 import DeleteModal from './DeleteModal';
 import { Actions, Router, Scene  } from "react-native-router-flux";
 import SwitchSelector from "react-native-switch-selector";
+import { useTheme } from '@react-navigation/native'
 
 export default function BudgetPage ({navigation})
 {
@@ -113,7 +114,7 @@ export default function BudgetPage ({navigation})
             inputRange: [-100, 0],
             outputRange: [0.7,0]
         })
-
+        
         return (
             <>
             <View style={{ backgroundColor: colors.danger, justifyContent: 'center' }}>
@@ -145,7 +146,7 @@ export default function BudgetPage ({navigation})
     const _onPressModelItem = () => {
         setRefresh({})
     }
-
+    const { colors } = useTheme();
     return ( 
         
         <View style={styles.mainContainer}> 
@@ -163,10 +164,10 @@ export default function BudgetPage ({navigation})
                             <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
-                                    textColor={colors.primary} 
+                                    textColor={colors.green} 
                                     selectedColor={colors.white}
-                                    buttonColor={colors.primary}
-                                    borderColor={colors.primary}
+                                    buttonColor={colors.green}
+                                    borderColor={colors.green}
                                     hasPadding
                                     options={[
                                         { label: "Expense", value: "expense" }, 
@@ -174,17 +175,21 @@ export default function BudgetPage ({navigation})
                                     ]}
                             />
                             <TextInput
-                                style={styles.input}
+                                style={[styles.input, {
+                                    backgroundColor: colors.surface,
+                                    color: colors.text }]}
                                 placeholder='Category'
-                                placeholderTextColor="black"
+                                placeholderTextColor={colors.gray}
                                 onChangeText={(text) => setCategory(text)}
                                 value={category}
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                             />
                             <TextInput
-                                style={styles.input}
-                                placeholderTextColor="black"
+                                style={[styles.input, {
+                                    backgroundColor: colors.surface,
+                                    color: colors.text }]}
+                                placeholderTextColor={colors.gray}
                                 placeholder='Planned'
                                 onChangeText={(text) => setPlanned(text)}
                                 value={planned}
@@ -206,15 +211,19 @@ export default function BudgetPage ({navigation})
                 <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                     Alert.alert("Modal has been closed.");}}>
                         <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Add category</Text>
+                            <View style={[styles.modalView, {
+                                backgroundColor: colors.background
+                            }]}>
+                                <Text style={[styles.modalText, {
+                                    color: colors.text
+                                }]}>Add category</Text>
                                 <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
-                                    textColor={colors.primary} 
+                                    textColor={colors.green} 
                                     selectedColor={colors.white}
-                                    buttonColor={colors.primary}
-                                    borderColor={colors.primary}
+                                    buttonColor={colors.green}
+                                    borderColor={colors.green}
                                     hasPadding
                                     options={[
                                         { label: "Expense", value: "expense" }, 
@@ -222,17 +231,21 @@ export default function BudgetPage ({navigation})
                                     ]}
                                 />
                                 <TextInput
-                                    style={styles.input}
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        color: colors.text }]}
                                     placeholder='Category'
-                                    placeholderTextColor="black"
+                                    placeholderTextColor={colors.gray}
                                     onChangeText={(text) => setCategory(text)}
                                     value={category}
                                     underlineColorAndroid="transparent"
                                     autoCapitalize="none"
                                 />
                                 <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        color: colors.text }]}
+                                    placeholderTextColor={colors.gray}
                                     placeholder='Planned spending'
                                     onChangeText={(text) => setPlanned(text)}
                                     value={planned}
@@ -276,7 +289,7 @@ export default function BudgetPage ({navigation})
                                             <View style={styles.amountsContainer}> 
                                                 <Text style={styles.subtext}>Difference</Text>
                                                 {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
-                                                    <Text style={{color: colors.primary}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
+                                                    <Text style={{color: colors.green}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
                                                 : 
                                                     <Text style={{color: colors.danger}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                                 }
@@ -330,7 +343,7 @@ export default function BudgetPage ({navigation})
                                                     <View style={styles.amountsContainer}> 
                                                         <Text style={styles.subtext}>Difference</Text>
                                                         {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
-                                                            <Text style={{color: colors.primary}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
+                                                            <Text style={{color: colors.green}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
                                                         : 
                                                             <Text style={{color: colors.danger}} >-${(Math.abs(parseInt(item.planned - item.spent)))}</Text>
                                                         }
@@ -361,7 +374,7 @@ export default function BudgetPage ({navigation})
                 />
             }
             <View style={styles.bottomContainer}>
-                <MaterialCommunityIcons style={styles.elevationLow} name="plus-circle" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
+                <MaterialCommunityIcons style={styles.elevationLow} name="plus-circle" color={colors.green} size={55} onPress={()=> {setModalVisible(true);}}/>
             </View>
         </View>
     );

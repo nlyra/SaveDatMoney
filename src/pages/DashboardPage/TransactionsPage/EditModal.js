@@ -91,10 +91,10 @@ export default class EditModal extends Component {
                      <SwitchSelector style={{padding:10}}
                         initial={0}
                         onPress={value => this.setState({radio: value})}
-                        textColor={colors.primary} 
+                        textColor={colors.green} 
                         selectedColor={colors.white}
-                        buttonColor={colors.primary}
-                        borderColor={colors.primary}
+                        buttonColor={colors.green}
+                        borderColor={colors.green}
                         hasPadding
                         options={[
                               { label: "Expense", value: "expense" }, 
@@ -148,10 +148,10 @@ export default class EditModal extends Component {
                         <SwitchSelector style={{padding:10}}
                            initial={0}
                            onPress={value => this.setState({radio: value})}
-                           textColor={colors.primary} 
+                           textColor={colors.green} 
                            selectedColor={colors.white}
-                           buttonColor={colors.primary}
-                           borderColor={colors.primary}
+                           buttonColor={colors.green}
+                           borderColor={colors.green}
                            hasPadding
                            options={[
                                  { label: "Expense", value: "expense" }, 

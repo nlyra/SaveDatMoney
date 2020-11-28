@@ -18,10 +18,44 @@ const Tab = createMaterialBottomTabNavigator();
 
 export default function DashboardPage({navigation})
 {
+  const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+  const CustomDefaultTheme = {
+    ... NavigationDefaultTheme,
+    ... PaperDefaultTheme,
+    colors: {
+        ... NavigationDefaultTheme.colors,
+        ... PaperDefaultTheme.colors,
+        backgroumd: "#ffffff",
+        text: "#000000",
+        accent: "#f0f0f0",
+    }
+}
+const CustomDarkTheme = {
+  ... NavigationDarkTheme,
+  ... PaperDarkTheme,
+  colors: {
+    primary: "#23272A",
+    accent: "#99AAB5",
+    background: "#23272A",
+    surface: "#99AAB5",
+    card: "##99AAB5",
+    text: "#FFFFFF",
+    border: "#23272A",
+    notification: "#23272A",
+    backdrop: "#FFFFFF"
+  }
+}
+  const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
+  const authContext = React.useMemo(() => ({
+    toggleTheme: () => {
+        setIsDarkTheme( isDarkTheme => !isDarkTheme);
+      }
+  }), []);
+  const { colors } = useTheme();
     return (
-
-
-      <NavigationContainer independent={true}>
+      <PaperProvider theme={theme}>
+        <AuthContext.Provider value={authContext}>
+          <NavigationContainer independent={true} theme={theme}>
         <Tab.Navigator
           initialRouteName="Budget"
           barStyle={{ backgroundColor: '#2ea44f' }}
@@ -88,7 +122,9 @@ export default function DashboardPage({navigation})
             }}
           />
         </Tab.Navigator>
-      </NavigationContainer>
+        </NavigationContainer>
+          </AuthContext.Provider>
+          </PaperProvider>
 
     )
 }

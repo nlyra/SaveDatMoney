@@ -12,6 +12,7 @@ import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
 import { Actions, Router, Scene  } from "react-native-router-flux";
 import SwitchSelector from "react-native-switch-selector";
+import { useTheme } from '@react-navigation/native'
 
     
 export default function TransactionsPage ({navigation})
@@ -92,7 +93,7 @@ export default function TransactionsPage ({navigation})
             inputRange: [-100, 0],
             outputRange: [0.7,0]
         })
-
+        const { colors } = useTheme();
         return (
 
             
@@ -126,7 +127,7 @@ export default function TransactionsPage ({navigation})
     const _onPressModelItem = () => {
         setRefresh({})
     }
-
+    const { colors } = useTheme();
     return ( 
         
         <View style={styles.mainContainer}> 
@@ -140,14 +141,16 @@ export default function TransactionsPage ({navigation})
                 Alert.alert("Modal has been closed.");}}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Add transaction</Text>
+                            <Text style={[styles.modalText, {
+                                color: colors.text
+                            }]}>Add transaction</Text>
                             <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
-                                    textColor={colors.primary} 
+                                    textColor={colors.green} 
                                     selectedColor={colors.white}
-                                    buttonColor={colors.primary}
-                                    borderColor={colors.primary}
+                                    buttonColor={colors.green}
+                                    borderColor={colors.green}
                                     hasPadding
                                     options={[
                                         { label: "Expense", value: "expense" }, 
@@ -155,17 +158,21 @@ export default function TransactionsPage ({navigation})
                                     ]}
                             />
                             <TextInput
-                                style={styles.input}
+                                style={[styles.input, {
+                                    backgroundColor: colors.surface,
+                                    color: colors.text }]}
                                 placeholder='Category'
-                                placeholderTextColor="black"
+                                placeholderTextColor={colors.gray}
                                 onChangeText={(text) => setCategory(text)}
                                 value={category}
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                             />
                             <TextInput
-                                style={styles.input}
-                                placeholderTextColor="black"
+                                style={[styles.input, {
+                                    backgroundColor: colors.surface,
+                                    color: colors.text }]}
+                                placeholderTextColor={colors.gray}
                                 placeholder='Description'
                                 onChangeText={(text) => setDescription(text)}
                                 value={description}
@@ -173,8 +180,10 @@ export default function TransactionsPage ({navigation})
                                 autoCapitalize="none"
                             />
                             <TextInput
-                                style={styles.input}
-                                placeholderTextColor="black"
+                                style={[styles.input, {
+                                    backgroundColor: colors.surface,
+                                    color: colors.text }]}
+                                placeholderTextColor={colors.gray}
                                 placeholder='Amount'
                                 onChangeText={(text) => setCost(text)}
                                 value={cost}
@@ -196,15 +205,19 @@ export default function TransactionsPage ({navigation})
                 <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                     Alert.alert("Modal has been closed.");}}>
                         <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                                <Text style={styles.modalText}>Add transaction</Text>
+                            <View style={[styles.modalView, {
+                                backgroundColor: colors.background
+                            }]}>
+                                <Text style={[styles.modalText, {
+                                color: colors.text
+                            }]} >Add transaction</Text>
                                 <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
-                                    textColor={colors.primary} 
+                                    textColor={colors.green} 
                                     selectedColor={colors.white}
-                                    buttonColor={colors.primary}
-                                    borderColor={colors.primary}
+                                    buttonColor={colors.green}
+                                    borderColor={colors.green}
                                     hasPadding
                                     options={[
                                         { label: "Expense", value: "expense" }, 
@@ -212,17 +225,21 @@ export default function TransactionsPage ({navigation})
                                     ]}
                                 />
                                 <TextInput
-                                    style={styles.input}
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        color: colors.text }]}
                                     placeholder='Category'
-                                    placeholderTextColor="black"
+                                    placeholderTextColor={colors.gray}
                                     onChangeText={(text) => setCategory(text)}
                                     value={category}
                                     underlineColorAndroid="transparent"
                                     autoCapitalize="none"
                                 />
                                 <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        color: colors.text }]}
+                                    placeholderTextColor={colors.gray}
                                     placeholder='Description'
                                     onChangeText={(text) => setDescription(text)}
                                     value={description}
@@ -230,8 +247,10 @@ export default function TransactionsPage ({navigation})
                                     autoCapitalize="none"
                                 />
                                 <TextInput
-                                    style={styles.input}
-                                    placeholderTextColor="black"
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        color: colors.text }]}
+                                    placeholderTextColor={colors.gray}
                                     placeholder='Amount'
                                     onChangeText={(text) => setCost(text)}
                                     value={cost}
@@ -274,7 +293,7 @@ export default function TransactionsPage ({navigation})
                                             {item.expenseOrIncome === "expense" ? 
                                                 <Text style={{color: colors.danger}} >-${item.cost}</Text>
                                             : 
-                                                <Text style={{color: colors.primary}} >${item.cost}</Text>
+                                                <Text style={{color: colors.green}} >${item.cost}</Text>
                                             }
                                         </View>
                                     </View>
@@ -306,7 +325,7 @@ export default function TransactionsPage ({navigation})
                                                     {item.expenseOrIncome === "expense" ? 
                                                         <Text style={{color: colors.danger}} >-${item.cost}</Text>
                                                     : 
-                                                        <Text style={{color: colors.primary}} >${item.cost}</Text>
+                                                        <Text style={{color: colors.green}} >${item.cost}</Text>
                                                     }
                                                     
                                                 </View>
@@ -326,7 +345,7 @@ export default function TransactionsPage ({navigation})
                 />
             }
             <View style={styles.bottomContainer}>
-                <MaterialCommunityIcons style={styles.elevationLow} name="plus-circle" color={colors.primary} size={55} onPress={()=> {setModalVisible(true);}}/>
+                <MaterialCommunityIcons style={styles.elevationLow} name="plus-circle" color={colors.green} size={55} onPress={()=> {setModalVisible(true);}}/>
             </View>
         </View>
     );
