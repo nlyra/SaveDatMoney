@@ -8,7 +8,7 @@ import {format} from 'date-fns';
 import MonthPicker from '../MonthPicker';
 import * as shape from 'd3-shape';
 import * as scale from 'd3-scale';
-import { AreaChart, BarChart, AnimatedProgressCircle, ProgressCircle, Grid, YAxis } from 'react-native-svg-charts';
+import { AreaChart, BarChart, AnimatedProgressCircle, ProgressCircle, Grid, XAxis } from 'react-native-svg-charts';
 
 function InsightsPage({navigation}) {
 
@@ -82,7 +82,7 @@ function InsightsPage({navigation}) {
 
       return (        
         <View style={styles.mainContainer}>
-          <View styles={{marginTop: 20}}>
+          <View style={{marginTop: 15}}>
             <MonthPicker date={date} onChange={(newDate) => setDate(newDate)}/>
           </View>
           <ScrollView>
@@ -99,17 +99,7 @@ function InsightsPage({navigation}) {
                 
               </View>
 
-              <View 
-                style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                justifyContent: "center",
-                alignItems: "center"
-              }}>
-              </View>
+
 
               <View style={{flex:1}}>
                 <ProgressCircle
@@ -122,22 +112,7 @@ function InsightsPage({navigation}) {
                 />
                 
               </View>
-
-              <View 
-                style={{
-
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                justifyContent: "center",
-                alignItems: "center"
-              }}>
-              </View>
             </View>
-
-
-
 
           <View style = {{flexDirection: "row"}}>
             <View style={{flex:1}}>
@@ -146,11 +121,17 @@ function InsightsPage({navigation}) {
                 data = {expenseData}                
                 svg = {{ fill: 'rgb(255, 55, 55)' }}          
                 contentInset = {{top: 30, bottom: 30}}
-                spacingOuter = {0.3}
                 yMax = {1000}
               >
                   <Grid/>
               </BarChart>
+              <XAxis
+                    style={{ marginHorizontal: -10 }}
+                    data={expenseLabels}
+                    formatLabel={(value, index) => expenseLabels[index]}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
             </View>
 
             <View style={{flex:1}}>
@@ -159,11 +140,18 @@ function InsightsPage({navigation}) {
                 data = {incomeData}
                 svg = {{ fill: 'rgb(55, 255, 55)' }}
                 contentInset = {{top: 30, bottom: 30}}
-                spacingOuter = {0.3}
                 yMax = {1000}
               >
                   <Grid />
               </BarChart>
+              <XAxis
+                    style={{ marginHorizontal: -10, padding: 20 }}
+                    data={incomeLabels}
+                    formatLabel={(value, index) => incomeLabels[index]}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+
+                />
             </View>
             <Text>{labels}</Text>
           </View>
