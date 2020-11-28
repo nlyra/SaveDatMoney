@@ -39,12 +39,12 @@ export default function LoginPage({navigation})
         firebase.auth().signInWithEmailAndPassword(email, password).then((response) => {
 
             const user = firebase.auth().currentUser;
-            
+
             if (user.emailVerified)
             {
                 const uid = response.user.uid
                 const usersRef = firebase.database().ref('users/' + uid);
-    
+
                 usersRef.once('value').then(function(snapshot) {
                     navigation.reset({
                         index: 0,
@@ -67,7 +67,7 @@ export default function LoginPage({navigation})
             var errorMessage = error.message;
             setMessage(errorMessage);
         });
-        
+
     }
 
     return (
@@ -126,7 +126,7 @@ export default function LoginPage({navigation})
                 :
                 <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
-                }}> 
+                }}>
                     <View style={styles.modalView}>
                     <Text style={styles.messageText}>Please verifiy your email before signing in.</Text>
                         <View style={styles.insideModalView}>
@@ -139,7 +139,7 @@ export default function LoginPage({navigation})
                         </View>
                     </View>
                 </WebModal>
-            } 
+            }
 
             </ScrollView>
         </View>
