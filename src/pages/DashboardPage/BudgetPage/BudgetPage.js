@@ -185,7 +185,7 @@ export default function BudgetPage ({navigation})
                             <TextInput
                                 style={styles.input}
                                 placeholderTextColor="black"
-                                placeholder='Planned'
+                                placeholder='Expected'
                                 onChangeText={(text) => setPlanned(text)}
                                 value={planned}
                                 underlineColorAndroid="transparent"
@@ -233,7 +233,7 @@ export default function BudgetPage ({navigation})
                                 <TextInput
                                     style={styles.input}
                                     placeholderTextColor="black"
-                                    placeholder='Planned spending'
+                                    placeholder='Expected'
                                     onChangeText={(text) => setPlanned(text)}
                                     value={planned}
                                     underlineColorAndroid="transparent"
