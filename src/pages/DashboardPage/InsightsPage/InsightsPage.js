@@ -133,7 +133,7 @@ function InsightsPage({navigation}) {
               <XAxis
                     style = {{height: 300, padding: 20}}
                     data={expenseLabels}
-                    formatLabel={(value, index) => "    "+expenseLabels[index]}
+                    formatLabel={(value, index) => "    "+expenseLabels[index] + ": $" + expenseData[index]}
                     contentInset={{ left: 40, right: 40 }}
                     svg={{ fontSize: 16, fill: 'black', fontFamily: 'Arial' }}
                 />
@@ -154,7 +154,7 @@ function InsightsPage({navigation}) {
               <XAxis
                     style={{ marginHorizontal: -10, padding: 20 }}
                     data={incomeLabels}
-                    formatLabel={(value, index) => "    "+incomeLabels[index]}
+                    formatLabel={(value, index) => "    "+incomeLabels[index] + ": $" + expenseData[index]}
                     contentInset={{ left: 40, right: 40 }}
                     svg={{ fontSize: 16, fill: 'black', fontFamily: 'Arial' }}
 
