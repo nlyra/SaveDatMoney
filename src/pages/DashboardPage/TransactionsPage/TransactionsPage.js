@@ -280,12 +280,16 @@ export default function TransactionsPage ({navigation})
                     keyExtractor = {(col) => col.id}
                     renderItem={({item})=> (
                         <View style={styles.centeredView}>
-                            <View style={styles.feedItem}>
+                            <View style={[styles.feedItem, {
+                                backgroundColor: colors.backdrop
+                            }]}>
                                 <View style={{flex:1}}>
-                                    <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                 <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', backgroundColor: colors.backdrop}}>
                                         <View>
                                             <Text style={styles.description}> {item.description}</Text>
-                                            <Text style={styles.category}> {item.category}</Text>
+                                            <Text style={[styles.category, {
+                                                color: colors.text
+                                            }]}> {item.category}</Text>
                                         </View>
                                         <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>

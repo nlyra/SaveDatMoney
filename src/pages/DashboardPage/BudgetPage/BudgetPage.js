@@ -159,9 +159,13 @@ export default function BudgetPage ({navigation})
                 <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                 Alert.alert("Modal has been closed.");}}>
                     <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Add</Text>
-                            <SwitchSelector style={{padding:10}}
+                        <View style={[styles.modalView, {
+                                    backgroundColor: colors.background
+                                }]}>
+                                    <Text style={[styles.modalText, {
+                                        color: colors.text
+                                    }]}>Add</Text>
+                                <SwitchSelector style={{padding:10}}
                                     initial={0}
                                     onPress={value => setRadio(value)}
                                     textColor={colors.green} 
@@ -176,7 +180,7 @@ export default function BudgetPage ({navigation})
                             />
                             <TextInput
                                 style={[styles.input, {
-                                    backgroundColor: colors.surface,
+                                    backgroundColor: colors.backdrop,
                                     color: colors.text }]}
                                 placeholder='Category'
                                 placeholderTextColor={colors.gray}
@@ -187,7 +191,7 @@ export default function BudgetPage ({navigation})
                             />
                             <TextInput
                                 style={[styles.input, {
-                                    backgroundColor: colors.surface,
+                                    backgroundColor: colors.backdrop,
                                     color: colors.text }]}
                                 placeholderTextColor={colors.gray}
                                 placeholder='Planned'
@@ -232,7 +236,7 @@ export default function BudgetPage ({navigation})
                                 />
                                 <TextInput
                                     style={[styles.input, {
-                                        backgroundColor: colors.surface,
+                                        backgroundColor: colors.backdrop,
                                         color: colors.text }]}
                                     placeholder='Category'
                                     placeholderTextColor={colors.gray}
@@ -243,7 +247,7 @@ export default function BudgetPage ({navigation})
                                 />
                                 <TextInput
                                     style={[styles.input, {
-                                        backgroundColor: colors.surface,
+                                        backgroundColor: colors.backdrop,
                                         color: colors.text }]}
                                     placeholderTextColor={colors.gray}
                                     placeholder='Planned spending'
@@ -275,19 +279,25 @@ export default function BudgetPage ({navigation})
                     keyExtractor = {(col) => col.id}
                     renderItem={({item})=> (
                         <View style={styles.centeredView}>
-                            <View style={styles.feedItem}>
+                            <View style={[styles.feedItem, {
+                                backgroundColor: colors.backdrop
+                            }]}>
                                 <View style={{flex:1}}>
-                                    <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center'}}>
+                                    <View style={{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', backgroundColor: colors.backdrop}}>
                                         <View>
                                             <Text style={styles.category}> {item.category}</Text>
                                         </View>
-                                        <View style={{flexDirection: 'row-reverse', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row-reverse', alignItems: 'center', backgroundColor: colors.backdrop}}>
                                             
                                             <DeleteModal itemKey={item.key} onPressModelItem={_onPressModelItem}></DeleteModal>
                                             <EditModal itemKey={item.key} item={item} onPressModelItem={_onPressModelItem}></EditModal>
 
-                                            <View style={styles.amountsContainer}> 
-                                                <Text style={styles.subtext}>Difference</Text>
+                                            <View style={[styles.amountsContainer, {
+                                                backgroundColor: colors.backdrop
+                                            }]}> 
+                                                <Text style={[styles.subtext, {
+                                                    color: colors.text
+                                                }]}>Difference</Text>
                                                 {(item.planned - item.spent >= 0  && item.expenseOrIncome === "expense") || (item.planned - item.spent < 0 && item.expenseOrIncome === "income") ? 
                                                     <Text style={{color: colors.green}} >${Math.abs(parseInt(item.planned - item.spent))}</Text>
                                                 : 
@@ -295,18 +305,26 @@ export default function BudgetPage ({navigation})
                                                 }
                                             </View>
 
-                                            <View style={styles.amountsContainer}> 
+                                            <View style={[styles.amountsContainer, {
+                                                backgroundColor: colors.backdrop
+                                            }]}> 
                                                 {item.expenseOrIncome === "expense" ? 
-                                                    <Text style={styles.subtext}>Spent</Text>
+                                                    <Text style={[styles.subtext, {
+                                                        color: colors.text
+                                                    }]}>Spent</Text>
                                                 :
-                                                    <Text style={styles.subtext}>Earned</Text>
+                                                <Text style={[styles.subtext, {
+                                                    color: colors.text
+                                                }]}>Earned</Text>
                                                 }
-                                                <Text style={{color: colors.black}} >${item.spent}</Text>
+                                                <Text style={{color: colors.text}} >${item.spent}</Text>
                                             </View>
 
-                                            <View style={styles.amountsContainer}> 
-                                                <Text style={styles.subtext}>Expected</Text>
-                                                <Text style={{color: colors.black}} >${item.planned}</Text>
+                                                <View style={styles.amountsContainer}> 
+                                                <Text style={[styles.subtext, {
+                                                        color: colors.text
+                                                    }]}>Expected</Text>
+                                                <Text style={{color: colors.text}} >${item.planned}</Text>
                                             </View>
 
                                         </View>

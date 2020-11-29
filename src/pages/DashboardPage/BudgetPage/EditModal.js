@@ -20,7 +20,7 @@ export default class EditModal extends Component {
       }
       console.log("planned is" + this.state.planned);
    }
-
+   
    toggleModal(visible) {
       this.setState({ modalVisible: visible });
    }
@@ -64,21 +64,22 @@ export default class EditModal extends Component {
       }
 
       return (
-
          <View style = {styles.modalContainer}>
             {Platform.OS === 'ios' ?
             <Modal animationType="slide" transparent={true} visible={this.state.modalVisible2} onRequestClose={() => {
             Alert.alert("Modal has been closed.");}}>
                <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                     <Text style={styles.modalText}>Edit Category</Text>
+                     <Text style={[styles.modalText, {
+                        color: colors.text
+                     }]}>Edit Category</Text>
                      <SwitchSelector style={{padding:10}}
                         initial={0}
                         onPress={value => this.setState({radio: value})}
-                        textColor={colors.primary} 
+                        textColor={colors.green} 
                         selectedColor={colors.white}
-                        buttonColor={colors.primary}
-                        borderColor={colors.primary}
+                        buttonColor={colors.green}
+                        borderColor={colors.green}
                         hasPadding
                         options={[
                               { label: "Expense", value: "expense" }, 
@@ -123,10 +124,10 @@ export default class EditModal extends Component {
                         <SwitchSelector style={{padding:10}}
                            initial={0}
                            onPress={value => this.setState({radio: value})}
-                           textColor={colors.primary} 
+                           textColor={colors.green} 
                            selectedColor={colors.white}
-                           buttonColor={colors.primary}
-                           borderColor={colors.primary}
+                           buttonColor={colors.green}
+                           borderColor={colors.green}
                            hasPadding
                            options={[
                                  { label: "Expense", value: "expense" }, 

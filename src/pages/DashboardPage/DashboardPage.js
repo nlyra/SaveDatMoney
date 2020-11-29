@@ -53,9 +53,9 @@ const CustomDarkTheme = {
   }), []);
   const { colors } = useTheme();
     return (
-      <PaperProvider theme={theme}>
-        <AuthContext.Provider value={authContext}>
-          <NavigationContainer independent={true} theme={theme}>
+      // <PaperProvider theme={theme}>
+      //   <AuthContext.Provider value={authContext}>
+      //     <NavigationContainer independent={true} theme={theme}>
         <Tab.Navigator
           initialRouteName="Budget"
           barStyle={{ backgroundColor: '#2ea44f' }}
@@ -122,9 +122,9 @@ const CustomDarkTheme = {
             }}
           />
         </Tab.Navigator>
-        </NavigationContainer>
-          </AuthContext.Provider>
-          </PaperProvider>
+      //  </NavigationContainer>
+       //   </AuthContext.Provider>
+       //   </PaperProvider>
 
     )
 }

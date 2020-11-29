@@ -5,6 +5,7 @@ import { firebase } from '../../firebase/config'
 import WebModal from 'modal-enhanced-react-native-web';
 import styles from './styles';
 import { Alert } from 'react-native-web';
+import { useTheme } from 'react-native-paper';
 
 export default function RegistrationPage({navigation})
 {   
@@ -36,7 +37,7 @@ export default function RegistrationPage({navigation})
         navigation.navigate('Login');
     }
 
-
+    const { colors } = useTheme();
     return(
         <View style={styles.container}>
             <ScrollView style={{flex: 1, width: '100%' }} keyboardShouldPersistTaps="always">
@@ -45,9 +46,12 @@ export default function RegistrationPage({navigation})
                     source={require('../../../assets/savedatmoneylogo.png')}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, {
+                        backgroundColor: colors.surface,
+                        color: colors.text
+                    }]}
                     placeholder='E-mail'
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.gray}
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid="transparent"
@@ -63,8 +67,13 @@ export default function RegistrationPage({navigation})
                 <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
                 }}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.messageText}>Password recovery link successfully sent to email.</Text>
+                    <View style={[styles.modalView, {
+                        backgroundColor: colors.surface
+                    }]}>
+                        <Text style={[styles.messageText, {
+                            backgroundColor: colors.surface,
+                            color: colors.text
+                        }]}>Password recovery link successfully sent to email.</Text>
                         <TouchableHighlight style={styles.button} onPress={closeModal}>
                             <Text style={styles.modalButtonTitle}>Ok</Text>
                         </TouchableHighlight>
@@ -74,8 +83,13 @@ export default function RegistrationPage({navigation})
                 <WebModal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
                 }}> 
-                    <View style={styles.modalView}>
-                        <Text style={styles.messageText}>Password recovery link successfully sent to email.</Text>
+                    <View style={[styles.modalView, {
+                        backgroundColor: colors.surface
+                    }]}>
+                        <Text style={[styles.messageText, {
+                                backgroundColor: colors.surface,
+                                color: colors.text
+                            }]}>Password recovery link successfully sent to email.</Text>
                         <TouchableHighlight style={styles.button} onPress={closeModal}>
                             <Text style={styles.modalButtonTitle}>Ok</Text>
                         </TouchableHighlight>

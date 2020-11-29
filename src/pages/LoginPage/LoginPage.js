@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
 import WebModal from 'modal-enhanced-react-native-web';
+import { useTheme } from 'react-native-paper';
 
 export default function LoginPage({navigation})
 {
@@ -69,7 +70,7 @@ export default function LoginPage({navigation})
         });
 
     }
-
+    const { colors } = useTheme();
     return (
         <View style={styles.container}>
             <ScrollView style={{ flex: 1, width: '100%' }} keyboardShouldPersistTaps="always">
@@ -78,17 +79,23 @@ export default function LoginPage({navigation})
                     source={require('../../../assets/savedatmoneylogo.png')}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, {
+                        backgroundColor: colors.surface,
+                        color: colors.text
+                    }]}
                     placeholder='E-mail'
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.gray}
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
                 <TextInput
-                    style={styles.input}
-                    placeholderTextColor="#aaaaaa"
+                    style={[styles.input, {
+                        backgroundColor: colors.surface,
+                        color: colors.text
+                    }]}
+                    placeholderTextColor={colors.gray}
                     secureTextEntry
                     placeholder='Password'
                     onChangeText={(text) => setPassword(text)}
@@ -101,7 +108,7 @@ export default function LoginPage({navigation})
                     <Text style={styles.buttonTitle}>Log in</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+                    <Text style={[styles.footerText, {color: colors.text}]}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
                 </View>
                 <View style={styles.footerView}>
                     <Text onPress={onFooterLinkPress2} style={styles.footerLink}>Forgot Password?</Text>

@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { firebase } from '../../firebase/config'
 import WebModal from 'modal-enhanced-react-native-web';
 import styles from './styles';
+import { useTheme } from 'react-native-paper';
 
 export default function RegistrationPage({navigation})
 {   
@@ -68,7 +69,7 @@ export default function RegistrationPage({navigation})
             setMessage(errorMessage);
         });
     }
-
+    const { colors } = useTheme();
     return(
         <View style={styles.container}>
             <ScrollView style={{flex: 1, width: '100%'}} keyboardShouldPersistTaps="always">
@@ -77,26 +78,35 @@ export default function RegistrationPage({navigation})
                     source={require('../../../assets/savedatmoneylogo.png')}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, {
+                        backgroundColor: colors.surface,
+                        color: colors.text
+                    }]}
                     placeholder='Full Name'
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.gray}
                     onChangeText={(text) => setFullName(text)}
                     value={fullName}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, {
+                        backgroundColor: colors.surface,
+                        color: colors.text
+                    }]}
                     placeholder='E-mail'
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.gray}
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
                 <TextInput
-                    style={styles.input}
-                    placeholderTextColor="#aaaaaa"
+                    style={[styles.input, {
+                        backgroundColor: colors.surface,
+                        color: colors.text
+                    }]}
+                    placeholderTextColor={colors.gray}
                     secureTextEntry
                     placeholder='Password'
                     onChangeText={(text) => setPassword(text)}
@@ -105,8 +115,11 @@ export default function RegistrationPage({navigation})
                     autoCapitalize="none"
                 />
                 <TextInput
-                    style={styles.input}
-                    placeholderTextColor="#aaaaaa"
+                    style={[styles.input, {
+                        backgroundColor: colors.surface,
+                        color: colors.text
+                    }]}
+                    placeholderTextColor={colors.gray}
                     secureTextEntry
                     placeholder='Confirm Password'
                     onChangeText={(text) => setConfirmPassword(text)}
@@ -119,7 +132,7 @@ export default function RegistrationPage({navigation})
                     <Text style={styles.buttonTitle}>Create account</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Already have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
+                    <Text style={[styles.footerText, {color: colors.text}]}>Already have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
                 </View>
 
                 {Platform.IOS === 'ios' ?

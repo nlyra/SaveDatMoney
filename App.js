@@ -51,6 +51,7 @@ function Dashboard({navigation}){
         surface: "#f0f0f0",
         green: '#2ea44f',
         danger: '#F85757',
+        backdrop: "#FFFFFF",
         warning: '#ffe700',
         white: '#FFFFFF',
         black: '#000000',
@@ -69,7 +70,7 @@ const CustomDarkTheme = {
       text: "#FFFFFF",
       border: "#23272A",
       notification: "#23272A",
-      backdrop: "#FFFFFF",
+      backdrop: "#2C2F33",
       gray: "gray",
       green: '#2ea44f',
       danger: '#F85757',
@@ -81,9 +82,6 @@ const CustomDarkTheme = {
   }
     const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
   return (
-    <PaperProvider theme={theme}>
-    <AuthContext.Provider value={authContext}>
-    <NavigationContainer independent={true} theme={theme}>
     <Tab.Navigator
       initialRouteName="Budget"
       barStyle={{ backgroundColor: '#2ea44f' }}
@@ -150,9 +148,6 @@ const CustomDarkTheme = {
         }}
       />
     </Tab.Navigator>
-    </NavigationContainer>
-    </AuthContext.Provider>
-          </PaperProvider>
   );
 }
 
@@ -181,6 +176,7 @@ export default function App() {
           surface: "#f0f0f0",
           green: '#2ea44f',
           danger: '#F85757',
+          backdrop: "#FFFFFF",
           warning: '#ffe700',
           white: '#FFFFFF',
           black: '#000000',
@@ -199,7 +195,7 @@ export default function App() {
         text: "#FFFFFF",
         border: "#23272A",
         notification: "#23272A",
-        backdrop: "#FFFFFF",
+        backdrop: "#2C2F33",
         gray: "gray",
         green: '#2ea44f',
         danger: '#F85757',
