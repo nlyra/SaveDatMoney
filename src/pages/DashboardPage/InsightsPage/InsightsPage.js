@@ -155,7 +155,7 @@ function InsightsPage({navigation}) {
                     style={{ marginHorizontal: -10, padding: 20 }}
                     data={incomeLabels}
                     formatLabel={(value, index) => "    "+incomeLabels[index] + ": $" + expenseData[index]}
-                    contentInset={{ left: 40, right: 40 }}
+                    contentInset={{ left: 50, right: 40 }}
                     svg={{ fontSize: 16, fill: 'black', fontFamily: 'Arial' }}
 
                 />
