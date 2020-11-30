@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal, ScrollView } from 'react-native';
 import { firebase } from '../../firebase/config'
 import WebModal from 'modal-enhanced-react-native-web';
 import styles from './styles';

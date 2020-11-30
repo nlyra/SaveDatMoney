@@ -1,0 +1,311 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignSelf": "center",
+      "flex": 1,
+      "width": "100%",
+    }
+  }
+>
+  <RCTScrollView
+    keyboardShouldPersistTaps="always"
+    style={
+      Object {
+        "flex": 1,
+        "width": "100%",
+      }
+    }
+  >
+    <View>
+      <Image
+        source={
+          Object {
+            "testUri": "../../../assets/savedatmoneylogo.png",
+          }
+        }
+        style={
+          Object {
+            "alignSelf": "center",
+            "flex": 1,
+            "height": 160,
+            "margin": 30,
+            "width": 140,
+          }
+        }
+      />
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        onChangeText={[Function]}
+        placeholder="E-mail"
+        placeholderTextColor="#aaaaaa"
+        rejectResponderTermination={true}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderRadius": 5,
+            "height": 48,
+            "marginBottom": 10,
+            "marginLeft": 30,
+            "marginRight": 30,
+            "marginTop": 10,
+            "overflow": "hidden",
+            "paddingLeft": 16,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        onChangeText={[Function]}
+        placeholder="Password"
+        placeholderTextColor="#aaaaaa"
+        rejectResponderTermination={true}
+        secureTextEntry={true}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderRadius": 5,
+            "height": 48,
+            "marginBottom": 10,
+            "marginLeft": 30,
+            "marginRight": 30,
+            "marginTop": 10,
+            "overflow": "hidden",
+            "paddingLeft": 16,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#2ea44f",
+            "borderRadius": 5,
+            "height": 48,
+            "justifyContent": "center",
+            "marginLeft": 30,
+            "marginRight": 30,
+            "marginTop": 20,
+            "opacity": 1,
+            "paddingLeft": 30,
+            "paddingRight": 30,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "white",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Log in
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "marginTop": 10,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#2e2e2d",
+              "fontSize": 16,
+            }
+          }
+        >
+          Don't have an account? 
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#2ea44f",
+                "fontSize": 16,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Sign up
+          </Text>
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "marginTop": 10,
+          }
+        }
+      >
+        <Text
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#2ea44f",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Forgot Password?
+        </Text>
+      </View>
+      <Modal
+        animationType="slide"
+        hardwareAccelerated={false}
+        onRequestClose={[Function]}
+        transparent={true}
+        visible={false}
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "alignSelf": "center",
+              "backgroundColor": "white",
+              "borderRadius": 20,
+              "elevation": 9,
+              "margin": 20,
+              "padding": 35,
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.25,
+              "shadowRadius": 3.84,
+              "width": "100%",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "fontSize": 16,
+                "paddingLeft": 20,
+              }
+            }
+          >
+            Please verifiy your email before signing in.
+          </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "alignSelf": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "marginTop": 20,
+                "paddingLeft": 30,
+                "paddingRight": 30,
+                "width": "100%",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#2ea44f",
+                  "borderRadius": 5,
+                  "height": 48,
+                  "justifyContent": "center",
+                  "marginLeft": 30,
+                  "marginRight": 30,
+                  "marginTop": 20,
+                  "paddingLeft": 30,
+                  "paddingRight": 30,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "white",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Resend Link
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#2ea44f",
+                  "borderRadius": 5,
+                  "height": 48,
+                  "justifyContent": "center",
+                  "marginLeft": 30,
+                  "marginRight": 30,
+                  "marginTop": 20,
+                  "paddingLeft": 30,
+                  "paddingRight": 30,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "white",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Cancel
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  </RCTScrollView>
+</View>
+`;

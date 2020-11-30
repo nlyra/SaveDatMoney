@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Image, Text, TextInput, TouchableOpacity, TouchableHighlight, View, Platform, Modal, ScrollView} from 'react-native';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
 import WebModal from 'modal-enhanced-react-native-web';
@@ -50,7 +49,6 @@ export default function LoginPage({navigation})
                         index: 0,
                         routes: [{ name: 'Budget' }],
                     });
-                    //navigation.navigate('Dashboard', snapshot.val());
                 }).catch((error) => {
                     var errorCode = error.code;
                     var errorMessage = error.message;
